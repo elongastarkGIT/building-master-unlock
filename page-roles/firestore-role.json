@@ -1,0 +1,15 @@
+{
+  "file": "firestore.js",
+  "status": "validated",
+  "role": "Couche d'accès Firestore",
+  "responsibilities": [
+    "CRUD générique",
+    "Requêtes et pagination",
+    "Listeners temps réel",
+    "Batch et transactions"
+  ],
+  "dependsOn": [
+    "firebaseConfig.js"
+  ],
+  "usedBy": []
+}

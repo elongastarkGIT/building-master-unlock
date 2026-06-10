@@ -1,0 +1,13 @@
+{
+  "file": "validators.js",
+  "status": "validated",
+  "role": "Validation des données",
+  "responsibilities": [
+    "Validation types de base",
+    "Validation utilisateur, service, commande, paiement"
+  ],
+  "dependsOn": [],
+  "usedBy": [
+    "firebase/auth.js"
+  ]
+}

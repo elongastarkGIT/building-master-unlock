@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="Finalisez votre commande et payez en Mobile Money — MASTER UNLOCKER.">
+<title>Paiement — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="/pages/home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+    <nav id="nav-main" class="nav-main" aria-label="Navigation principale">
+      <a href="/pages/home.html" data-link id="nav-home">Accueil</a>
+      <a href="/pages/services.html" data-link id="nav-services">Services</a>
+      <a href="/pages/brands.html" data-link id="nav-brands">Marques</a>
+      <a href="/pages/faq.html" data-link id="nav-faq">FAQ</a>
+      <a href="/pages/contact.html" data-link id="nav-contact">Contact</a>
+      <a href="/pages/status.html" data-link id="nav-status">Statut</a>
+    </nav>
+    <div id="nav-actions" class="nav-actions">
+      <a href="/pages/login.html" class="btn btn-ghost btn-sm" data-link id="btn-login">Connexion</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" data-link id="btn-register">Inscription</a>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <a href="/pages/home.html" data-link id="mobile-nav-home">Accueil</a>
+    <a href="/pages/services.html" data-link id="mobile-nav-services">Services</a>
+    <a href="/pages/brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="/pages/faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="/pages/contact.html" data-link id="mobile-nav-contact">Contact</a>
+    <a href="/pages/status.html" data-link id="mobile-nav-status">Statut</a>
+    <a href="/pages/login.html" data-link id="mobile-nav-login">Connexion</a>
+    <a href="/pages/register.html" data-link id="mobile-nav-register">Inscription</a>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section id="checkout-section" class="section">
+    <div class="container">
+      <header class="page-header">
+        <h1 id="page-title">Finaliser la commande</h1>
+        <p id="page-subtitle">Vérifiez votre commande et choisissez votre mode de paiement.</p>
+      </header>
+
+      <div class="editor-layout">
+        <div id="checkout-main">
+          <form id="payment-form" class="card" aria-label="Formulaire de paiement">
+            <h2 id="payment-title" class="card-title">Mode de paiement</h2>
+            <p id="payment-subtitle" class="card-body">Sélectionnez votre méthode de paiement préférée.</p>
+
+            <fieldset id="payment-methods" class="form-group">
+              <legend class="sr-only">Méthode de paiement</legend>
+
+              <div class="card" style="padding: var(--space-4); margin-bottom: var(--space-3);">
+                <label for="payment-momo" class="flex items-center gap-4" style="cursor: pointer;">
+                  <input type="radio" id="payment-momo" name="paymentMethod" value="momo" checked>
+                  <span>
+                    <strong id="momo-label">Mobile Money (MoMo)</strong>
+                    <span class="text-muted" style="display: block; font-size: var(--text-sm);">Paiement via opérateur mobile</span>
+                  </span>
+                </label>
+              </div>
+
+              <div class="card" style="padding: var(--space-4);">
+                <label for="payment-card" class="flex items-center gap-4" style="cursor: pointer;">
+                  <input type="radio" id="payment-card" name="paymentMethod" value="card">
+                  <span>
+                    <strong id="card-label">Carte bancaire</strong>
+                    <span class="text-muted" style="display: block; font-size: var(--text-sm);">Visa, Mastercard via CinetPay ou Flutterwave</span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div id="momo-fields" class="form-group">
+              <label for="momo-phone" class="form-label">Numéro Mobile Money</label>
+              <input type="tel" id="momo-phone" name="momoPhone" class="form-input" placeholder="+243 XXX XXX XXX" autocomplete="tel">
+              <p class="form-hint">Le numéro utilisé pour effectuer le paiement MoMo.</p>
+            </div>
+
+            <div id="card-fields" class="form-group" hidden>
+              <p class="alert alert-info">Le paiement par carte sera traité via notre partenaire sécurisé. Vous serez redirigé vers la page de paiement.</p>
+            </div>
+
+            <p id="payment-error" class="form-error" role="alert" hidden></p>
+
+            <button type="button" id="btn-pay" class="btn btn-primary btn-lg btn-block">Payer maintenant</button>
+          </form>
+
+          <div id="checkout-security" class="alert alert-info mt-8">
+            Vos paiements sont sécurisés. Aucune donnée bancaire n'est stockée sur nos serveurs. La commande sera créée après validation du paiement.
+          </div>
+        </div>
+
+        <aside id="order-summary">
+          <div class="card" style="position: sticky; top: calc(var(--header-height) + var(--space-4));">
+            <h2 id="summary-title" class="card-title">Résumé de commande</h2>
+
+            <dl id="summary-details">
+              <dt class="text-muted" style="font-size: var(--text-sm);">Service</dt>
+              <dd id="summary-service" style="margin: 0 0 var(--space-4);">Chargement...</dd>
+
+              <dt class="text-muted" style="font-size: var(--text-sm);">Référence brouillon</dt>
+              <dd id="summary-draft-id" style="margin: 0 0 var(--space-4); font-family: var(--font-mono);">—</dd>
+
+              <dt class="text-muted" style="font-size: var(--text-sm);">IMEI / Identifiant</dt>
+              <dd id="summary-identifier" style="margin: 0 0 var(--space-4);">—</dd>
+
+              <dt class="text-muted" style="font-size: var(--text-sm);">Sous-total</dt>
+              <dd id="summary-subtotal" style="margin: 0 0 var(--space-2);">—</dd>
+
+              <dt class="text-muted" style="font-size: var(--text-sm);">Frais</dt>
+              <dd id="summary-fees" style="margin: 0 0 var(--space-4);">—</dd>
+            </dl>
+
+            <div class="card-footer flex justify-between items-center" style="padding-top: var(--space-4); margin-top: var(--space-4);">
+              <span id="summary-total-label" class="card-title" style="margin: 0;">Total</span>
+              <span id="summary-total" class="stat-value">—</span>
+            </div>
+
+            <p id="summary-status" class="form-hint text-center mt-4">Chargement du brouillon de commande...</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div id="footer-brand">
+        <a href="/pages/home.html" class="logo" data-link id="footer-logo">
+          <span class="logo-mark" aria-hidden="true">MU</span>
+          <span>MASTER UNLOCKER</span>
+        </a>
+        <p class="text-muted mt-4">Plateforme SaaS de services mobiles — déblocage, IMEI, FRP, iCloud et outils GSM.</p>
+      </div>
+      <nav id="footer-nav-services" aria-label="Liens services">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/pages/services.html" data-link id="footer-link-services">Catalogue</a></li>
+          <li><a href="/pages/brands.html" data-link id="footer-link-brands">Marques</a></li>
+          <li><a href="/pages/tracking.html" data-link id="footer-link-tracking">Suivi commande</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-support" aria-label="Liens support">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/pages/faq.html" data-link id="footer-link-faq">FAQ</a></li>
+          <li><a href="/pages/contact.html" data-link id="footer-link-contact">Contact</a></li>
+          <li><a href="/pages/status.html" data-link id="footer-link-status">Statut</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-account" aria-label="Liens compte">
+        <h4>Compte</h4>
+        <ul>
+          <li><a href="/pages/login.html" data-link id="footer-link-login">Connexion</a></li>
+          <li><a href="/pages/register.html" data-link id="footer-link-register">Inscription</a></li>
+          <li><a href="/pages/announcements.html" data-link id="footer-link-announcements">Annonces</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 MASTER UNLOCKER. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

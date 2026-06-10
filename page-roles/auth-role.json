@@ -1,0 +1,19 @@
+{
+  "file": "auth.js",
+  "status": "validated",
+  "role": "Authentification Firebase",
+  "responsibilities": [
+    "Inscription et connexion",
+    "Déconnexion et reset password",
+    "Listener d'état auth",
+    "Résolution rôle users/admins"
+  ],
+  "dependsOn": [
+    "firebaseConfig.js",
+    "validators.js",
+    "sanitizer.js"
+  ],
+  "usedBy": [
+    "session.js"
+  ]
+}

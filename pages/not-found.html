@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="Page introuvable — MASTER UNLOCKER">
+<title>404 — Page introuvable — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="/pages/home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+    <nav id="nav-main" class="nav-main" aria-label="Navigation principale">
+      <a href="/pages/home.html" data-link id="nav-home">Accueil</a>
+      <a href="/pages/services.html" data-link id="nav-services">Services</a>
+      <a href="/pages/brands.html" data-link id="nav-brands">Marques</a>
+      <a href="/pages/faq.html" data-link id="nav-faq">FAQ</a>
+      <a href="/pages/contact.html" data-link id="nav-contact">Contact</a>
+      <a href="/pages/status.html" data-link id="nav-status">Statut</a>
+    </nav>
+    <div id="nav-actions" class="nav-actions">
+      <a href="/pages/login.html" class="btn btn-ghost btn-sm" data-link id="btn-login">Connexion</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" data-link id="btn-register">Inscription</a>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <a href="/pages/home.html" data-link id="mobile-nav-home">Accueil</a>
+    <a href="/pages/services.html" data-link id="mobile-nav-services">Services</a>
+    <a href="/pages/brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="/pages/faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="/pages/contact.html" data-link id="mobile-nav-contact">Contact</a>
+    <a href="/pages/status.html" data-link id="mobile-nav-status">Statut</a>
+    <a href="/pages/login.html" data-link id="mobile-nav-login">Connexion</a>
+    <a href="/pages/register.html" data-link id="mobile-nav-register">Inscription</a>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section id="not-found-section" class="section">
+    <div class="container text-center">
+      <p id="error-code" class="stat-value" style="font-size: clamp(4rem, 15vw, 8rem); color: var(--color-primary); line-height: 1;">404</p>
+      <h1 id="error-title">Page introuvable</h1>
+      <p id="error-message" class="text-muted" style="max-width: 480px; margin: 0 auto var(--space-8);">
+        La page que vous recherchez n'existe pas, a été déplacée ou est temporairement indisponible.
+      </p>
+      <div id="error-actions" class="flex gap-4" style="justify-content: center; flex-wrap: wrap;">
+        <a href="/pages/home.html" class="btn btn-primary" data-link id="error-link-home">Retour à l'accueil</a>
+        <a href="/pages/services.html" class="btn btn-secondary" data-link id="error-link-services">Voir les services</a>
+        <a href="/pages/contact.html" class="btn btn-ghost" data-link id="error-link-contact">Contacter le support</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="container">
+    <div class="footer-bottom" style="border: none; padding-top: 0;">
+      <p id="footer-copyright">&copy; 2026 MASTER UNLOCKER. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "file": "session.js",
+  "status": "validated",
+  "role": "Gestion de session utilisateur",
+  "responsibilities": [
+    "Synchroniser Firebase Auth avec l'état global",
+    "Exposer la session courante",
+    "Centraliser la déconnexion",
+    "Fournir les listeners de session"
+  ],
+  "dependsOn": [
+    "firebase/auth.js",
+    "state.js"
+  ],
+  "usedBy": [
+    "app.js",
+    "guards.js"
+  ]
+}

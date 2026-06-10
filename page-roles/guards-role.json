@@ -1,0 +1,18 @@
+{
+  "file": "guards.js",
+  "status": "validated",
+  "role": "Protection des routes et contrôle d'accès",
+  "responsibilities": [
+    "Vérification authentification",
+    "Vérification statut utilisateur",
+    "Vérification des rôles",
+    "Redirections sécurisées"
+  ],
+  "dependsOn": [
+    "session.js",
+    "constants.js"
+  ],
+  "usedBy": [
+    "router.js"
+  ]
+}

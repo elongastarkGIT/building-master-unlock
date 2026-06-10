@@ -1,0 +1,16 @@
+{
+  "file": "firebaseConfig.js",
+  "status": "validated",
+  "role": "Configuration et initialisation Firebase",
+  "responsibilities": [
+    "Initialiser Firebase App",
+    "Configurer Firestore, Auth, Storage, Functions",
+    "Exporter les primitives Firebase"
+  ],
+  "dependsOn": [],
+  "usedBy": [
+    "auth.js",
+    "firestore.js",
+    "app.js"
+  ]
+}

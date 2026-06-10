@@ -1,0 +1,18 @@
+{
+  "file": "state.js",
+  "status": "validated",
+  "role": "État global en mémoire",
+  "responsibilities": [
+    "Utilisateur et profil courants",
+    "État UI global",
+    "Brouillon de commande",
+    "Préférences applicatives"
+  ],
+  "dependsOn": [
+    "constants.js",
+    "storage.js"
+  ],
+  "usedBy": [
+    "session.js"
+  ]
+}

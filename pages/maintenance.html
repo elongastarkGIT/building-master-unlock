@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="MASTER UNLOCKER est en maintenance.">
+<title>Maintenance — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="/pages/home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+  </div>
+</header>
+
+<main id="main-content">
+  <section id="maintenance-section" class="section">
+    <div class="container text-center">
+      <div id="maintenance-icon" class="empty-state-icon" aria-hidden="true" style="font-size: var(--text-3xl);">⚙</div>
+      <h1 id="maintenance-title">Maintenance en cours</h1>
+      <p id="maintenance-message" class="text-muted" style="max-width: 520px; margin: 0 auto var(--space-8);">
+        MASTER UNLOCKER est temporairement indisponible pour une opération de maintenance planifiée. Nous travaillons à améliorer la plateforme et serons de retour très bientôt.
+      </p>
+      <p id="maintenance-estimate" class="alert alert-info" style="max-width: 480px; margin: 0 auto var(--space-8);">
+        Durée estimée : —
+      </p>
+      <p id="maintenance-contact" class="text-muted">
+        Pour toute urgence, contactez
+        <a href="mailto:support@masterunlocker.com" id="maintenance-email">support@masterunlocker.com</a>
+      </p>
+      <a href="/pages/status.html" class="btn btn-secondary mt-8" data-link id="maintenance-status-link">Vérifier le statut</a>
+    </div>
+  </section>
+</main>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

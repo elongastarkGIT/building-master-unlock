@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="Catalogue des services MASTER UNLOCKER — déblocage, IMEI, FRP, iCloud, MDM et outils GSM.">
+<title>Services — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="/pages/home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+    <nav id="nav-main" class="nav-main" aria-label="Navigation principale">
+      <a href="/pages/home.html" data-link id="nav-home">Accueil</a>
+      <a href="/pages/services.html" data-link id="nav-services" class="active">Services</a>
+      <a href="/pages/brands.html" data-link id="nav-brands">Marques</a>
+      <a href="/pages/faq.html" data-link id="nav-faq">FAQ</a>
+      <a href="/pages/contact.html" data-link id="nav-contact">Contact</a>
+      <a href="/pages/status.html" data-link id="nav-status">Statut</a>
+    </nav>
+    <div id="nav-actions" class="nav-actions">
+      <a href="/pages/login.html" class="btn btn-ghost btn-sm" data-link id="btn-login">Connexion</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" data-link id="btn-register">Inscription</a>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <a href="/pages/home.html" data-link id="mobile-nav-home">Accueil</a>
+    <a href="/pages/services.html" data-link id="mobile-nav-services">Services</a>
+    <a href="/pages/brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="/pages/faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="/pages/contact.html" data-link id="mobile-nav-contact">Contact</a>
+    <a href="/pages/status.html" data-link id="mobile-nav-status">Statut</a>
+    <a href="/pages/login.html" data-link id="mobile-nav-login">Connexion</a>
+    <a href="/pages/register.html" data-link id="mobile-nav-register">Inscription</a>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section id="services-section" class="section">
+    <div class="container">
+      <header class="page-header">
+        <h1 id="page-title">Catalogue des services</h1>
+        <p id="page-subtitle">Parcourez nos services mobiles. Les prix et disponibilités sont chargés dynamiquement depuis Firestore.</p>
+      </header>
+
+      <div id="filter-bar" class="filter-bar" role="search">
+        <label for="filter-category" class="sr-only">Filtrer par catégorie</label>
+        <select id="filter-category" class="form-select" name="category" aria-label="Catégorie de service">
+          <option value="">Toutes les catégories</option>
+          <option value="unlock">Déblocage mobile</option>
+          <option value="imei">Services IMEI</option>
+          <option value="frp">FRP Unlock</option>
+          <option value="icloud">Services Apple / iCloud</option>
+          <option value="mdm">MDM Unlock</option>
+          <option value="tools">Outils GSM</option>
+          <option value="credits">Crédits outils</option>
+        </select>
+        <span id="services-count" class="text-muted" aria-live="polite">Chargement...</span>
+      </div>
+
+      <div id="services-grid" class="grid grid-3" aria-busy="true" aria-label="Liste des services">
+        <article id="service-card-1" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span class="skeleton skeleton-title" style="display: block; width: 80%;"></span>
+            </h2>
+            <span class="badge badge-neutral">—</span>
+          </div>
+          <p class="card-body">
+            <span class="skeleton skeleton-text"></span>
+            <span class="skeleton skeleton-text" style="width: 70%;"></span>
+          </p>
+          <div class="card-footer flex justify-between items-center">
+            <span id="service-price-1" class="stat-value" style="font-size: var(--text-xl);">—</span>
+            <a href="/pages/service-details.html" class="btn btn-secondary btn-sm" data-link id="service-link-1">Détails</a>
+          </div>
+        </article>
+        <article id="service-card-2" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span class="skeleton skeleton-title" style="display: block; width: 75%;"></span>
+            </h2>
+            <span class="badge badge-info">—</span>
+          </div>
+          <p class="card-body">
+            <span class="skeleton skeleton-text"></span>
+            <span class="skeleton skeleton-text" style="width: 60%;"></span>
+          </p>
+          <div class="card-footer flex justify-between items-center">
+            <span id="service-price-2" class="stat-value" style="font-size: var(--text-xl);">—</span>
+            <a href="/pages/service-details.html" class="btn btn-secondary btn-sm" data-link id="service-link-2">Détails</a>
+          </div>
+        </article>
+        <article id="service-card-3" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span class="skeleton skeleton-title" style="display: block; width: 85%;"></span>
+            </h2>
+            <span class="badge badge-success">—</span>
+          </div>
+          <p class="card-body">
+            <span class="skeleton skeleton-text"></span>
+            <span class="skeleton skeleton-text" style="width: 65%;"></span>
+          </p>
+          <div class="card-footer flex justify-between items-center">
+            <span id="service-price-3" class="stat-value" style="font-size: var(--text-xl);">—</span>
+            <a href="/pages/service-details.html" class="btn btn-secondary btn-sm" data-link id="service-link-3">Détails</a>
+          </div>
+        </article>
+        <article id="service-card-4" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span class="skeleton skeleton-title" style="display: block; width: 70%;"></span>
+            </h2>
+            <span class="badge badge-neutral">—</span>
+          </div>
+          <p class="card-body">
+            <span class="skeleton skeleton-text"></span>
+            <span class="skeleton skeleton-text" style="width: 80%;"></span>
+          </p>
+          <div class="card-footer flex justify-between items-center">
+            <span id="service-price-4" class="stat-value" style="font-size: var(--text-xl);">—</span>
+            <a href="/pages/service-details.html" class="btn btn-secondary btn-sm" data-link id="service-link-4">Détails</a>
+          </div>
+        </article>
+        <article id="service-card-5" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span class="skeleton skeleton-title" style="display: block; width: 78%;"></span>
+            </h2>
+            <span class="badge badge-pending">—</span>
+          </div>
+          <p class="card-body">
+            <span class="skeleton skeleton-text"></span>
+            <span class="skeleton skeleton-text" style="width: 55%;"></span>
+          </p>
+          <div class="card-footer flex justify-between items-center">
+            <span id="service-price-5" class="stat-value" style="font-size: var(--text-xl);">—</span>
+            <a href="/pages/service-details.html" class="btn btn-secondary btn-sm" data-link id="service-link-5">Détails</a>
+          </div>
+        </article>
+        <article id="service-card-6" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span class="skeleton skeleton-title" style="display: block; width: 82%;"></span>
+            </h2>
+            <span class="badge badge-info">—</span>
+          </div>
+          <p class="card-body">
+            <span class="skeleton skeleton-text"></span>
+            <span class="skeleton skeleton-text" style="width: 72%;"></span>
+          </p>
+          <div class="card-footer flex justify-between items-center">
+            <span id="service-price-6" class="stat-value" style="font-size: var(--text-xl);">—</span>
+            <a href="/pages/service-details.html" class="btn btn-secondary btn-sm" data-link id="service-link-6">Détails</a>
+          </div>
+        </article>
+      </div>
+
+      <div id="services-empty" class="empty-state" hidden>
+        <div class="empty-state-icon" aria-hidden="true">—</div>
+        <h2 id="empty-title">Aucun service disponible</h2>
+        <p id="empty-message">Aucun service ne correspond à vos critères pour le moment. Réessayez avec un autre filtre ou consultez plus tard.</p>
+        <a href="/pages/contact.html" class="btn btn-secondary" data-link id="empty-cta">Nous contacter</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div id="footer-brand">
+        <a href="/pages/home.html" class="logo" data-link id="footer-logo">
+          <span class="logo-mark" aria-hidden="true">MU</span>
+          <span>MASTER UNLOCKER</span>
+        </a>
+        <p class="text-muted mt-4">Plateforme SaaS de services mobiles — déblocage, IMEI, FRP, iCloud et outils GSM.</p>
+      </div>
+      <nav id="footer-nav-services" aria-label="Liens services">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/pages/services.html" data-link id="footer-link-services">Catalogue</a></li>
+          <li><a href="/pages/brands.html" data-link id="footer-link-brands">Marques</a></li>
+          <li><a href="/pages/tracking.html" data-link id="footer-link-tracking">Suivi commande</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-support" aria-label="Liens support">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/pages/faq.html" data-link id="footer-link-faq">FAQ</a></li>
+          <li><a href="/pages/contact.html" data-link id="footer-link-contact">Contact</a></li>
+          <li><a href="/pages/status.html" data-link id="footer-link-status">Statut</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-account" aria-label="Liens compte">
+        <h4>Compte</h4>
+        <ul>
+          <li><a href="/pages/login.html" data-link id="footer-link-login">Connexion</a></li>
+          <li><a href="/pages/register.html" data-link id="footer-link-register">Inscription</a></li>
+          <li><a href="/pages/announcements.html" data-link id="footer-link-announcements">Annonces</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 MASTER UNLOCKER. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

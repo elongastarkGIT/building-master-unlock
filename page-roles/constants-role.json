@@ -1,0 +1,18 @@
+{
+  "file": "constants.js",
+  "status": "validated",
+  "role": "Source unique de configuration applicative",
+  "responsibilities": [
+    "Configuration globale",
+    "Rôles et statuts métier",
+    "Routes et clés de stockage",
+    "Mapping des collections Firestore"
+  ],
+  "dependsOn": [],
+  "usedBy": [
+    "state.js",
+    "router.js",
+    "guards.js",
+    "app.js"
+  ]
+}

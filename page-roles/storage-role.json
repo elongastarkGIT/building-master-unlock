@@ -1,0 +1,14 @@
+{
+  "file": "storage.js",
+  "status": "validated",
+  "role": "Helpers de persistance locale",
+  "responsibilities": [
+    "Lecture et écriture localStorage",
+    "Lecture et écriture sessionStorage",
+    "Suppression et nettoyage par préfixe"
+  ],
+  "dependsOn": [],
+  "usedBy": [
+    "state.js"
+  ]
+}

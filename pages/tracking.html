@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="Suivez l'état de votre commande MASTER UNLOCKER.">
+<title>Suivi de commande — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="/pages/home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+    <nav id="nav-main" class="nav-main" aria-label="Navigation principale">
+      <a href="/pages/home.html" data-link id="nav-home">Accueil</a>
+      <a href="/pages/services.html" data-link id="nav-services">Services</a>
+      <a href="/pages/brands.html" data-link id="nav-brands">Marques</a>
+      <a href="/pages/faq.html" data-link id="nav-faq">FAQ</a>
+      <a href="/pages/contact.html" data-link id="nav-contact">Contact</a>
+      <a href="/pages/status.html" data-link id="nav-status">Statut</a>
+    </nav>
+    <div id="nav-actions" class="nav-actions">
+      <a href="/pages/login.html" class="btn btn-ghost btn-sm" data-link id="btn-login">Connexion</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" data-link id="btn-register">Inscription</a>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <a href="/pages/home.html" data-link id="mobile-nav-home">Accueil</a>
+    <a href="/pages/services.html" data-link id="mobile-nav-services">Services</a>
+    <a href="/pages/brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="/pages/faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="/pages/contact.html" data-link id="mobile-nav-contact">Contact</a>
+    <a href="/pages/status.html" data-link id="mobile-nav-status">Statut</a>
+    <a href="/pages/login.html" data-link id="mobile-nav-login">Connexion</a>
+    <a href="/pages/register.html" data-link id="mobile-nav-register">Inscription</a>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section id="tracking-section" class="section">
+    <div class="container">
+      <header class="page-header text-center">
+        <h1 id="page-title">Suivi de commande</h1>
+        <p id="page-subtitle">Entrez votre numéro de commande pour consulter son statut et l'état du traitement.</p>
+      </header>
+
+      <div id="tracking-form-wrapper" class="auth-card" style="margin: 0 auto;">
+        <form id="tracking-form" class="card" aria-label="Formulaire de suivi">
+          <div class="form-group">
+            <label for="tracking-order-number" class="form-label">Numéro de commande</label>
+            <input type="text" id="tracking-order-number" name="orderNumber" class="form-input" placeholder="Ex. ORD-XXXXXX" autocomplete="off" required>
+            <p class="form-hint">Le numéro vous a été communiqué par email après validation du paiement.</p>
+          </div>
+
+          <p id="tracking-error" class="form-error" role="alert" hidden></p>
+
+          <button type="submit" id="tracking-submit" class="btn btn-primary btn-block">Rechercher la commande</button>
+        </form>
+      </div>
+
+      <div id="tracking-result" class="card mt-8" hidden aria-live="polite">
+        <h2 id="result-title" class="card-title">Résultat</h2>
+        <dl id="result-details">
+          <dt class="text-muted" style="font-size: var(--text-sm);">Numéro</dt>
+          <dd id="result-order-number" style="margin: 0 0 var(--space-4); font-family: var(--font-mono);">—</dd>
+
+          <dt class="text-muted" style="font-size: var(--text-sm);">Statut</dt>
+          <dd id="result-status" style="margin: 0 0 var(--space-4);">
+            <span class="badge badge-neutral">—</span>
+          </dd>
+
+          <dt class="text-muted" style="font-size: var(--text-sm);">Traitement</dt>
+          <dd id="result-processing" style="margin: 0 0 var(--space-4);">—</dd>
+
+          <dt class="text-muted" style="font-size: var(--text-sm);">Service</dt>
+          <dd id="result-service" style="margin: 0 0 var(--space-4);">Chargement...</dd>
+
+          <dt class="text-muted" style="font-size: var(--text-sm);">Date de commande</dt>
+          <dd id="result-date" style="margin: 0;">—</dd>
+        </dl>
+      </div>
+
+      <div id="tracking-empty" class="empty-state mt-8">
+        <p id="tracking-hint" class="text-muted">Connectez-vous à votre compte pour accéder à l'historique complet de vos commandes.</p>
+        <a href="/pages/login.html" class="btn btn-secondary" data-link id="tracking-login-cta">Se connecter</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div id="footer-brand">
+        <a href="/pages/home.html" class="logo" data-link id="footer-logo">
+          <span class="logo-mark" aria-hidden="true">MU</span>
+          <span>MASTER UNLOCKER</span>
+        </a>
+        <p class="text-muted mt-4">Plateforme SaaS de services mobiles — déblocage, IMEI, FRP, iCloud et outils GSM.</p>
+      </div>
+      <nav id="footer-nav-services" aria-label="Liens services">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/pages/services.html" data-link id="footer-link-services">Catalogue</a></li>
+          <li><a href="/pages/brands.html" data-link id="footer-link-brands">Marques</a></li>
+          <li><a href="/pages/tracking.html" data-link id="footer-link-tracking">Suivi commande</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-support" aria-label="Liens support">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/pages/faq.html" data-link id="footer-link-faq">FAQ</a></li>
+          <li><a href="/pages/contact.html" data-link id="footer-link-contact">Contact</a></li>
+          <li><a href="/pages/status.html" data-link id="footer-link-status">Statut</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-account" aria-label="Liens compte">
+        <h4>Compte</h4>
+        <ul>
+          <li><a href="/pages/login.html" data-link id="footer-link-login">Connexion</a></li>
+          <li><a href="/pages/register.html" data-link id="footer-link-register">Inscription</a></li>
+          <li><a href="/pages/announcements.html" data-link id="footer-link-announcements">Annonces</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 MASTER UNLOCKER. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

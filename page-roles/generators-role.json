@@ -1,0 +1,13 @@
+{
+  "file": "generators.js",
+  "status": "validated",
+  "role": "Génération d'identifiants métier",
+  "responsibilities": [
+    "Numéros de commande",
+    "Références de paiement",
+    "Codes de suivi et licences",
+    "Slugs et identifiants publics"
+  ],
+  "dependsOn": [],
+  "usedBy": []
+}

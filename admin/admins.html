@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<title>Administrateurs — Admin MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-admin">
+
+<div class="admin-layout" id="admin-layout">
+
+<aside class="admin-sidebar" id="admin-sidebar" aria-label="Navigation administrateur">
+  <div class="sidebar-brand">
+    <a href="/admin/dashboard.html" class="logo" id="admin-logo">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span>MASTER UNLOCKER</span>
+    </a>
+    <span class="admin-badge" id="admin-badge">ADMIN</span>
+  </div>
+  <nav class="sidebar-nav" id="admin-sidebar-nav">
+    <div class="sidebar-nav-section" id="nav-section-principal">
+      <span class="sidebar-nav-label" id="nav-label-principal">Principal</span>
+      <a href="/admin/dashboard.html" class="sidebar-link" data-link id="nav-dashboard">
+        <span class="sidebar-icon" aria-hidden="true">◉</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/admin/orders.html" class="sidebar-link" data-link id="nav-orders">
+        <span class="sidebar-icon" aria-hidden="true">◎</span>
+        <span>Commandes</span>
+      </a>
+      <a href="/admin/users.html" class="sidebar-link" data-link id="nav-users">
+        <span class="sidebar-icon" aria-hidden="true">◈</span>
+        <span>Utilisateurs</span>
+      </a>
+    </div>
+    <div class="sidebar-nav-section" id="nav-section-catalogue">
+      <span class="sidebar-nav-label" id="nav-label-catalogue">Catalogue</span>
+      <a href="/admin/services.html" class="sidebar-link" data-link id="nav-services">
+        <span class="sidebar-icon" aria-hidden="true">◆</span>
+        <span>Services</span>
+      </a>
+      <a href="/admin/promotions.html" class="sidebar-link" data-link id="nav-promotions">
+        <span class="sidebar-icon" aria-hidden="true">◇</span>
+        <span>Promotions</span>
+      </a>
+      <a href="/admin/providers.html" class="sidebar-link" data-link id="nav-providers">
+        <span class="sidebar-icon" aria-hidden="true">◐</span>
+        <span>Fournisseurs</span>
+      </a>
+    </div>
+    <div class="sidebar-nav-section" id="nav-section-finance">
+      <span class="sidebar-nav-label" id="nav-label-finance">Finance</span>
+      <a href="/admin/payments.html" class="sidebar-link" data-link id="nav-payments">
+        <span class="sidebar-icon" aria-hidden="true">◑</span>
+        <span>Paiements</span>
+      </a>
+      <a href="/admin/reports.html" class="sidebar-link" data-link id="nav-reports">
+        <span class="sidebar-icon" aria-hidden="true">◒</span>
+        <span>Rapports</span>
+      </a>
+    </div>
+    <div class="sidebar-nav-section" id="nav-section-support">
+      <span class="sidebar-nav-label" id="nav-label-support">Support</span>
+      <a href="/admin/tickets.html" class="sidebar-link" data-link id="nav-tickets">
+        <span class="sidebar-icon" aria-hidden="true">◓</span>
+        <span>Tickets</span>
+      </a>
+      <a href="/admin/notifications.html" class="sidebar-link" data-link id="nav-notifications">
+        <span class="sidebar-icon" aria-hidden="true">◔</span>
+        <span>Notifications</span>
+      </a>
+    </div>
+    <div class="sidebar-nav-section" id="nav-section-systeme">
+      <span class="sidebar-nav-label" id="nav-label-systeme">Système</span>
+      <a href="/admin/settings.html" class="sidebar-link" data-link id="nav-settings">
+        <span class="sidebar-icon" aria-hidden="true">◕</span>
+        <span>Paramètres</span>
+      </a>
+      <a href="/admin/status.html" class="sidebar-link" data-link id="nav-status">
+        <span class="sidebar-icon" aria-hidden="true">◖</span>
+        <span>Statut</span>
+      </a>
+      <a href="/admin/logs.html" class="sidebar-link" data-link id="nav-logs">
+        <span class="sidebar-icon" aria-hidden="true">◗</span>
+        <span>Logs</span>
+      </a>
+      <a href="/admin/admins.html" class="sidebar-link active" data-link id="nav-admins">
+        <span class="sidebar-icon" aria-hidden="true">◘</span>
+        <span>Administrateurs</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer" id="admin-sidebar-footer">
+    <a href="/pages/login.html" class="sidebar-link" data-link id="nav-logout">
+      <span class="sidebar-icon" aria-hidden="true">↩</span>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<main class="admin-main" id="admin-main">
+
+<header class="admin-topbar" id="admin-topbar">
+  <div class="dashboard-topbar-left">
+    <button type="button" class="menu-toggle" id="admin-menu-toggle" aria-label="Ouvrir le menu" aria-controls="admin-sidebar" aria-expanded="false">☰</button>
+    <form class="admin-search" id="admin-search-form" role="search">
+      <label for="admin-search-input" class="sr-only">Rechercher</label>
+      <input type="search" id="admin-search-input" name="q" placeholder="Rechercher..." autocomplete="off">
+    </form>
+  </div>
+  <div class="dashboard-topbar-right">
+    <div class="user-menu" id="admin-user-menu">
+      <div class="user-avatar" id="admin-user-avatar" aria-hidden="true">—</div>
+      <div class="user-info">
+        <span class="user-name" id="admin-user-name">—</span>
+        <span class="user-role" id="admin-user-role">—</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="admin-content" id="admin-content">
+
+<header class="page-header" id="page-header">
+  <h1 id="page-title">Administrateurs</h1>
+  <p id="page-description">Gestion des comptes administrateurs et opérateurs.</p>
+</header>
+
+<div class="action-bar" id="admin-admins-toolbar">
+  <h2 class="card-title" id="admin-admins-subtitle">Équipe admin</h2>
+  <button type="button" class="btn btn-primary btn-sm" id="admin-add-admin-btn">Ajouter un administrateur</button>
+</div>
+
+<div class="data-card" id="admin-admins-card">
+  <div class="data-card-header" id="admin-admins-header">
+    <h2 class="card-title" id="admin-admins-title">Liste des administrateurs</h2>
+  </div>
+  <div class="data-card-body" id="admin-admins-body-wrapper">
+    <div class="table-wrapper" id="admin-admins-table-wrapper">
+      <table class="table" id="admin-admins-table">
+        <thead id="admin-admins-thead">
+          <tr>
+            <th scope="col" id="admins-col-uid">UID</th>
+            <th scope="col" id="admins-col-email">Email</th>
+            <th scope="col" id="admins-col-role">Rôle</th>
+            <th scope="col" id="admins-col-status">Statut</th>
+            <th scope="col" id="admins-col-date">Créé le</th>
+            <th scope="col" id="admins-col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-admins-body"></tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="admin-admins-empty">
+      <p id="admin-admins-empty-text">Aucun administrateur trouvé.</p>
+    </div>
+  </div>
+</div>
+
+</div>
+</main>
+</div>
+
+<div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+<div id="modal-root"></div>
+
+<script type="module" src="../js/main.js"></script>
+</body>
+</html>

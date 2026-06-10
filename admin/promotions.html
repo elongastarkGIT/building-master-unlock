@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<title>Promotions — Admin MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-admin">
+
+<div class="admin-layout" id="admin-layout">
+
+<aside class="admin-sidebar" id="admin-sidebar" aria-label="Navigation administrateur">
+  <div class="sidebar-brand">
+    <a href="/admin/dashboard.html" class="logo" id="admin-logo">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span>MASTER UNLOCKER</span>
+    </a>
+    <span class="admin-badge" id="admin-badge">ADMIN</span>
+  </div>
+  <nav class="sidebar-nav" id="admin-sidebar-nav">
+    <div class="sidebar-nav-section" id="nav-section-principal">
+      <span class="sidebar-nav-label" id="nav-label-principal">Principal</span>
+      <a href="/admin/dashboard.html" class="sidebar-link" data-link id="nav-dashboard">
+        <span class="sidebar-icon" aria-hidden="true">◉</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/admin/orders.html" class="sidebar-link" data-link id="nav-orders">
+        <span class="sidebar-icon" aria-hidden="true">◎</span>
+        <span>Commandes</span>
+      </a>
+      <a href="/admin/users.html" class="sidebar-link" data-link id="nav-users">
+        <span class="sidebar-icon" aria-hidden="true">◈</span>
+        <span>Utilisateurs</span>
+      </a>
+    </div>
+    <div class="sidebar-nav-section" id="nav-section-catalogue">
+      <span class="sidebar-nav-label" id="nav-label-catalogue">Catalogue</span>
+      <a href="/admin/services.html" class="sidebar-link" data-link id="nav-services">
+        <span class="sidebar-icon" aria-hidden="true">◆</span>
+        <span>Services</span>
+      </a>
+      <a href="/admin/promotions.html" class="sidebar-link active" data-link id="nav-promotions">
+        <span class="sidebar-icon" aria-hidden="true">◇</span>
+        <span>Promotions</span>
+      </a>
+      <a href="/admin/providers.html" class="sidebar-link" data-link id="nav-providers">
+        <span class="sidebar-icon" aria-hidden="true">◐</span>
+        <span>Fournisseurs</span>
+      </a>
+    </div>
+    <div class="sidebar-nav-section" id="nav-section-finance">
+      <span class="sidebar-nav-label" id="nav-label-finance">Finance</span>
+      <a href="/admin/payments.html" class="sidebar-link" data-link id="nav-payments">
+        <span class="sidebar-icon" aria-hidden="true">◑</span>
+        <span>Paiements</span>
+      </a>
+      <a href="/admin/reports.html" class="sidebar-link" data-link id="nav-reports">
+        <span class="sidebar-icon" aria-hidden="true">◒</span>
+        <span>Rapports</span>
+      </a>
+    </div>
+    <div class="sidebar-nav-section" id="nav-section-support">
+      <span class="sidebar-nav-label" id="nav-label-support">Support</span>
+      <a href="/admin/tickets.html" class="sidebar-link" data-link id="nav-tickets">
+        <span class="sidebar-icon" aria-hidden="true">◓</span>
+        <span>Tickets</span>
+      </a>
+      <a href="/admin/notifications.html" class="sidebar-link" data-link id="nav-notifications">
+        <span class="sidebar-icon" aria-hidden="true">◔</span>
+        <span>Notifications</span>
+      </a>
+    </div>
+    <div class="sidebar-nav-section" id="nav-section-systeme">
+      <span class="sidebar-nav-label" id="nav-label-systeme">Système</span>
+      <a href="/admin/settings.html" class="sidebar-link" data-link id="nav-settings">
+        <span class="sidebar-icon" aria-hidden="true">◕</span>
+        <span>Paramètres</span>
+      </a>
+      <a href="/admin/status.html" class="sidebar-link" data-link id="nav-status">
+        <span class="sidebar-icon" aria-hidden="true">◖</span>
+        <span>Statut</span>
+      </a>
+      <a href="/admin/logs.html" class="sidebar-link" data-link id="nav-logs">
+        <span class="sidebar-icon" aria-hidden="true">◗</span>
+        <span>Logs</span>
+      </a>
+      <a href="/admin/admins.html" class="sidebar-link" data-link id="nav-admins">
+        <span class="sidebar-icon" aria-hidden="true">◘</span>
+        <span>Administrateurs</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer" id="admin-sidebar-footer">
+    <a href="/pages/login.html" class="sidebar-link" data-link id="nav-logout">
+      <span class="sidebar-icon" aria-hidden="true">↩</span>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<main class="admin-main" id="admin-main">
+
+<header class="admin-topbar" id="admin-topbar">
+  <div class="dashboard-topbar-left">
+    <button type="button" class="menu-toggle" id="admin-menu-toggle" aria-label="Ouvrir le menu" aria-controls="admin-sidebar" aria-expanded="false">☰</button>
+    <form class="admin-search" id="admin-search-form" role="search">
+      <label for="admin-search-input" class="sr-only">Rechercher</label>
+      <input type="search" id="admin-search-input" name="q" placeholder="Rechercher..." autocomplete="off">
+    </form>
+  </div>
+  <div class="dashboard-topbar-right">
+    <div class="user-menu" id="admin-user-menu">
+      <div class="user-avatar" id="admin-user-avatar" aria-hidden="true">—</div>
+      <div class="user-info">
+        <span class="user-name" id="admin-user-name">—</span>
+        <span class="user-role" id="admin-user-role">—</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="admin-content" id="admin-content">
+
+<header class="page-header" id="page-header">
+  <h1 id="page-title">Promotions</h1>
+  <p id="page-description">Gestion des coupons et réductions.</p>
+</header>
+
+<div class="action-bar" id="admin-promotions-toolbar">
+  <div class="filter-bar" id="admin-promotions-filters">
+    <div class="form-group" id="promotions-filter-type-group">
+      <label for="admin-promotions-filter-type" class="form-label" id="promotions-filter-type-label">Type</label>
+      <select id="admin-promotions-filter-type" name="type" class="form-select">
+        <option value="" id="promotions-type-all">Tous</option>
+        <option value="fixed" id="promotions-type-fixed">fixed</option>
+        <option value="percent" id="promotions-type-percent">percent</option>
+      </select>
+    </div>
+    <button type="button" class="btn btn-secondary btn-sm" id="admin-promotions-filter-apply">Filtrer</button>
+  </div>
+  <button type="button" class="btn btn-primary btn-sm" id="admin-add-promotion-btn">Nouvelle promotion</button>
+</div>
+
+<div class="data-card" id="admin-promotions-card">
+  <div class="data-card-header" id="admin-promotions-header">
+    <h2 class="card-title" id="admin-promotions-title">Liste des promotions</h2>
+  </div>
+  <div class="data-card-body" id="admin-promotions-body-wrapper">
+    <div class="table-wrapper" id="admin-promotions-table-wrapper">
+      <table class="table" id="admin-promotions-table">
+        <thead id="admin-promotions-thead">
+          <tr>
+            <th scope="col" id="promotions-col-code">Code</th>
+            <th scope="col" id="promotions-col-type">Type</th>
+            <th scope="col" id="promotions-col-value">Valeur</th>
+            <th scope="col" id="promotions-col-active">Actif</th>
+            <th scope="col" id="promotions-col-expiry">Expiration</th>
+            <th scope="col" id="promotions-col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-promotions-body"></tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="admin-promotions-empty">
+      <p id="admin-promotions-empty-text">Aucune promotion trouvée.</p>
+    </div>
+  </div>
+</div>
+
+</div>
+</main>
+</div>
+
+<div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+<div id="modal-root"></div>
+
+<script type="module" src="../js/main.js"></script>
+</body>
+</html>

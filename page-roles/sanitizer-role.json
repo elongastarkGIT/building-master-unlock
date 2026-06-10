@@ -1,0 +1,14 @@
+{
+  "file": "sanitizer.js",
+  "status": "validated",
+  "role": "Sanitization des entrées",
+  "responsibilities": [
+    "Nettoyage chaînes et HTML",
+    "Sanitization email, téléphone, objets",
+    "Protection XSS avant stockage"
+  ],
+  "dependsOn": [],
+  "usedBy": [
+    "firebase/auth.js"
+  ]
+}

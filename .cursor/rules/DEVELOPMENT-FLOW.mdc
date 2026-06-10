@@ -1,0 +1,416 @@
+---
+alwaysApply: true
+---
+
+OBJECTIF
+
+Ce document définit l'ordre officiel de développement de MASTER UNLOCKER.
+
+Le but est de :
+
+- éviter les dépendances cassées
+- éviter les retours inutiles
+- garantir une architecture cohérente
+- permettre à tout assistant IA de travailler sur le projet sans perdre le contexte
+- maintenir une progression stable du projet
+
+---
+
+RÈGLES OBLIGATOIRES
+
+1. Toujours travailler sur un seul fichier à la fois.
+
+2. Respecter strictement l'ordre du flow.
+
+3. Ne jamais sauter un fichier.
+
+4. Ne jamais revenir modifier un fichier déjà validé sauf :
+   
+   - bug critique
+   - faille sécurité
+   - dépendance cassée
+
+5. Toujours analyser les fichiers déjà existants avant de proposer une modification.
+
+6. Toujours vérifier les imports existants avant toute génération.
+
+7. Toujours vérifier les dépendances réelles avant d'écrire du code.
+
+8. Toujours privilégier la réutilisation du code existant.
+
+9. Aucun code ne doit contourner l'architecture définie dans ARCHITECTURE.md.
+
+10. Toute nouvelle logique doit respecter DATABASE.md.
+
+---
+
+AUDIT OBLIGATOIRE
+
+Avant chaque création ou modification :
+
+1. Lire le fichier concerné.
+2. Vérifier les dépendances.
+3. Vérifier les imports.
+4. Vérifier les exports.
+5. Vérifier la cohérence avec :
+   - PRD.md
+   - ARCHITECTURE.md
+   - DATABASE.md
+   - DEVELOPMENT-FLOW.md
+
+Si une amélioration est possible :
+
+- la signaler
+- expliquer l'impact
+- proposer une correction
+
+Ne jamais approuver automatiquement un fichier.
+
+---
+
+PAGE-ROLES OBLIGATOIRE
+
+Après validation d'un fichier :
+
+Créer automatiquement un fichier résumé dans :
+
+/page-roles
+Documentation technique obligatoire de chaque fichier du projet.
+
+OBJECTIFS
+
+- Comprendre rapidement le rôle d'un fichier.
+- Comprendre rapidement son fonctionnement.
+- Comprendre rapidement ses dépendances.
+- Comprendre rapidement ses impacts.
+- Réduire le temps d'analyse du projet.
+- Faciliter la maintenance.
+- Faciliter les futures évolutions.
+- Éviter les duplications de logique.
+- Faciliter l'onboarding d'un nouveau développeur.
+- Faciliter l'analyse par une IA.
+- Centraliser la documentation technique du projet.
+
+---
+
+RÈGLE OBLIGATOIRE
+
+Après la création, la correction ou la modification d'un fichier :
+
+Créer ou mettre à jour son fichier de documentation associé.
+
+Aucun fichier ne doit rester sans documentation.
+
+Toute modification importante d'un fichier doit entraîner la mise à jour immédiate de son fichier "*-role.json".
+
+---
+
+EMPLACEMENT
+
+/page-roles
+
+---
+
+FORMAT DU NOM
+
+nomDuFichier-role.json
+
+Exemples :
+
+main-role.json
+
+router-role.json
+
+login-role.json
+
+session-role.json
+
+createOrder-role.json
+
+manageOrders-role.json
+
+---
+
+CONTENU MINIMUM OBLIGATOIRE
+
+Chaque fichier role.json doit contenir :
+
+- file
+- status
+- role
+- responsibilities
+- summary
+- exports
+- functions
+- dependsOn
+- usedBy
+- firebaseCollections
+- executionFlow
+- limitations
+- impacts
+- rules
+- lastUpdated
+
+---
+
+DESCRIPTION DES CHAMPS
+
+file
+Nom réel du fichier.
+
+status
+draft | in-progress | validated | deprecated
+
+role
+Mission principale du fichier.
+
+responsibilities
+Liste des responsabilités exactes du fichier.
+
+summary
+Résumé technique rapide du fonctionnement.
+
+exports
+Fonctions, classes ou constantes exportées.
+
+functions
+Description rapide de chaque fonction importante :
+
+- nom
+- rôle
+- paramètres principaux
+- valeur retournée
+
+dependsOn
+Dépendances directes utilisées.
+
+usedBy
+Fichiers utilisant ce module.
+
+firebaseCollections
+Collections Firebase utilisées directement.
+
+executionFlow
+Résumé du flux d'exécution réel.
+
+limitations
+Limites connues du fichier.
+
+Exemples :
+
+- Ne gère pas les permissions.
+- Ne gère pas les paiements.
+- Ne contient pas de logique métier.
+- Dépend d'une session utilisateur active.
+
+impacts
+Éléments pouvant être impactés si le fichier est modifié.
+
+Exemples :
+
+- Dashboard utilisateur.
+- Authentification.
+- Paiements.
+- Création de commandes.
+- Router global.
+
+rules
+Règles importantes à respecter.
+
+Exemples :
+
+- Respecter state.js comme source de vérité.
+- Respecter guards.js pour les accès.
+- Ne jamais accéder directement au DOM hors UI layer.
+- Respecter sanitizer.js avant affichage.
+
+lastUpdated
+Date de dernière mise à jour.
+
+---
+
+EXEMPLE
+
+{
+"file":"main.js",
+"status":"validated",
+"role":"Bootstrap principal de l'application",
+"responsibilities":[
+"Démarrer l'application",
+"Initialiser le système",
+"Vérifier la session",
+"Lancer le router"
+],
+"summary":"Point d'entrée principal chargé par index.html.",
+"exports":[
+"initApp"
+],
+"functions":[
+{
+"name":"initApp",
+"role":"Démarrer l'application",
+"params":[],
+"returns":"Promise<void>"
+}
+],
+"dependsOn":[
+"app.js",
+"router.js",
+"session.js"
+],
+"usedBy":[
+"index.html"
+],
+"firebaseCollections":[
+"users"
+],
+"executionFlow":[
+"index.html",
+"main.js",
+"app.js",
+"session.js",
+"router.js"
+],
+"limitations":[
+"Ne contient pas de logique métier"
+],
+"impacts":[
+"Démarrage global de l'application",
+"Initialisation de la session",
+"Navigation"
+],
+"rules":[
+"Respecter state.js comme source de vérité",
+"Respecter guards.js pour les accès"
+],
+"lastUpdated":"2026-06-08"
+}
+
+---
+
+RÈGLES DE QUALITÉ
+
+- Les informations doivent refléter exactement l'état réel du code.
+- Les dépendances doivent être exactes.
+- Les fonctions documentées doivent être exactes.
+- Les collections Firebase doivent être exactes.
+- Le flux d'exécution doit être exact.
+- Les impacts doivent être documentés.
+- Les limites doivent être documentées.
+- Le résumé doit rester court, clair et technique.
+- Une personne ou une IA doit pouvoir comprendre rapidement le fichier sans analyser immédiatement son contenu.
+- Toute modification importante doit mettre à jour le fichier role.json associé.
+
+
+---
+
+FICHIERS VALIDÉS
+
+utils/helpers.js ✅
+
+utils/generators.js ✅
+
+js/core/constants.js ✅
+
+js/core/state.js ✅
+
+js/core/guards.js ✅
+
+firebase/firebaseConfig.js ✅
+
+firebase/firestore.js ✅
+
+firebase/auth.js ✅
+
+utils/validators.js ✅
+
+utils/sanitizer.js ✅
+
+utils/formatters.js ✅
+
+utils/storage.js ✅
+
+js/core/app.js ✅
+
+js/core/router.js ✅
+
+js/main.js ✅
+
+js/auth/session.js ✅
+
+---
+
+FLOW OFFICIEL ACTUEL
+
+Étape suivante :
+
+js/ui/toast.js
+
+Rôle :
+
+- notifications système
+- succès
+- erreurs
+- avertissements
+
+---
+
+Puis :
+
+js/ui/modal.js
+
+Rôle :
+
+- fenêtres modales
+- confirmations
+- alertes système
+
+---
+
+RÈGLE DE DÉPENDANCES
+
+Un fichier ne peut être développé que si :
+
+- toutes ses dépendances directes sont validées
+
+Exemple :
+
+session.js dépend de :
+
+- auth.js
+- state.js
+- storage.js
+
+Donc :
+
+storage.js doit être terminé avant session.js
+
+---
+
+OBJECTIF FINAL
+
+Construire une plateforme SaaS professionnelle :
+
+MASTER UNLOCKER
+
+Basée sur :
+
+- HTML
+- CSS
+- JavaScript modulaire
+- Firebase
+- GitHub Pages
+
+Avec :
+
+- commandes
+- paiements
+- dashboard utilisateur
+- dashboard admin
+- notifications
+- support
+- automatisation future via APIs fournisseurs
+
+Sans dette technique majeure.
+
+Fin du document.

@@ -1,0 +1,11 @@
+{
+  "file": "formatters.js",
+  "status": "validated",
+  "role": "Formatage d'affichage",
+  "responsibilities": [
+    "Formatage devise et date",
+    "Libellés statuts commande, paiement, utilisateur"
+  ],
+  "dependsOn": [],
+  "usedBy": []
+}

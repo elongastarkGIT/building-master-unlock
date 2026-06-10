@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="Détails du service — MASTER UNLOCKER">
+<title>Détails du service — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="/pages/home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+    <nav id="nav-main" class="nav-main" aria-label="Navigation principale">
+      <a href="/pages/home.html" data-link id="nav-home">Accueil</a>
+      <a href="/pages/services.html" data-link id="nav-services" class="active">Services</a>
+      <a href="/pages/brands.html" data-link id="nav-brands">Marques</a>
+      <a href="/pages/faq.html" data-link id="nav-faq">FAQ</a>
+      <a href="/pages/contact.html" data-link id="nav-contact">Contact</a>
+      <a href="/pages/status.html" data-link id="nav-status">Statut</a>
+    </nav>
+    <div id="nav-actions" class="nav-actions">
+      <a href="/pages/login.html" class="btn btn-ghost btn-sm" data-link id="btn-login">Connexion</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" data-link id="btn-register">Inscription</a>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <a href="/pages/home.html" data-link id="mobile-nav-home">Accueil</a>
+    <a href="/pages/services.html" data-link id="mobile-nav-services">Services</a>
+    <a href="/pages/brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="/pages/faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="/pages/contact.html" data-link id="mobile-nav-contact">Contact</a>
+    <a href="/pages/status.html" data-link id="mobile-nav-status">Statut</a>
+    <a href="/pages/login.html" data-link id="mobile-nav-login">Connexion</a>
+    <a href="/pages/register.html" data-link id="mobile-nav-register">Inscription</a>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section id="service-details-section" class="section">
+    <div class="container">
+      <nav id="breadcrumb" class="breadcrumb" aria-label="Fil d'Ariane">
+        <a href="/pages/home.html" data-link id="breadcrumb-home">Accueil</a>
+        <span aria-hidden="true">/</span>
+        <a href="/pages/services.html" data-link id="breadcrumb-services">Services</a>
+        <span aria-hidden="true">/</span>
+        <span id="breadcrumb-current" aria-current="page">Chargement...</span>
+      </nav>
+
+      <div class="editor-layout">
+        <div id="service-main">
+          <article id="service-info-card" class="card">
+            <div class="card-header">
+              <div>
+                <h1 id="service-title">Chargement...</h1>
+                <p id="service-category" class="text-muted" style="margin: 0;">—</p>
+              </div>
+              <span id="service-badge" class="badge badge-neutral">—</span>
+            </div>
+            <div class="card-body">
+              <p id="service-description">Les détails du service seront chargés dynamiquement depuis Firestore.</p>
+              <dl id="service-meta" class="mt-4">
+                <dt class="text-muted" style="font-size: var(--text-sm);">Prix</dt>
+                <dd id="service-price" class="stat-value" style="margin: 0 0 var(--space-4);">—</dd>
+                <dt class="text-muted" style="font-size: var(--text-sm);">Délai estimé</dt>
+                <dd id="service-delivery" style="margin: 0 0 var(--space-4);">—</dd>
+                <dt class="text-muted" style="font-size: var(--text-sm);">Disponibilité</dt>
+                <dd id="service-availability" style="margin: 0;">Chargement...</dd>
+              </dl>
+            </div>
+          </article>
+
+          <form id="order-form" class="card mt-8" aria-label="Formulaire de commande">
+            <h2 id="form-title" class="card-title">Informations requises</h2>
+            <p id="form-subtitle" class="card-body">Remplissez les champs demandés pour votre commande. Les champs affichés dépendent du service sélectionné.</p>
+
+            <div class="form-group">
+              <label for="field-imei" class="form-label">IMEI</label>
+              <input type="text" id="field-imei" name="imei" class="form-input" placeholder="Ex. 356938035643809" maxlength="15" inputmode="numeric" autocomplete="off">
+              <p class="form-hint">15 chiffres sans espaces ni tirets.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="field-serial" class="form-label">Numéro de série</label>
+              <input type="text" id="field-serial" name="serial" class="form-input" placeholder="Ex. F2LMQ0XXXXXX" autocomplete="off">
+              <p class="form-hint">Numéro de série de l'appareil (Apple, outils GSM, etc.).</p>
+            </div>
+
+            <div class="form-group">
+              <label for="field-email" class="form-label">Email de contact</label>
+              <input type="email" id="field-email" name="email" class="form-input" placeholder="votre@email.com" autocomplete="email">
+              <p class="form-hint">Pour recevoir les notifications de commande.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="field-phone" class="form-label">Téléphone</label>
+              <input type="tel" id="field-phone" name="phone" class="form-input" placeholder="+243 XXX XXX XXX" autocomplete="tel">
+            </div>
+
+            <div class="form-group">
+              <label for="field-username" class="form-label">Nom d'utilisateur (outil GSM)</label>
+              <input type="text" id="field-username" name="username" class="form-input" placeholder="Nom d'utilisateur de l'outil" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <label for="field-android-version" class="form-label">Version Android</label>
+              <input type="text" id="field-android-version" name="androidVersion" class="form-input" placeholder="Ex. Android 13" autocomplete="off">
+            </div>
+
+            <p id="form-error" class="form-error" role="alert" hidden></p>
+          </form>
+        </div>
+
+        <aside id="service-sidebar">
+          <div class="card" style="position: sticky; top: calc(var(--header-height) + var(--space-4));">
+            <h2 id="sidebar-title" class="card-title">Résumé</h2>
+            <dl>
+              <dt class="text-muted" style="font-size: var(--text-sm);">Service</dt>
+              <dd id="sidebar-service-name" style="margin: 0 0 var(--space-4);">Chargement...</dd>
+              <dt class="text-muted" style="font-size: var(--text-sm);">Prix total</dt>
+              <dd id="sidebar-total" class="stat-value" style="margin: 0 0 var(--space-6);">—</dd>
+            </dl>
+            <a href="/pages/checkout.html" class="btn btn-primary btn-block" data-link id="btn-order-cta">Commander et payer</a>
+            <p class="form-hint text-center mt-4">Vous serez redirigé vers le paiement après validation du formulaire.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div id="footer-brand">
+        <a href="/pages/home.html" class="logo" data-link id="footer-logo">
+          <span class="logo-mark" aria-hidden="true">MU</span>
+          <span>MASTER UNLOCKER</span>
+        </a>
+        <p class="text-muted mt-4">Plateforme SaaS de services mobiles — déblocage, IMEI, FRP, iCloud et outils GSM.</p>
+      </div>
+      <nav id="footer-nav-services" aria-label="Liens services">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/pages/services.html" data-link id="footer-link-services">Catalogue</a></li>
+          <li><a href="/pages/brands.html" data-link id="footer-link-brands">Marques</a></li>
+          <li><a href="/pages/tracking.html" data-link id="footer-link-tracking">Suivi commande</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-support" aria-label="Liens support">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/pages/faq.html" data-link id="footer-link-faq">FAQ</a></li>
+          <li><a href="/pages/contact.html" data-link id="footer-link-contact">Contact</a></li>
+          <li><a href="/pages/status.html" data-link id="footer-link-status">Statut</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-account" aria-label="Liens compte">
+        <h4>Compte</h4>
+        <ul>
+          <li><a href="/pages/login.html" data-link id="footer-link-login">Connexion</a></li>
+          <li><a href="/pages/register.html" data-link id="footer-link-register">Inscription</a></li>
+          <li><a href="/pages/announcements.html" data-link id="footer-link-announcements">Annonces</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 MASTER UNLOCKER. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

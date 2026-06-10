@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+
+<title>Sécurité — MASTER UNLOCKER</title>
+
+<link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="page-dashboard">
+
+<div class="dashboard-layout">
+
+<aside id="dashboard-sidebar" class="dashboard-sidebar" aria-label="Navigation du tableau de bord">
+
+<div class="sidebar-brand">
+<a id="sidebar-brand-link" href="/dashboard/dashboard.html" class="logo">
+<span class="logo-mark" aria-hidden="true">MU</span>
+<span id="sidebar-brand-name">MASTER UNLOCKER</span>
+</a>
+</div>
+
+<nav id="sidebar-nav" class="sidebar-nav" aria-label="Menu principal">
+
+<div class="sidebar-nav-section">
+<p id="sidebar-nav-label-main" class="sidebar-nav-label">Menu principal</p>
+<ul id="sidebar-nav-list-main">
+<li><a id="nav-dashboard" href="/dashboard/dashboard.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">▣</span>Tableau de bord</a></li>
+<li><a id="nav-orders" href="/dashboard/orders.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">☰</span>Commandes</a></li>
+<li><a id="nav-payments" href="/dashboard/payments.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">$</span>Paiements</a></li>
+<li><a id="nav-licenses" href="/dashboard/licenses.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">🔑</span>Licences</a></li>
+<li><a id="nav-tickets" href="/dashboard/tickets.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">✉</span>Tickets</a></li>
+<li><a id="nav-notifications" href="/dashboard/notifications.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">🔔</span>Notifications</a></li>
+</ul>
+</div>
+
+<div class="sidebar-nav-section">
+<p id="sidebar-nav-label-account" class="sidebar-nav-label">Compte</p>
+<ul id="sidebar-nav-list-account">
+<li><a id="nav-profile" href="/dashboard/profile.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">👤</span>Profil</a></li>
+<li><a id="nav-security" href="/dashboard/security.html" class="sidebar-link active" data-link><span class="sidebar-icon" aria-hidden="true">🔒</span>Sécurité</a></li>
+<li><a id="nav-settings" href="/dashboard/settings.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">⚙</span>Paramètres</a></li>
+<li><a id="nav-wallet" href="/dashboard/wallet.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">💳</span>Portefeuille <span class="badge badge-neutral">Bientôt</span></a></li>
+</ul>
+</div>
+
+</nav>
+
+<div id="sidebar-footer" class="sidebar-footer">
+<a id="sidebar-logout-link" href="/pages/login.html" class="sidebar-link"><span class="sidebar-icon" aria-hidden="true">↩</span>Déconnexion</a>
+</div>
+
+</aside>
+
+<div class="dashboard-main">
+
+<header id="dashboard-topbar" class="dashboard-topbar">
+
+<div class="dashboard-topbar-left">
+<button type="button" id="sidebar-toggle" class="menu-toggle" aria-label="Ouvrir le menu" aria-controls="dashboard-sidebar" aria-expanded="false">☰</button>
+<h2 id="topbar-page-title" class="sr-only">Sécurité</h2>
+</div>
+
+<div class="dashboard-topbar-right">
+<a id="notification-btn" href="/dashboard/notifications.html" class="notification-btn" aria-label="Notifications">
+<span aria-hidden="true">🔔</span>
+</a>
+<div id="user-menu" class="user-menu" aria-label="Menu utilisateur">
+<span id="user-avatar" class="user-avatar" aria-hidden="true">—</span>
+<div class="user-info">
+<span id="user-name" class="user-name">—</span>
+<span id="user-role" class="user-role">Client</span>
+</div>
+</div>
+</div>
+
+</header>
+
+<main id="dashboard-content" class="dashboard-content">
+
+<header id="page-header" class="page-header">
+<h1 id="page-title">Sécurité</h1>
+<p id="page-subtitle">Protégez votre compte et gérez vos sessions actives.</p>
+</header>
+
+<form id="change-password-form" class="card mb-8" aria-labelledby="change-password-title" novalidate>
+
+<h2 id="change-password-title" class="card-title">Changer le mot de passe</h2>
+
+<div id="current-password-group" class="form-group">
+<label id="current-password-label" class="form-label" for="current-password">Mot de passe actuel</label>
+<input type="password" id="current-password" name="currentPassword" class="form-input" autocomplete="current-password" required>
+</div>
+
+<div id="new-password-group" class="form-group">
+<label id="new-password-label" class="form-label" for="new-password">Nouveau mot de passe</label>
+<input type="password" id="new-password" name="newPassword" class="form-input" autocomplete="new-password" required>
+<p id="new-password-hint" class="form-hint">Minimum 8 caractères, avec lettres et chiffres.</p>
+</div>
+
+<div id="confirm-password-group" class="form-group">
+<label id="confirm-password-label" class="form-label" for="confirm-password">Confirmer le mot de passe</label>
+<input type="password" id="confirm-password" name="confirmPassword" class="form-input" autocomplete="new-password" required>
+</div>
+
+<div id="change-password-error" class="form-error" role="alert" hidden></div>
+
+<button type="submit" id="change-password-btn" class="btn btn-primary">Mettre à jour le mot de passe</button>
+
+</form>
+
+<section id="sessions-section" class="card" aria-labelledby="sessions-title">
+
+<h2 id="sessions-title" class="card-title">Sessions actives</h2>
+
+<p id="sessions-description" class="card-body">Appareils et navigateurs connectés à votre compte.</p>
+
+<ul id="sessions-list">
+</ul>
+
+<div id="sessions-empty-state" class="empty-state">
+<div id="sessions-empty-icon" class="empty-state-icon" aria-hidden="true">🔒</div>
+<p id="sessions-empty-text">Aucune session active détectée.</p>
+</div>
+
+<div id="sessions-info" class="mt-4">
+<p id="sessions-current-label" class="form-label">Session actuelle</p>
+<p id="sessions-current-device" class="text-muted">—</p>
+<p id="sessions-current-date" class="text-muted">—</p>
+</div>
+
+<button type="button" id="sessions-revoke-all-btn" class="btn btn-danger btn-sm mt-4">Déconnecter toutes les sessions</button>
+
+</section>
+
+</main>
+
+</div>
+
+</div>
+
+<div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

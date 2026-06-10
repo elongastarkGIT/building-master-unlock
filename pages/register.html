@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="Créez votre compte MASTER UNLOCKER.">
+<title>Inscription — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="/pages/home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+    <nav id="nav-main" class="nav-main" aria-label="Navigation principale">
+      <a href="/pages/home.html" data-link id="nav-home">Accueil</a>
+      <a href="/pages/services.html" data-link id="nav-services">Services</a>
+      <a href="/pages/brands.html" data-link id="nav-brands">Marques</a>
+      <a href="/pages/faq.html" data-link id="nav-faq">FAQ</a>
+      <a href="/pages/contact.html" data-link id="nav-contact">Contact</a>
+      <a href="/pages/status.html" data-link id="nav-status">Statut</a>
+    </nav>
+    <div id="nav-actions" class="nav-actions">
+      <a href="/pages/login.html" class="btn btn-ghost btn-sm" data-link id="btn-login">Connexion</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" data-link id="btn-register">Inscription</a>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <a href="/pages/home.html" data-link id="mobile-nav-home">Accueil</a>
+    <a href="/pages/services.html" data-link id="mobile-nav-services">Services</a>
+    <a href="/pages/brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="/pages/faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="/pages/contact.html" data-link id="mobile-nav-contact">Contact</a>
+    <a href="/pages/status.html" data-link id="mobile-nav-status">Statut</a>
+    <a href="/pages/login.html" data-link id="mobile-nav-login">Connexion</a>
+    <a href="/pages/register.html" data-link id="mobile-nav-register">Inscription</a>
+  </nav>
+</header>
+
+<main id="main-content">
+  <div id="auth-layout" class="auth-layout">
+    <div id="auth-card" class="auth-card">
+      <div class="card">
+        <header class="text-center mb-8">
+          <a href="/pages/home.html" class="logo" data-link id="auth-logo" style="justify-content: center;">
+            <span class="logo-mark" aria-hidden="true">MU</span>
+            <span>MASTER UNLOCKER</span>
+          </a>
+          <h1 id="auth-title" style="margin-top: var(--space-6);">Créer un compte</h1>
+          <p id="auth-subtitle" class="text-muted" style="margin: 0;">Rejoignez la plateforme en quelques secondes</p>
+        </header>
+
+        <form id="register-form" aria-label="Formulaire d'inscription">
+          <div class="form-group">
+            <label for="register-fullname" class="form-label">Nom complet</label>
+            <input type="text" id="register-fullname" name="fullName" class="form-input" placeholder="Jean Dupont" autocomplete="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="register-email" class="form-label">Adresse email</label>
+            <input type="email" id="register-email" name="email" class="form-input" placeholder="votre@email.com" autocomplete="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="register-phone" class="form-label">Téléphone</label>
+            <input type="tel" id="register-phone" name="phone" class="form-input" placeholder="+243 XXX XXX XXX" autocomplete="tel" required>
+            <p class="form-hint">Utilisé pour les notifications et le support.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="register-password" class="form-label">Mot de passe</label>
+            <input type="password" id="register-password" name="password" class="form-input" placeholder="Minimum 8 caractères" autocomplete="new-password" required>
+          </div>
+
+          <div class="form-group">
+            <label for="register-confirm" class="form-label">Confirmer le mot de passe</label>
+            <input type="password" id="register-confirm" name="confirmPassword" class="form-input" placeholder="Répétez le mot de passe" autocomplete="new-password" required>
+          </div>
+
+          <p id="register-error" class="form-error" role="alert" hidden></p>
+
+          <button type="submit" id="register-submit" class="btn btn-primary btn-block">Créer mon compte</button>
+        </form>
+
+        <p id="auth-links" class="text-center text-muted mt-8" style="margin-bottom: 0; font-size: var(--text-sm);">
+          Déjà un compte ?
+          <a href="/pages/login.html" data-link id="link-login">Se connecter</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="container">
+    <div class="footer-bottom" style="border: none; padding-top: 0;">
+      <p id="footer-copyright">&copy; 2026 MASTER UNLOCKER. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

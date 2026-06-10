@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="Marques supportées par MASTER UNLOCKER — Samsung, Apple, Xiaomi, Tecno, Infinix, Itel.">
+<title>Marques — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="/pages/home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+    <nav id="nav-main" class="nav-main" aria-label="Navigation principale">
+      <a href="/pages/home.html" data-link id="nav-home">Accueil</a>
+      <a href="/pages/services.html" data-link id="nav-services">Services</a>
+      <a href="/pages/brands.html" data-link id="nav-brands" class="active">Marques</a>
+      <a href="/pages/faq.html" data-link id="nav-faq">FAQ</a>
+      <a href="/pages/contact.html" data-link id="nav-contact">Contact</a>
+      <a href="/pages/status.html" data-link id="nav-status">Statut</a>
+    </nav>
+    <div id="nav-actions" class="nav-actions">
+      <a href="/pages/login.html" class="btn btn-ghost btn-sm" data-link id="btn-login">Connexion</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" data-link id="btn-register">Inscription</a>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <a href="/pages/home.html" data-link id="mobile-nav-home">Accueil</a>
+    <a href="/pages/services.html" data-link id="mobile-nav-services">Services</a>
+    <a href="/pages/brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="/pages/faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="/pages/contact.html" data-link id="mobile-nav-contact">Contact</a>
+    <a href="/pages/status.html" data-link id="mobile-nav-status">Statut</a>
+    <a href="/pages/login.html" data-link id="mobile-nav-login">Connexion</a>
+    <a href="/pages/register.html" data-link id="mobile-nav-register">Inscription</a>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section id="brands-section" class="section">
+    <div class="container">
+      <header class="page-header">
+        <h1 id="page-title">Marques supportées</h1>
+        <p id="page-subtitle">Sélectionnez une marque pour découvrir les services disponibles. Le catalogue est synchronisé avec Firestore.</p>
+      </header>
+
+      <div id="brands-grid" class="grid grid-3">
+        <article id="brand-samsung" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">Samsung</h2>
+            <span class="badge badge-info">Android</span>
+          </div>
+          <p class="card-body">FRP Unlock, Network Unlock, IMEI et services MDM pour appareils Samsung Galaxy.</p>
+          <div class="card-footer">
+            <a href="/pages/brand-details.html" class="btn btn-secondary btn-sm" data-link id="brand-link-samsung">Voir les services</a>
+          </div>
+        </article>
+
+        <article id="brand-apple" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">Apple</h2>
+            <span class="badge badge-neutral">iOS</span>
+          </div>
+          <p class="card-body">Services iCloud, activation, serial et déblocage opérateur pour iPhone et iPad.</p>
+          <div class="card-footer">
+            <a href="/pages/brand-details.html" class="btn btn-secondary btn-sm" data-link id="brand-link-apple">Voir les services</a>
+          </div>
+        </article>
+
+        <article id="brand-xiaomi" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">Xiaomi</h2>
+            <span class="badge badge-info">Android</span>
+          </div>
+          <p class="card-body">FRP Unlock, déverrouillage Mi Account et services IMEI pour Redmi et POCO.</p>
+          <div class="card-footer">
+            <a href="/pages/brand-details.html" class="btn btn-secondary btn-sm" data-link id="brand-link-xiaomi">Voir les services</a>
+          </div>
+        </article>
+
+        <article id="brand-tecno" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">Tecno</h2>
+            <span class="badge badge-info">Android</span>
+          </div>
+          <p class="card-body">FRP Unlock et services de déblocage pour la gamme Tecno et Spark.</p>
+          <div class="card-footer">
+            <a href="/pages/brand-details.html" class="btn btn-secondary btn-sm" data-link id="brand-link-tecno">Voir les services</a>
+          </div>
+        </article>
+
+        <article id="brand-infinix" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">Infinix</h2>
+            <span class="badge badge-info">Android</span>
+          </div>
+          <p class="card-body">FRP Unlock, IMEI et déblocage pour smartphones Infinix Hot et Note.</p>
+          <div class="card-footer">
+            <a href="/pages/brand-details.html" class="btn btn-secondary btn-sm" data-link id="brand-link-infinix">Voir les services</a>
+          </div>
+        </article>
+
+        <article id="brand-itel" class="card card-interactive">
+          <div class="card-header">
+            <h2 class="card-title">Itel</h2>
+            <span class="badge badge-info">Android</span>
+          </div>
+          <p class="card-body">FRP Unlock et services techniques pour appareils Itel entry-level.</p>
+          <div class="card-footer">
+            <a href="/pages/brand-details.html" class="btn btn-secondary btn-sm" data-link id="brand-link-itel">Voir les services</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div id="footer-brand">
+        <a href="/pages/home.html" class="logo" data-link id="footer-logo">
+          <span class="logo-mark" aria-hidden="true">MU</span>
+          <span>MASTER UNLOCKER</span>
+        </a>
+        <p class="text-muted mt-4">Plateforme SaaS de services mobiles — déblocage, IMEI, FRP, iCloud et outils GSM.</p>
+      </div>
+      <nav id="footer-nav-services" aria-label="Liens services">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/pages/services.html" data-link id="footer-link-services">Catalogue</a></li>
+          <li><a href="/pages/brands.html" data-link id="footer-link-brands">Marques</a></li>
+          <li><a href="/pages/tracking.html" data-link id="footer-link-tracking">Suivi commande</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-support" aria-label="Liens support">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/pages/faq.html" data-link id="footer-link-faq">FAQ</a></li>
+          <li><a href="/pages/contact.html" data-link id="footer-link-contact">Contact</a></li>
+          <li><a href="/pages/status.html" data-link id="footer-link-status">Statut</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-account" aria-label="Liens compte">
+        <h4>Compte</h4>
+        <ul>
+          <li><a href="/pages/login.html" data-link id="footer-link-login">Connexion</a></li>
+          <li><a href="/pages/register.html" data-link id="footer-link-register">Inscription</a></li>
+          <li><a href="/pages/announcements.html" data-link id="footer-link-announcements">Annonces</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 MASTER UNLOCKER. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

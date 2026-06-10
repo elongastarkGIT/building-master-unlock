@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="Contactez le support MASTER UNLOCKER.">
+<title>Contact — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="/pages/home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+    <nav id="nav-main" class="nav-main" aria-label="Navigation principale">
+      <a href="/pages/home.html" data-link id="nav-home">Accueil</a>
+      <a href="/pages/services.html" data-link id="nav-services">Services</a>
+      <a href="/pages/brands.html" data-link id="nav-brands">Marques</a>
+      <a href="/pages/faq.html" data-link id="nav-faq">FAQ</a>
+      <a href="/pages/contact.html" data-link id="nav-contact" class="active">Contact</a>
+      <a href="/pages/status.html" data-link id="nav-status">Statut</a>
+    </nav>
+    <div id="nav-actions" class="nav-actions">
+      <a href="/pages/login.html" class="btn btn-ghost btn-sm" data-link id="btn-login">Connexion</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" data-link id="btn-register">Inscription</a>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <a href="/pages/home.html" data-link id="mobile-nav-home">Accueil</a>
+    <a href="/pages/services.html" data-link id="mobile-nav-services">Services</a>
+    <a href="/pages/brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="/pages/faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="/pages/contact.html" data-link id="mobile-nav-contact">Contact</a>
+    <a href="/pages/status.html" data-link id="mobile-nav-status">Statut</a>
+    <a href="/pages/login.html" data-link id="mobile-nav-login">Connexion</a>
+    <a href="/pages/register.html" data-link id="mobile-nav-register">Inscription</a>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section id="contact-section" class="section">
+    <div class="container">
+      <header class="page-header text-center">
+        <h1 id="page-title">Nous contacter</h1>
+        <p id="page-subtitle">Une question sur un service ou une commande ? Notre équipe support est à votre disposition.</p>
+      </header>
+
+      <div class="editor-layout">
+        <form id="contact-form" class="card" aria-label="Formulaire de contact">
+          <h2 id="form-title" class="card-title">Envoyer un message</h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name" class="form-label">Nom complet</label>
+              <input type="text" id="contact-name" name="fullName" class="form-input" placeholder="Votre nom" autocomplete="name" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email" class="form-label">Email</label>
+              <input type="email" id="contact-email" name="email" class="form-input" placeholder="votre@email.com" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-subject" class="form-label">Sujet</label>
+            <select id="contact-subject" name="subject" class="form-select" required>
+              <option value="">Sélectionnez un sujet</option>
+              <option value="order">Question sur une commande</option>
+              <option value="payment">Problème de paiement</option>
+              <option value="service">Information sur un service</option>
+              <option value="account">Compte utilisateur</option>
+              <option value="other">Autre</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-order" class="form-label">Numéro de commande (optionnel)</label>
+            <input type="text" id="contact-order" name="orderNumber" class="form-input" placeholder="Ex. ORD-XXXXXX" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message" class="form-label">Message</label>
+            <textarea id="contact-message" name="message" class="form-textarea" rows="6" placeholder="Décrivez votre demande en détail..." required></textarea>
+          </div>
+
+          <p id="contact-error" class="form-error" role="alert" hidden></p>
+
+          <button type="submit" id="contact-submit" class="btn btn-primary">Envoyer le message</button>
+        </form>
+
+        <aside id="contact-info">
+          <div class="card">
+            <h2 id="info-title" class="card-title">Informations</h2>
+            <dl>
+              <dt class="text-muted" style="font-size: var(--text-sm);">Email support</dt>
+              <dd id="info-email" style="margin: 0 0 var(--space-6);">
+                <a href="mailto:support@masterunlocker.com" id="support-email-link">support@masterunlocker.com</a>
+              </dd>
+
+              <dt class="text-muted" style="font-size: var(--text-sm);">Horaires</dt>
+              <dd id="info-hours" style="margin: 0 0 var(--space-6);">Lun – Ven, 08h00 – 18h00 (UTC+1)</dd>
+
+              <dt class="text-muted" style="font-size: var(--text-sm);">Délai de réponse</dt>
+              <dd id="info-response" style="margin: 0 0 var(--space-6);">Sous 24 heures ouvrées</dd>
+            </dl>
+
+            <div class="alert alert-info">
+              Pour un suivi de commande en temps réel, utilisez la page
+              <a href="/pages/tracking.html" data-link id="info-link-tracking">Suivi de commande</a>
+              ou consultez la <a href="/pages/faq.html" data-link id="info-link-faq">FAQ</a>.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div id="footer-brand">
+        <a href="/pages/home.html" class="logo" data-link id="footer-logo">
+          <span class="logo-mark" aria-hidden="true">MU</span>
+          <span>MASTER UNLOCKER</span>
+        </a>
+        <p class="text-muted mt-4">Plateforme SaaS de services mobiles — déblocage, IMEI, FRP, iCloud et outils GSM.</p>
+      </div>
+      <nav id="footer-nav-services" aria-label="Liens services">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/pages/services.html" data-link id="footer-link-services">Catalogue</a></li>
+          <li><a href="/pages/brands.html" data-link id="footer-link-brands">Marques</a></li>
+          <li><a href="/pages/tracking.html" data-link id="footer-link-tracking">Suivi commande</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-support" aria-label="Liens support">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/pages/faq.html" data-link id="footer-link-faq">FAQ</a></li>
+          <li><a href="/pages/contact.html" data-link id="footer-link-contact">Contact</a></li>
+          <li><a href="/pages/status.html" data-link id="footer-link-status">Statut</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-account" aria-label="Liens compte">
+        <h4>Compte</h4>
+        <ul>
+          <li><a href="/pages/login.html" data-link id="footer-link-login">Connexion</a></li>
+          <li><a href="/pages/register.html" data-link id="footer-link-register">Inscription</a></li>
+          <li><a href="/pages/announcements.html" data-link id="footer-link-announcements">Annonces</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 MASTER UNLOCKER. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

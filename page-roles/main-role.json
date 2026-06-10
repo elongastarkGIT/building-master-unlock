@@ -1,0 +1,18 @@
+{
+  "file": "main.js",
+  "status": "validated",
+  "role": "Bootstrap principal de l'application",
+  "responsibilities": [
+    "Démarrer l'application",
+    "Initialiser le core",
+    "Lancer le router",
+    "Gérer les liens actifs"
+  ],
+  "dependsOn": [
+    "app.js",
+    "router.js"
+  ],
+  "usedBy": [
+    "index.html"
+  ]
+}

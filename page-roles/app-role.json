@@ -1,0 +1,18 @@
+{
+  "file": "app.js",
+  "status": "validated",
+  "role": "Initialisation centrale de l'application",
+  "responsibilities": [
+    "Charger Firebase",
+    "Initialiser la session utilisateur",
+    "Gérer le mode maintenance"
+  ],
+  "dependsOn": [
+    "firebaseConfig.js",
+    "session.js",
+    "constants.js"
+  ],
+  "usedBy": [
+    "main.js"
+  ]
+}

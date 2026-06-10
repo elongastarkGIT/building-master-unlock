@@ -1,0 +1,17 @@
+{
+  "file": "router.js",
+  "status": "validated",
+  "role": "Navigation et résolution des routes",
+  "responsibilities": [
+    "Navigation entre pages HTML",
+    "Application des guards par type de route",
+    "Gestion des liens actifs"
+  ],
+  "dependsOn": [
+    "constants.js",
+    "guards.js"
+  ],
+  "usedBy": [
+    "main.js"
+  ]
+}

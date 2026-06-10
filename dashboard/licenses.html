@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+
+<title>Licences — MASTER UNLOCKER</title>
+
+<link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="page-dashboard">
+
+<div class="dashboard-layout">
+
+<aside id="dashboard-sidebar" class="dashboard-sidebar" aria-label="Navigation du tableau de bord">
+
+<div class="sidebar-brand">
+<a id="sidebar-brand-link" href="/dashboard/dashboard.html" class="logo">
+<span class="logo-mark" aria-hidden="true">MU</span>
+<span id="sidebar-brand-name">MASTER UNLOCKER</span>
+</a>
+</div>
+
+<nav id="sidebar-nav" class="sidebar-nav" aria-label="Menu principal">
+
+<div class="sidebar-nav-section">
+<p id="sidebar-nav-label-main" class="sidebar-nav-label">Menu principal</p>
+<ul id="sidebar-nav-list-main">
+<li><a id="nav-dashboard" href="/dashboard/dashboard.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">▣</span>Tableau de bord</a></li>
+<li><a id="nav-orders" href="/dashboard/orders.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">☰</span>Commandes</a></li>
+<li><a id="nav-payments" href="/dashboard/payments.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">$</span>Paiements</a></li>
+<li><a id="nav-licenses" href="/dashboard/licenses.html" class="sidebar-link active" data-link><span class="sidebar-icon" aria-hidden="true">🔑</span>Licences</a></li>
+<li><a id="nav-tickets" href="/dashboard/tickets.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">✉</span>Tickets</a></li>
+<li><a id="nav-notifications" href="/dashboard/notifications.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">🔔</span>Notifications</a></li>
+</ul>
+</div>
+
+<div class="sidebar-nav-section">
+<p id="sidebar-nav-label-account" class="sidebar-nav-label">Compte</p>
+<ul id="sidebar-nav-list-account">
+<li><a id="nav-profile" href="/dashboard/profile.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">👤</span>Profil</a></li>
+<li><a id="nav-security" href="/dashboard/security.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">🔒</span>Sécurité</a></li>
+<li><a id="nav-settings" href="/dashboard/settings.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">⚙</span>Paramètres</a></li>
+<li><a id="nav-wallet" href="/dashboard/wallet.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">💳</span>Portefeuille <span class="badge badge-neutral">Bientôt</span></a></li>
+</ul>
+</div>
+
+</nav>
+
+<div id="sidebar-footer" class="sidebar-footer">
+<a id="sidebar-logout-link" href="/pages/login.html" class="sidebar-link"><span class="sidebar-icon" aria-hidden="true">↩</span>Déconnexion</a>
+</div>
+
+</aside>
+
+<div class="dashboard-main">
+
+<header id="dashboard-topbar" class="dashboard-topbar">
+
+<div class="dashboard-topbar-left">
+<button type="button" id="sidebar-toggle" class="menu-toggle" aria-label="Ouvrir le menu" aria-controls="dashboard-sidebar" aria-expanded="false">☰</button>
+<h2 id="topbar-page-title" class="sr-only">Licences</h2>
+</div>
+
+<div class="dashboard-topbar-right">
+<a id="notification-btn" href="/dashboard/notifications.html" class="notification-btn" aria-label="Notifications">
+<span aria-hidden="true">🔔</span>
+</a>
+<div id="user-menu" class="user-menu" aria-label="Menu utilisateur">
+<span id="user-avatar" class="user-avatar" aria-hidden="true">—</span>
+<div class="user-info">
+<span id="user-name" class="user-name">—</span>
+<span id="user-role" class="user-role">Client</span>
+</div>
+</div>
+</div>
+
+</header>
+
+<main id="dashboard-content" class="dashboard-content">
+
+<header id="page-header" class="page-header">
+<h1 id="page-title">Licences outils</h1>
+<p id="page-subtitle">Gérez vos licences UnlockTool, Chimera, TSM et autres outils GSM.</p>
+</header>
+
+<section id="licenses-section" aria-labelledby="licenses-grid-title">
+<h2 id="licenses-grid-title" class="sr-only">Licences actives</h2>
+<div id="licenses-grid" class="grid grid-3">
+</div>
+<div id="licenses-empty-state" class="empty-state">
+<div id="licenses-empty-icon" class="empty-state-icon" aria-hidden="true">🔑</div>
+<p id="licenses-empty-text">Aucune licence active.</p>
+<a id="licenses-empty-action" href="/pages/services.html" class="btn btn-primary btn-sm mt-4">Acheter une licence</a>
+</div>
+</section>
+
+</main>
+
+</div>
+
+</div>
+
+<div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>

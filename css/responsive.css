@@ -1,0 +1,145 @@
+/* MASTER UNLOCKER — Responsive */
+
+@media (max-width: 1024px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .editor-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-main,
+  .nav-actions .btn-ghost {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: static;
+    inset: auto;
+    padding: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dashboard-sidebar,
+  .admin-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .dashboard-sidebar.is-open,
+  .admin-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .dashboard-layout .dashboard-main,
+  .admin-layout .admin-main {
+    margin-left: 0;
+  }
+
+  .dashboard-content,
+  .admin-content {
+    padding: var(--space-4);
+  }
+
+  .admin-search {
+    min-width: auto;
+    flex: 1;
+  }
+
+  .action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-bar .form-select {
+    width: 100%;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  .hero {
+    padding: var(--space-8) 0;
+  }
+
+  .section {
+    padding: var(--space-8) 0;
+  }
+
+  .modal {
+    max-width: 100%;
+    margin: var(--space-4);
+  }
+
+  .toast-container {
+    left: var(--space-4);
+    right: var(--space-4);
+    max-width: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-lg {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-sm);
+  }
+
+  .page-header h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .stat-value {
+    font-size: var(--text-xl);
+  }
+
+  .user-info {
+    display: none;
+  }
+}

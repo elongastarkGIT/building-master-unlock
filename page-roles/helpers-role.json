@@ -1,0 +1,13 @@
+{
+  "file": "helpers.js",
+  "status": "validated",
+  "role": "Utilitaires généraux purs",
+  "responsibilities": [
+    "Debounce et throttle",
+    "Génération d'identifiants aléatoires sécurisés",
+    "Manipulation de texte et objets",
+    "Helpers DOM légers"
+  ],
+  "dependsOn": [],
+  "usedBy": []
+}

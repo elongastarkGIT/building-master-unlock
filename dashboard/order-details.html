@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+
+<title>Détails commande — MASTER UNLOCKER</title>
+
+<link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="page-dashboard">
+
+<div class="dashboard-layout">
+
+<aside id="dashboard-sidebar" class="dashboard-sidebar" aria-label="Navigation du tableau de bord">
+
+<div class="sidebar-brand">
+<a id="sidebar-brand-link" href="/dashboard/dashboard.html" class="logo">
+<span class="logo-mark" aria-hidden="true">MU</span>
+<span id="sidebar-brand-name">MASTER UNLOCKER</span>
+</a>
+</div>
+
+<nav id="sidebar-nav" class="sidebar-nav" aria-label="Menu principal">
+
+<div class="sidebar-nav-section">
+<p id="sidebar-nav-label-main" class="sidebar-nav-label">Menu principal</p>
+<ul id="sidebar-nav-list-main">
+<li><a id="nav-dashboard" href="/dashboard/dashboard.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">▣</span>Tableau de bord</a></li>
+<li><a id="nav-orders" href="/dashboard/orders.html" class="sidebar-link active" data-link><span class="sidebar-icon" aria-hidden="true">☰</span>Commandes</a></li>
+<li><a id="nav-payments" href="/dashboard/payments.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">$</span>Paiements</a></li>
+<li><a id="nav-licenses" href="/dashboard/licenses.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">🔑</span>Licences</a></li>
+<li><a id="nav-tickets" href="/dashboard/tickets.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">✉</span>Tickets</a></li>
+<li><a id="nav-notifications" href="/dashboard/notifications.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">🔔</span>Notifications</a></li>
+</ul>
+</div>
+
+<div class="sidebar-nav-section">
+<p id="sidebar-nav-label-account" class="sidebar-nav-label">Compte</p>
+<ul id="sidebar-nav-list-account">
+<li><a id="nav-profile" href="/dashboard/profile.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">👤</span>Profil</a></li>
+<li><a id="nav-security" href="/dashboard/security.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">🔒</span>Sécurité</a></li>
+<li><a id="nav-settings" href="/dashboard/settings.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">⚙</span>Paramètres</a></li>
+<li><a id="nav-wallet" href="/dashboard/wallet.html" class="sidebar-link" data-link><span class="sidebar-icon" aria-hidden="true">💳</span>Portefeuille <span class="badge badge-neutral">Bientôt</span></a></li>
+</ul>
+</div>
+
+</nav>
+
+<div id="sidebar-footer" class="sidebar-footer">
+<a id="sidebar-logout-link" href="/pages/login.html" class="sidebar-link"><span class="sidebar-icon" aria-hidden="true">↩</span>Déconnexion</a>
+</div>
+
+</aside>
+
+<div class="dashboard-main">
+
+<header id="dashboard-topbar" class="dashboard-topbar">
+
+<div class="dashboard-topbar-left">
+<button type="button" id="sidebar-toggle" class="menu-toggle" aria-label="Ouvrir le menu" aria-controls="dashboard-sidebar" aria-expanded="false">☰</button>
+<h2 id="topbar-page-title" class="sr-only">Détails commande</h2>
+</div>
+
+<div class="dashboard-topbar-right">
+<a id="notification-btn" href="/dashboard/notifications.html" class="notification-btn" aria-label="Notifications">
+<span aria-hidden="true">🔔</span>
+</a>
+<div id="user-menu" class="user-menu" aria-label="Menu utilisateur">
+<span id="user-avatar" class="user-avatar" aria-hidden="true">—</span>
+<div class="user-info">
+<span id="user-name" class="user-name">—</span>
+<span id="user-role" class="user-role">Client</span>
+</div>
+</div>
+</div>
+
+</header>
+
+<main id="dashboard-content" class="dashboard-content">
+
+<nav id="order-breadcrumb" class="breadcrumb" aria-label="Fil d'Ariane">
+<a id="breadcrumb-orders" href="/dashboard/orders.html">Commandes</a>
+<span id="breadcrumb-separator" aria-hidden="true">/</span>
+<span id="breadcrumb-current">Détails commande</span>
+</nav>
+
+<header id="page-header" class="page-header">
+<h1 id="page-title">Détails commande</h1>
+<p id="page-subtitle">Suivi et informations de la commande.</p>
+</header>
+
+<div id="order-info-grid" class="grid grid-2 mb-8">
+
+<article id="order-info-card-main" class="card">
+<header class="card-header">
+<h2 id="order-info-title" class="card-title">Informations générales</h2>
+<span id="order-status-badge" class="badge badge-neutral">—</span>
+</header>
+<dl id="order-info-list">
+<div id="order-info-ref-row" class="form-group">
+<dt id="order-info-ref-label">Référence</dt>
+<dd id="order-info-ref">—</dd>
+</div>
+<div id="order-info-service-row" class="form-group">
+<dt id="order-info-service-label">Service</dt>
+<dd id="order-info-service">—</dd>
+</div>
+<div id="order-info-amount-row" class="form-group">
+<dt id="order-info-amount-label">Montant</dt>
+<dd id="order-info-amount">—</dd>
+</div>
+<div id="order-info-date-row" class="form-group">
+<dt id="order-info-date-label">Date de création</dt>
+<dd id="order-info-date">—</dd>
+</div>
+</dl>
+</article>
+
+<article id="order-info-card-details" class="card">
+<header class="card-header">
+<h2 id="order-details-title" class="card-title">Détails du service</h2>
+</header>
+<dl id="order-details-list">
+<div id="order-details-processing-row" class="form-group">
+<dt id="order-details-processing-label">Statut de traitement</dt>
+<dd id="order-details-processing">—</dd>
+</div>
+<div id="order-details-payment-row" class="form-group">
+<dt id="order-details-payment-label">Paiement</dt>
+<dd id="order-details-payment">—</dd>
+</div>
+<div id="order-details-result-row" class="form-group">
+<dt id="order-details-result-label">Résultat</dt>
+<dd id="order-details-result">—</dd>
+</div>
+</dl>
+</article>
+
+</div>
+
+<section id="order-timeline-section" aria-labelledby="order-timeline-title">
+<h2 id="order-timeline-title">Progression</h2>
+<ol id="order-timeline" class="order-timeline mt-4">
+<li id="timeline-step-pending" class="timeline-item">
+<span class="timeline-dot" aria-hidden="true"></span>
+<h3 id="timeline-pending-title">En attente</h3>
+<p id="timeline-pending-desc" class="text-muted">Commande créée, en attente de paiement.</p>
+<time id="timeline-pending-date" datetime="">—</time>
+</li>
+<li id="timeline-step-paid" class="timeline-item">
+<span class="timeline-dot" aria-hidden="true"></span>
+<h3 id="timeline-paid-title">Payée</h3>
+<p id="timeline-paid-desc" class="text-muted">Paiement confirmé.</p>
+<time id="timeline-paid-date" datetime="">—</time>
+</li>
+<li id="timeline-step-processing" class="timeline-item">
+<span class="timeline-dot" aria-hidden="true"></span>
+<h3 id="timeline-processing-title">En traitement</h3>
+<p id="timeline-processing-desc" class="text-muted">Commande prise en charge par l'équipe.</p>
+<time id="timeline-processing-date" datetime="">—</time>
+</li>
+<li id="timeline-step-completed" class="timeline-item">
+<span class="timeline-dot" aria-hidden="true"></span>
+<h3 id="timeline-completed-title">Terminée</h3>
+<p id="timeline-completed-desc" class="text-muted">Service livré.</p>
+<time id="timeline-completed-date" datetime="">—</time>
+</li>
+</ol>
+</section>
+
+<div id="order-actions" class="quick-actions mt-8">
+<a id="order-back-link" href="/dashboard/orders.html" class="btn btn-secondary">Retour aux commandes</a>
+<a id="order-support-link" href="/dashboard/tickets.html" class="btn btn-ghost">Contacter le support</a>
+</div>
+
+</main>
+
+</div>
+
+</div>
+
+<div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+<div id="modal-root"></div>
+
+</body>
+</html>
