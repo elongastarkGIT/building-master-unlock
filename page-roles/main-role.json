@@ -6,7 +6,8 @@
     "Démarrer l'application",
     "Initialiser le core",
     "Lancer le router",
-    "Gérer les liens actifs"
+    "Gérer les liens actifs",
+    "Corriger les liens absolus au chargement (fixAbsoluteLinks)"
   ],
   "dependsOn": [
     "app.js",

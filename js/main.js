@@ -1,8 +1,10 @@
 import { initCore } from "./core/app.js";
-import { initRouter, setActiveLinks } from "./core/router.js";
+import { initRouter, setActiveLinks, fixAbsoluteLinks } from "./core/router.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
+    fixAbsoluteLinks();
+
     await initCore();
 
     initRouter();

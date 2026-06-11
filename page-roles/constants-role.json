@@ -6,7 +6,17 @@
     "Configuration globale",
     "Rôles et statuts métier",
     "Routes et clés de stockage",
-    "Mapping des collections Firestore"
+    "Mapping des collections Firestore",
+    "Détection BASE_PATH GitHub Pages",
+    "Résolution des chemins absolus (resolvePath / stripBasePath)"
+  ],
+  "exports": [
+    "APP_CONFIG",
+    "ROUTES",
+    "BASE_PATH",
+    "resolvePath",
+    "stripBasePath",
+    "detectBasePath"
   ],
   "dependsOn": [],
   "usedBy": [
@@ -14,5 +24,6 @@
     "router.js",
     "guards.js",
     "app.js"
-  ]
+  ],
+  "lastUpdated": "2026-06-11"
 }

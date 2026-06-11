@@ -1,20 +1,34 @@
 // /js/core/router.js
 
-import { ROUTES, USER_ROLES, ADMIN_ROLES } from "./constants.js";
+import { ROUTES, USER_ROLES, ADMIN_ROLES, resolvePath, stripBasePath } from "./constants.js";
 import { guardPage } from "./guards.js";
 
 /* =========================
    ROUTER STATE
 ========================= */
 
-let currentPath = window.location.pathname;
+let currentPath = stripBasePath(window.location.pathname);
+
+/* =========================
+   FIX ABSOLUTE LINKS (HTML)
+========================= */
+
+export function fixAbsoluteLinks(root = document) {
+  root.querySelectorAll('a[href^="/"], form[action^="/"]').forEach((el) => {
+    const attr = el.hasAttribute("href") ? "href" : "action";
+    const value = el.getAttribute(attr);
+    if (value && value.startsWith("/")) {
+      el.setAttribute(attr, resolvePath(value));
+    }
+  });
+}
 
 /* =========================
    NAVIGATE (SAFE)
 ========================= */
 export function navigate(url) {
   if (!url) return;
-  window.location.href = url;
+  window.location.href = resolvePath(url);
 }
 
 /* =========================
@@ -79,14 +93,15 @@ const routes = [
 ========================= */
 
 function getRoute(path) {
-  const exact = routes.find((route) => route.path === path);
+  const normalized = stripBasePath(path);
+  const exact = routes.find((route) => route.path === normalized);
 
   if (exact) {
     return exact;
   }
 
   const matches = routes
-    .filter((route) => route.path !== "/" && path.startsWith(route.path))
+    .filter((route) => route.path !== "/" && normalized.startsWith(route.path))
     .sort((a, b) => b.path.length - a.path.length);
 
   return matches[0] || null;
@@ -115,13 +130,14 @@ function applyGuard(route) {
 ========================= */
 
 export function initRouter() {
-  currentPath = window.location.pathname;
+  fixAbsoluteLinks();
+  currentPath = stripBasePath(window.location.pathname);
 
   const route = getRoute(currentPath);
   applyGuard(route);
 
   window.addEventListener("popstate", () => {
-    currentPath = window.location.pathname;
+    currentPath = stripBasePath(window.location.pathname);
     const nextRoute = getRoute(currentPath);
     applyGuard(nextRoute);
     setActiveLinks();
@@ -133,14 +149,15 @@ export function initRouter() {
 ========================= */
 
 export function setActiveLinks() {
-  currentPath = window.location.pathname;
+  currentPath = stripBasePath(window.location.pathname);
 
   const links = document.querySelectorAll("[data-link]");
 
   links.forEach((link) => {
     const href = link.getAttribute("href");
+    const normalizedHref = stripBasePath(href);
 
-    if (href === currentPath) {
+    if (normalizedHref === currentPath) {
       link.classList.add("active");
     } else {
       link.classList.remove("active");
@@ -153,5 +170,5 @@ export function setActiveLinks() {
 ========================= */
 
 export function isRoute(path) {
-  return window.location.pathname === path;
+  return stripBasePath(window.location.pathname) === stripBasePath(path);
 }

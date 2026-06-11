@@ -5,7 +5,16 @@
   "responsibilities": [
     "Navigation entre pages HTML",
     "Application des guards par type de route",
-    "Gestion des liens actifs"
+    "Gestion des liens actifs",
+    "Correction des liens absolus HTML (fixAbsoluteLinks)",
+    "Normalisation des chemins avec BASE_PATH"
+  ],
+  "exports": [
+    "navigate",
+    "initRouter",
+    "setActiveLinks",
+    "isRoute",
+    "fixAbsoluteLinks"
   ],
   "dependsOn": [
     "constants.js",

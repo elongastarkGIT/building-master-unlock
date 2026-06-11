@@ -1,7 +1,7 @@
 // /js/core/guards.js
 
 import { listenSession, logoutSession } from "../auth/session.js";
-import { USER_ROLES, USER_STATUS, ROUTES } from "./constants.js";
+import { USER_ROLES, USER_STATUS, ROUTES, resolvePath } from "./constants.js";
 
 /* =========================
    CHECK USER STATUS
@@ -23,7 +23,7 @@ function hasAccess(userData, allowedRoles = []) {
    REDIRECT SAFE
 ========================= */
 function redirect(url) {
-  window.location.href = url;
+  window.location.href = resolvePath(url);
 }
 
 /* =========================
@@ -60,7 +60,7 @@ export function guardPage({
     }
 
     if (!hasAccess(userData, allowRoles)) {
-      redirect("/pages/not-found.html");
+      redirect(ROUTES.public.notFound);
       return;
     }
   });

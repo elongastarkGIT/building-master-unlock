@@ -6,7 +6,7 @@
     "Vérification authentification",
     "Vérification statut utilisateur",
     "Vérification des rôles",
-    "Redirections sécurisées"
+    "Redirections sécurisées avec resolvePath"
   ],
   "dependsOn": [
     "session.js",

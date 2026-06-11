@@ -1,0 +1,39 @@
+{
+  "file": "index.html",
+  "status": "validated",
+  "role": "Point d'entrée racine et redirection vers l'accueil",
+  "responsibilities": [
+    "Rediriger vers pages/home.html",
+    "Fournir un lien de secours si la redirection meta échoue",
+    "Charger main.js pour l'initialisation globale"
+  ],
+  "summary": "Page racine avec meta refresh et lien vers l'accueil. Utilise des chemins relatifs (./pages/home.html) pour compatibilité GitHub Pages et local.",
+  "exports": [],
+  "functions": [],
+  "dependsOn": [
+    "css/style.css",
+    "js/main.js"
+  ],
+  "usedBy": [
+    "GitHub Pages",
+    "Serveur local"
+  ],
+  "firebaseCollections": [],
+  "executionFlow": [
+    "index.html",
+    "meta refresh vers ./pages/home.html",
+    "js/main.js"
+  ],
+  "limitations": [
+    "Ne contient pas de logique métier"
+  ],
+  "impacts": [
+    "Première URL visitée sur GitHub Pages",
+    "Redirection initiale vers home.html"
+  ],
+  "rules": [
+    "Utiliser des chemins relatifs pour la redirection racine",
+    "Ne pas utiliser de chemins absolus commençant par /pages/"
+  ],
+  "lastUpdated": "2026-06-11"
+}

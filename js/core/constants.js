@@ -153,6 +153,77 @@ export const ROLE_PERMISSIONS = {
 
 
 /* =========================
+   BASE PATH (GitHub Pages / sous-dossier)
+========================= */
+
+function detectBasePathFromPathname() {
+  const path = window.location.pathname;
+  const appRoots = ["/pages/", "/dashboard/", "/admin/"];
+
+  for (const root of appRoots) {
+    const idx = path.indexOf(root);
+    if (idx > 0) {
+      return path.slice(0, idx);
+    }
+  }
+
+  if (path.endsWith("/index.html")) {
+    const base = path.slice(0, -"/index.html".length);
+    return base === "/" ? "" : base;
+  }
+
+  if (path.endsWith("/") && path.length > 1) {
+    return path.slice(0, -1);
+  }
+
+  return "";
+}
+
+function detectBasePathFromScript() {
+  const scripts = document.querySelectorAll("script[src]");
+
+  for (const script of scripts) {
+    const src = script.getAttribute("src");
+    if (!src) continue;
+
+    try {
+      const url = new URL(src, window.location.href);
+      const jsIdx = url.pathname.lastIndexOf("/js/");
+      if (jsIdx > 0) {
+        return url.pathname.slice(0, jsIdx);
+      }
+    } catch {
+      continue;
+    }
+  }
+
+  return "";
+}
+
+export function detectBasePath() {
+  if (typeof window === "undefined") return "";
+  return detectBasePathFromScript() || detectBasePathFromPathname();
+}
+
+export const BASE_PATH = detectBasePath();
+
+export function resolvePath(path) {
+  if (!path || typeof path !== "string") return path;
+  if (!path.startsWith("/")) return path;
+  return `${BASE_PATH}${path}`;
+}
+
+export function stripBasePath(path) {
+  if (!path || typeof path !== "string") return path;
+  if (BASE_PATH && path.startsWith(BASE_PATH)) {
+    const rest = path.slice(BASE_PATH.length);
+    return rest || "/";
+  }
+  return path;
+}
+
+
+/* =========================
    ROUTES (HTML SPA HYBRID)
 ========================= */
 

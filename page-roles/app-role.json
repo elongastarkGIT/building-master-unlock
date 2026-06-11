@@ -5,7 +5,7 @@
   "responsibilities": [
     "Charger Firebase",
     "Initialiser la session utilisateur",
-    "Gérer le mode maintenance"
+    "Gérer le mode maintenance avec chemins résolus (resolvePath)"
   ],
   "dependsOn": [
     "firebaseConfig.js",
