@@ -1,7 +1,7 @@
 import { initCore } from "./core/app.js";
 import { initRouter, setActiveLinks, fixAbsoluteLinks } from "./core/router.js";
 import { COLLECTIONS, ROUTES, resolvePath } from "./core/constants.js";
-import { listenSession, logoutSession, getSession } from "./auth/session.js";
+import { listenSession, logoutSession } from "./auth/session.js";
 import { loginUser, loginWithGoogle, registerUser } from "../firebase/auth.js";
 import { getDocument, listenCollection, queryDocuments } from "../firebase/firestore.js";
 import { formatCurrency } from "../utils/formatters.js";
@@ -856,12 +856,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   if (isIndexPage()) {
-    const session = getSession();
-    const redirectPath = session?.data
-      ? getAuthenticatedRedirect(session)
-      : ROUTES.public.home;
-
-    await loaderController.complete(redirectPath);
+    await loaderController.complete(ROUTES.public.home);
     return;
   }
 
