@@ -24,6 +24,24 @@ function navigateTo(url) {
   window.location.href = resolvePath(url);
 }
 
+function cleanupSensitiveQueryParams() {
+  const url = new URL(window.location.href);
+  const sensitiveKeys = ["email", "password", "confirmPassword"];
+  let hasSensitiveData = false;
+
+  sensitiveKeys.forEach((key) => {
+    if (url.searchParams.has(key)) {
+      url.searchParams.delete(key);
+      hasSensitiveData = true;
+    }
+  });
+
+  if (hasSensitiveData) {
+    const cleanUrl = `${url.pathname}${url.search}${url.hash}`;
+    window.history.replaceState({}, document.title, cleanUrl);
+  }
+}
+
 function getAuthenticatedRedirect(session) {
   if (session?.data?.role === USER_ROLES.USER) {
     return ROUTES.user.dashboard;
@@ -724,16 +742,17 @@ function initPublicMobileNav() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
+    cleanupSensitiveQueryParams();
     fixAbsoluteLinks();
+    initPublicMobileNav();
+    initFaqAccordion();
 
     await initCore();
 
     initRouter();
-    initPublicMobileNav();
     initAuthForms();
     initServicesCatalog();
     await initServiceDetails();
-    initFaqAccordion();
 
     setActiveLinks();
 
