@@ -1,10 +1,10 @@
 // /firebase/firebaseConfig.js
 
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 
 import {
   getAuth
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 import {
   initializeFirestore,
@@ -48,7 +48,7 @@ import {
 
   connectFirestoreEmulator
 
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 import {
   getStorage,
@@ -58,27 +58,27 @@ import {
   getDownloadURL,
   deleteObject
 
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-storage.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-storage.js";
 
 import {
   getFunctions,
   httpsCallable,
   connectFunctionsEmulator
 
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-functions.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-functions.js";
 
 import {
   getMessaging,
   getToken,
   onMessage
 
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-messaging.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-messaging.js";
 
 import {
   getAnalytics,
   isSupported
 
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
 
 
 
@@ -87,14 +87,15 @@ import {
 ========================= */
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+  apiKey: "AIzaSyDNm909Ij6emiIrAjbs3j4Umk4Bi7-6Qvc",
+  authDomain: "master-unlock-db.firebaseapp.com",
+  projectId: "master-unlock-db",
+  storageBucket: "master-unlock-db.firebasestorage.app",
+  messagingSenderId: "1064792002882",
+  appId: "1:1064792002882:web:02bd0bdabdfd490170b8db",
+  measurementId: "G-63DWE7MRNG"
 };
+
 
 
 

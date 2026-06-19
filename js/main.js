@@ -1,9 +1,5 @@
-import { initCore } from "./core/app.js";
 import { initRouter, setActiveLinks, fixAbsoluteLinks } from "./core/router.js";
 import { COLLECTIONS, ROUTES, resolvePath } from "./core/constants.js";
-import { listenSession, logoutSession } from "./auth/session.js";
-import { loginUser, loginWithGoogle, registerUser } from "../firebase/auth.js";
-import { getDocument, listenCollection, queryDocuments } from "../firebase/firestore.js";
 import { formatCurrency } from "../utils/formatters.js";
 import { sanitizeObject, sanitizeText } from "../utils/sanitizer.js";
 
@@ -345,14 +341,23 @@ function initServicesCatalog() {
   renderServiceSkeletons(grid);
   filter.addEventListener("change", renderServices);
 
-  listenCollection(COLLECTIONS.SERVICES, (services) => {
-    allServices = services
-      .map(normalizeService)
-      .filter(isServiceVisible)
-      .sort((first, second) => first.title.localeCompare(second.title, "fr", { sensitivity: "base" }));
+  import("../firebase/firestore.js")
+    .then(({ listenCollection }) => {
+      listenCollection(COLLECTIONS.SERVICES, (services) => {
+        allServices = services
+          .map(normalizeService)
+          .filter(isServiceVisible)
+          .sort((first, second) => first.title.localeCompare(second.title, "fr", { sensitivity: "base" }));
 
-    renderServices();
-  });
+        renderServices();
+      });
+    })
+    .catch((error) => {
+      console.error("SERVICES CATALOG ERROR:", error);
+      grid.replaceChildren();
+      grid.setAttribute("aria-busy", "false");
+      count.textContent = "Impossible de charger les services";
+    });
 }
 
 function setServiceDetailsError(message) {
@@ -446,6 +451,7 @@ async function initServiceDetails() {
   const serviceSlug = sanitizeText(params.get("slug") || "");
 
   try {
+    const { getDocument, queryDocuments } = await import("../firebase/firestore.js");
     let service = null;
 
     if (serviceId) {
@@ -541,9 +547,11 @@ function initAuthForms() {
     return;
   }
 
-  let suppressAuthenticatedRedirect = false;
+  import("../firebase/auth.js")
+    .then(({ loginUser, loginWithGoogle, registerUser }) => import("../auth/session.js").then(({ listenSession, logoutSession }) => {
+      let suppressAuthenticatedRedirect = false;
 
-  listenSession((session) => {
+      listenSession((session) => {
     if (suppressAuthenticatedRedirect) {
       return;
     }
@@ -641,6 +649,10 @@ function initAuthForms() {
       }
     });
   }
+    }))
+    .catch((error) => {
+      console.error("AUTH FORMS ERROR:", error);
+    });
 }
 
 function initPublicMobileNav() {
@@ -745,123 +757,31 @@ function isIndexPage() {
   return pathname.endsWith("/index.html") || pathname.endsWith("/");
 }
 
-function initGlobalAppLoader() {
-  const loader = document.getElementById("global-app-loader");
-  const progressFill = document.getElementById("progress-fill");
-  const statusText = document.getElementById("status-text");
-  const key = document.getElementById("key");
-  const shackle = document.getElementById("shackle");
-
-  if (!loader || !progressFill || !statusText || !key || !shackle) {
-    return {
-      complete: async () => {}
-    };
-  }
-
-  const steps = [
-    { progress: 15, text: "Connexion securisee S-Unlock API...", duration: 900 },
-    { progress: 40, text: "Analyse des donnees materielles...", duration: 900 },
-    { progress: 65, text: "Generation de la cle de deverrouillage...", duration: 1200 },
-    { progress: 85, text: "Injection et rotation du token...", duration: 1400 }
-  ];
-
-  let resolveSequence;
-  const sequenceDone = new Promise((resolve) => {
-    resolveSequence = resolve;
-  });
-
-  const runStep = (index) => {
-    if (index >= steps.length) {
-      resolveSequence();
-      return;
-    }
-
-    const step = steps[index];
-    progressFill.style.width = `${step.progress}%`;
-    statusText.textContent = step.text;
-
-    if (step.progress === 65) {
-      window.setTimeout(() => {
-        key.classList.add("arrive");
-      }, 150);
-    }
-
-    if (step.progress === 85) {
-      window.setTimeout(() => {
-        key.classList.add("turn");
-        window.setTimeout(() => {
-          shackle.classList.add("opened");
-          window.setTimeout(() => {
-            key.classList.add("fade-out");
-          }, 200);
-        }, 420);
-      }, 220);
-    }
-
-    window.setTimeout(() => {
-      runStep(index + 1);
-    }, step.duration);
-  };
-
-  window.setTimeout(() => runStep(0), 250);
-
-  return {
-    complete: async (redirectPath) => {
-      await sequenceDone;
-
-      progressFill.style.width = "100%";
-      statusText.textContent = "Verification terminee. Redirection...";
-      statusText.style.color = "#00cec9";
-
-      await new Promise((resolve) => {
-        window.setTimeout(resolve, 260);
-      });
-
-      loader.style.transition = "opacity 260ms ease";
-      loader.style.opacity = "0";
-
-      await new Promise((resolve) => {
-        window.setTimeout(resolve, 260);
-      });
-
-      loader.style.display = "none";
-
-      if (redirectPath) {
-        navigateTo(redirectPath);
-      }
-    }
-  };
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
-  const loaderController = initGlobalAppLoader();
+  if (isIndexPage()) {
+    return;
+  }
 
   cleanupSensitiveQueryParams();
   fixAbsoluteLinks();
   initPublicMobileNav();
   initFaqAccordion();
-  initRouter();
-  initAuthForms();
-  initServicesCatalog();
-  await initServiceDetails();
   setActiveLinks();
   window.addEventListener("popstate", setActiveLinks);
-
-  if (isIndexPage()) {
-    await loaderController.complete(ROUTES.public.home);
-    return;
-  }
-
-  let initCoreError = null;
+  initRouter();
 
   try {
-    await initCore();
-  } catch (e) {
-    initCoreError = e;
-    console.error("INIT CORE ERROR:", e);
+    initAuthForms();
+    initServicesCatalog();
+    await initServiceDetails();
+  } catch (error) {
+    console.error("PAGE INIT ERROR:", error);
   }
 
-  if (!initCoreError) {
-    await loaderController.complete();
+  try {
+    const { initCore } = await import("./core/app.js");
+    await initCore();
+  } catch (error) {
+    console.error("INIT CORE ERROR:", error);
   }
 });

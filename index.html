@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta http-equiv="refresh" content="12;url=./pages/home.html">
 <meta name="description" content="Chargement sécurisé de MASTER UNLOCKER.">
 <title>MASTER UNLOCKER</title>
 
@@ -45,12 +46,82 @@
     .key-group.fade-out { transform: translate(0, 10px) scale(0.8) rotate(90deg) !important; opacity: 0 !important; }
 </style>
 
-<div id="app" class="container section text-center" hidden>
-  <p class="text-muted">Redirection vers l'accueil...</p>
-  <a href="./pages/home.html" class="btn btn-primary" data-link id="index-home-link">Acceder a MASTER UNLOCKER</a>
-</div>
+<noscript>
+  <meta http-equiv="refresh" content="0;url=./pages/home.html">
+</noscript>
 
-<script type="module" src="./js/main.js"></script>
+<script>
+  (function () {
+    const progressFill = document.getElementById("progress-fill");
+    const statusText = document.getElementById("status-text");
+    const loader = document.getElementById("global-app-loader");
+    const key = document.getElementById("key");
+    const shackle = document.getElementById("shackle");
+    const homeUrl = "./pages/home.html";
+
+    if (!progressFill || !statusText || !loader || !key || !shackle) {
+      window.location.replace(homeUrl);
+      return;
+    }
+
+    const steps = [
+      { progress: 15, text: "Connexion securisee S-Unlock API..." },
+      { progress: 40, text: "Analyse des donnees materielles..." },
+      { progress: 65, text: "Generation de la cle de deverrouillage..." },
+      { progress: 85, text: "Injection et rotation du token..." },
+      { progress: 100, text: "Succes ! Systeme totalement debloque." }
+    ];
+
+    let currentStep = 0;
+
+    function redirectToHome() {
+      statusText.style.color = "#00cec9";
+      statusText.textContent = "Redirection en cours...";
+      loader.style.transition = "opacity 260ms ease";
+      loader.style.opacity = "0";
+      window.setTimeout(function () {
+        window.location.replace(homeUrl);
+      }, 280);
+    }
+
+    function runLoader() {
+      if (currentStep >= steps.length) {
+        window.setTimeout(redirectToHome, 500);
+        return;
+      }
+
+      const step = steps[currentStep];
+      progressFill.style.width = step.progress + "%";
+      statusText.textContent = step.text;
+
+      if (step.progress === 65) {
+        window.setTimeout(function () {
+          key.classList.add("arrive");
+        }, 200);
+      }
+
+      if (step.progress === 85) {
+        window.setTimeout(function () {
+          key.classList.add("turn");
+          window.setTimeout(function () {
+            shackle.classList.add("opened");
+            window.setTimeout(function () {
+              key.classList.add("fade-out");
+            }, 250);
+          }, 500);
+        }, 300);
+      }
+
+      currentStep += 1;
+      let duration = 1400;
+      if (step.progress === 65) duration = 1800;
+      if (step.progress === 85) duration = 2200;
+      window.setTimeout(runLoader, duration);
+    }
+
+    window.setTimeout(runLoader, 500);
+  })();
+</script>
 
 </body>
 </html>

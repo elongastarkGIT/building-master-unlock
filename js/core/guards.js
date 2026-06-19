@@ -1,6 +1,5 @@
 // /js/core/guards.js
 
-import { listenSession, logoutSession } from "../auth/session.js";
 import { USER_ROLES, USER_STATUS, ROUTES, resolvePath } from "./constants.js";
 
 /* =========================
@@ -34,7 +33,7 @@ export function guardPage({
   requireAuth = true,
   redirectTo = ROUTES.public.login
 } = {}) {
-
+  import("../auth/session.js").then(({ listenSession, logoutSession }) => {
   listenSession(async (session) => {
 
     if (!session && requireAuth) {
@@ -63,6 +62,7 @@ export function guardPage({
       redirect(ROUTES.public.notFound);
       return;
     }
+  });
   });
 }
 

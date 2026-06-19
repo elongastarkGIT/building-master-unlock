@@ -11,7 +11,7 @@ import {
   updateProfile,
   GoogleAuthProvider,
   signInWithPopup
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 import {
   db,
