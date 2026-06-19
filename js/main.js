@@ -98,6 +98,13 @@ function mapAuthError(error) {
     return "Un compte existe deja avec une autre methode de connexion.";
   }
 
+  if (
+    code === "auth/configuration-not-found" ||
+    code === "auth/operation-not-allowed"
+  ) {
+    return "Authentication Firebase non configuree. Activez Email/Mot de passe dans la console Firebase.";
+  }
+
   if (message) {
     return message;
   }
