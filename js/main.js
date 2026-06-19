@@ -835,7 +835,6 @@ function initGlobalAppLoader() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const loaderController = initGlobalAppLoader();
-  let initCoreError = null;
 
   cleanupSensitiveQueryParams();
   fixAbsoluteLinks();
@@ -848,16 +847,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   setActiveLinks();
   window.addEventListener("popstate", setActiveLinks);
 
+  if (isIndexPage()) {
+    await loaderController.complete(ROUTES.public.home);
+    return;
+  }
+
+  let initCoreError = null;
+
   try {
     await initCore();
   } catch (e) {
     initCoreError = e;
     console.error("INIT CORE ERROR:", e);
-  }
-
-  if (isIndexPage()) {
-    await loaderController.complete(ROUTES.public.home);
-    return;
   }
 
   if (!initCoreError) {
