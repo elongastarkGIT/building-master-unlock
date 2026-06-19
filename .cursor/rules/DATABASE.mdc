@@ -1,0 +1,679 @@
+---
+alwaysApply: true
+---
+
+MASTER UNLOCKER — Database Architecture
+
+Vision
+
+La base de données MASTER UNLOCKER est conçue pour :
+
+- fonctionnement semi-automatique actuel
+- automatisation future
+- intégration APIs fournisseurs
+- multi-administrateurs
+- architecture SaaS scalable
+- maintenance long terme
+- séparation stricte des responsabilités
+
+Base de données principale :
+
+Firebase Firestore
+
+---
+
+Architecture Générale
+
+Le système repose sur plusieurs domaines métier indépendants :
+
+Users
+↓
+Services
+↓
+Orders
+↓
+Payments
+↓
+Notifications
+↓
+Support
+↓
+Administration
+↓
+Automatisation future
+
+Chaque domaine possède ses propres collections afin d'éviter les dépendances excessives.
+
+---
+
+Collections Critiques
+
+Ces collections constituent le cœur du système.
+
+users
+
+services
+
+orders
+
+orderDrafts
+
+payments
+
+notifications
+
+admins
+
+Toute fonctionnalité principale dépend directement ou indirectement de ces collections.
+
+---
+
+Collections
+
+1. users
+
+Rôle
+
+Gestion des comptes utilisateurs.
+
+Collection
+
+users/{uid}
+
+Utilisation
+
+- authentification
+- permissions
+- historique client
+- statistiques utilisateur
+
+Statuts
+
+active
+
+suspended
+
+banned
+
+pending
+
+---
+
+2. admins
+
+Rôle
+
+Gestion des administrateurs et opérateurs.
+
+Collection
+
+admins/{uid}
+
+Rôles
+
+support
+
+operator
+
+manager
+
+superadmin
+
+---
+
+3. services
+
+Rôle
+
+Catalogue dynamique des services vendus.
+
+Particularité
+
+Les prix sont entièrement gérés par Firestore.
+
+Aucune modification de code n'est nécessaire pour modifier :
+
+- prix
+- promotions
+- disponibilité
+
+---
+
+4. serviceCategories
+
+Rôle
+
+Organisation du catalogue.
+
+Permet :
+
+- filtrage
+- navigation
+- SEO
+
+---
+
+5. brands
+
+Rôle
+
+Gestion des marques supportées.
+
+Exemples :
+
+Samsung
+
+Apple
+
+Tecno
+
+Infinix
+
+Xiaomi
+
+---
+
+6. tools
+
+Rôle
+
+Logiciels et plateformes activables.
+
+Exemples :
+
+UnlockTool
+
+Chimera
+
+DFT Pro
+
+TSM Tool
+
+---
+
+7. orders
+
+Rôle
+
+Commande finale validée.
+
+Collection métier principale.
+
+Cycle de vie
+
+pending
+↓
+paid
+↓
+processing
+↓
+completed
+
+ou
+
+failed
+
+ou
+
+refunded
+
+Processing Status
+
+waiting
+
+in_progress
+
+done
+
+---
+
+8. orderDrafts
+
+Rôle
+
+Commande temporaire avant paiement.
+
+Importance
+
+Permet :
+
+- sécurisation paiement
+- reprise session
+- réduction fraudes
+- meilleure scalabilité
+
+Une commande ne devient réelle qu'après paiement validé.
+
+---
+
+9. payments
+
+Rôle
+
+Transactions financières.
+
+Providers prévus
+
+cinetpay
+
+flutterwave
+
+Méthodes
+
+momo
+
+card
+
+Statuts
+
+pending
+
+success
+
+failed
+
+cancelled
+
+---
+
+10. notifications
+
+Rôle
+
+Centre de notifications système.
+
+Utilisé pour :
+
+- commandes
+- paiements
+- alertes
+- annonces
+
+---
+
+11. tickets
+
+Rôle
+
+Support client.
+
+Priorités
+
+low
+
+medium
+
+high
+
+Statuts
+
+open
+
+pending
+
+closed
+
+---
+
+12. reviews
+
+Rôle
+
+Avis clients.
+
+Permet :
+
+- réputation
+- confiance
+- affichage public
+
+---
+
+13. wallets
+
+Rôle
+
+Préparation système revendeur.
+
+Version future.
+
+---
+
+14. transactions
+
+Rôle
+
+Historique financier des wallets.
+
+---
+
+15. providers
+
+Rôle
+
+Fournisseurs externes.
+
+Préparation automatisation future.
+
+---
+
+16. apiIntegrations
+
+Rôle
+
+Connexion entre services et fournisseurs.
+
+Permet :
+
+service
+↓
+provider
+↓
+API
+
+---
+
+17. toolLicenses
+
+Rôle
+
+Licences outils clients.
+
+Gestion :
+
+- activations
+- expirations
+- renouvellements
+
+---
+
+18. announcements
+
+Rôle
+
+Messages officiels plateforme.
+
+Exemples :
+
+maintenance
+
+update
+
+alert
+
+---
+
+19. settings
+
+Rôle
+
+Configuration globale du SaaS.
+
+Document principal :
+
+settings/general
+
+Source unique de configuration.
+
+---
+
+20. logs
+
+Rôle
+
+Audit et sécurité.
+
+Permet :
+
+- traçabilité
+- détection abus
+- diagnostic incidents
+
+---
+
+21. currencies
+
+Rôle
+
+Gestion multidevise.
+
+Exemples :
+
+USD
+
+CDF
+
+EUR
+
+---
+
+22. countries
+
+Rôle
+
+Pays supportés.
+
+Utilisé pour :
+
+- formulaires
+- paiements
+- devises
+
+---
+
+23. promotions
+
+Rôle
+
+Coupons et réductions.
+
+Types :
+
+fixed
+
+percent
+
+---
+
+24. resellers
+
+Rôle
+
+Système revendeurs futur.
+
+Préparation marketplace.
+
+---
+
+25. uploads
+
+Rôle
+
+Métadonnées des fichiers.
+
+Les fichiers physiques sont stockés dans Firebase Storage.
+
+Firestore conserve uniquement les références.
+
+---
+
+26. reports
+
+Rôle
+
+Rapports générés.
+
+Analytics.
+
+Statistiques.
+
+Exports.
+
+---
+
+27. savedDevices
+
+Rôle
+
+Appareils enregistrés.
+
+Permet :
+
+- historique client
+- commandes rapides
+- fidélisation
+
+---
+
+28. faqs
+
+Rôle
+
+FAQ dynamique.
+
+Modifiable sans déploiement.
+
+---
+
+29. statusPages
+
+Rôle
+
+État opérationnel des services.
+
+Statuts :
+
+operational
+
+degraded
+
+offline
+
+---
+
+Relations Principales
+
+users
+↓
+orders
+↓
+payments
+
+services
+↓
+orders
+
+brands
+↓
+services
+
+serviceCategories
+↓
+services
+
+providers
+↓
+apiIntegrations
+↓
+services
+
+users
+↓
+tickets
+
+users
+↓
+notifications
+
+users
+↓
+reviews
+
+---
+
+États Officiels du Système
+
+orders.status
+
+pending
+
+paid
+
+processing
+
+completed
+
+failed
+
+refunded
+
+---
+
+orders.processingStatus
+
+waiting
+
+in_progress
+
+done
+
+---
+
+payments.status
+
+pending
+
+success
+
+failed
+
+cancelled
+
+---
+
+users.status
+
+active
+
+suspended
+
+banned
+
+pending
+
+---
+
+Principes de Conception
+
+1. Aucune logique métier dans Firestore.
+
+2. Firestore stocke uniquement les données.
+
+3. Les règles métier sont dans JavaScript.
+
+4. Les paiements sont séparés des commandes.
+
+5. Les utilisateurs sont séparés des administrateurs.
+
+6. Les commandes sont séparées des brouillons.
+
+7. Toutes les automatisations futures doivent passer par providers et apiIntegrations.
+
+8. Les collections critiques ne doivent jamais être renommées.
+
+---
+
+Objectif Final
+
+Construire une plateforme SaaS professionnelle capable de gérer :
+
+- déblocage mobile
+- licences outils
+- commandes clients
+- paiements Mobile Money
+- gestion multi-admin
+- automatisation API fournisseurs
+- système revendeur
+- croissance importante du volume d'utilisateurs
+
+sans refonte majeure de la base de données.

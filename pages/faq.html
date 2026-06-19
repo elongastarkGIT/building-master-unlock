@@ -49,36 +49,66 @@
         <p id="page-subtitle">Tout ce que vous devez savoir sur nos services mobiles et le processus de commande.</p>
       </header>
 
-      <div id="faq-accordion" class="card" style="padding: 0; overflow: hidden;">
-        <details id="faq-1" class="faq-item" style="border-bottom: 1px solid var(--color-border); padding: var(--space-5) var(--space-6);">
-          <summary id="faq-1-question" class="card-title" style="cursor: pointer; list-style: none;">Quels services propose MASTER UNLOCKER ?</summary>
-          <p id="faq-1-answer" class="card-body mt-4" style="margin-bottom: 0;">Nous proposons le déblocage mobile (Network Unlock, Carrier Unlock), les services IMEI, le FRP Unlock (Samsung, Xiaomi, Tecno, Infinix, Itel), les services iCloud Apple, le MDM Unlock, ainsi que les activations et crédits pour outils GSM (UnlockTool, Chimera, TSM, TFM, DFT Pro, EFT Pro).</p>
-        </details>
+      <div id="faq-accordion" class="faq-accordion" aria-label="Questions frequentes">
+        <article id="faq-1" class="faq-item">
+          <button type="button" id="faq-1-question" class="faq-question" aria-expanded="false" aria-controls="faq-1-answer">
+            <span class="faq-question-text">Quels services propose MASTER UNLOCKER ?</span>
+            <span class="faq-arrow" aria-hidden="true"></span>
+          </button>
+          <div id="faq-1-answer" class="faq-answer" hidden>
+            <p class="card-body">Nous proposons le déblocage mobile (Network Unlock, Carrier Unlock), les services IMEI, le FRP Unlock (Samsung, Xiaomi, Tecno, Infinix, Itel), les services iCloud Apple, le MDM Unlock, ainsi que les activations et crédits pour outils GSM (UnlockTool, Chimera, TSM, TFM, DFT Pro, EFT Pro).</p>
+          </div>
+        </article>
 
-        <details id="faq-2" class="faq-item" style="border-bottom: 1px solid var(--color-border); padding: var(--space-5) var(--space-6);">
-          <summary id="faq-2-question" class="card-title" style="cursor: pointer; list-style: none;">Comment passer une commande ?</summary>
-          <p id="faq-2-answer" class="card-body mt-4" style="margin-bottom: 0;">Choisissez un service dans le catalogue, consultez les détails, remplissez le formulaire dynamique (IMEI, numéro de série, etc.), puis procédez au paiement Mobile Money ou par carte. Une commande est créée après validation du paiement.</p>
-        </details>
+        <article id="faq-2" class="faq-item">
+          <button type="button" id="faq-2-question" class="faq-question" aria-expanded="false" aria-controls="faq-2-answer">
+            <span class="faq-question-text">Comment passer une commande ?</span>
+            <span class="faq-arrow" aria-hidden="true"></span>
+          </button>
+          <div id="faq-2-answer" class="faq-answer" hidden>
+            <p class="card-body">Choisissez un service dans le catalogue, consultez les détails, remplissez le formulaire dynamique (IMEI, numéro de série, etc.), puis procédez au paiement Mobile Money ou par carte. Une commande est créée après validation du paiement.</p>
+          </div>
+        </article>
 
-        <details id="faq-3" class="faq-item" style="border-bottom: 1px solid var(--color-border); padding: var(--space-5) var(--space-6);">
-          <summary id="faq-3-question" class="card-title" style="cursor: pointer; list-style: none;">Quels modes de paiement sont acceptés ?</summary>
-          <p id="faq-3-answer" class="card-body mt-4" style="margin-bottom: 0;">Nous acceptons le Mobile Money (MoMo) et les cartes bancaires via nos partenaires CinetPay et Flutterwave. Le paiement est sécurisé et aucune donnée bancaire n'est stockée sur nos serveurs.</p>
-        </details>
+        <article id="faq-3" class="faq-item">
+          <button type="button" id="faq-3-question" class="faq-question" aria-expanded="false" aria-controls="faq-3-answer">
+            <span class="faq-question-text">Quels modes de paiement sont acceptés ?</span>
+            <span class="faq-arrow" aria-hidden="true"></span>
+          </button>
+          <div id="faq-3-answer" class="faq-answer" hidden>
+            <p class="card-body">Nous acceptons le Mobile Money (MoMo) et les cartes bancaires via nos partenaires CinetPay et Flutterwave. Le paiement est sécurisé et aucune donnée bancaire n'est stockée sur nos serveurs.</p>
+          </div>
+        </article>
 
-        <details id="faq-4" class="faq-item" style="border-bottom: 1px solid var(--color-border); padding: var(--space-5) var(--space-6);">
-          <summary id="faq-4-question" class="card-title" style="cursor: pointer; list-style: none;">Combien de temps prend le traitement d'une commande ?</summary>
-          <p id="faq-4-answer" class="card-body mt-4" style="margin-bottom: 0;">Le délai varie selon le service commandé. Le délai estimé est affiché sur la page de détails de chaque service. Vous pouvez suivre l'état de votre commande via la page de suivi ou votre espace client.</p>
-        </details>
+        <article id="faq-4" class="faq-item">
+          <button type="button" id="faq-4-question" class="faq-question" aria-expanded="false" aria-controls="faq-4-answer">
+            <span class="faq-question-text">Combien de temps prend le traitement d'une commande ?</span>
+            <span class="faq-arrow" aria-hidden="true"></span>
+          </button>
+          <div id="faq-4-answer" class="faq-answer" hidden>
+            <p class="card-body">Le délai varie selon le service commandé. Le délai estimé est affiché sur la page de détails de chaque service. Vous pouvez suivre l'état de votre commande via la page de suivi ou votre espace client.</p>
+          </div>
+        </article>
 
-        <details id="faq-5" class="faq-item" style="border-bottom: 1px solid var(--color-border); padding: var(--space-5) var(--space-6);">
-          <summary id="faq-5-question" class="card-title" style="cursor: pointer; list-style: none;">Comment suivre ma commande ?</summary>
-          <p id="faq-5-answer" class="card-body mt-4" style="margin-bottom: 0;">Utilisez la page <a href="./tracking.html" data-link id="faq-link-tracking">Suivi de commande</a> avec votre numéro de commande, ou connectez-vous à votre compte pour consulter l'historique et les notifications.</p>
-        </details>
+        <article id="faq-5" class="faq-item">
+          <button type="button" id="faq-5-question" class="faq-question" aria-expanded="false" aria-controls="faq-5-answer">
+            <span class="faq-question-text">Comment suivre ma commande ?</span>
+            <span class="faq-arrow" aria-hidden="true"></span>
+          </button>
+          <div id="faq-5-answer" class="faq-answer" hidden>
+            <p class="card-body">Utilisez la page <a href="./tracking.html" data-link id="faq-link-tracking">Suivi de commande</a> avec votre numéro de commande, ou connectez-vous à votre compte pour consulter l'historique et les notifications.</p>
+          </div>
+        </article>
 
-        <details id="faq-6" class="faq-item" style="padding: var(--space-5) var(--space-6);">
-          <summary id="faq-6-question" class="card-title" style="cursor: pointer; list-style: none;">Que faire en cas de problème avec ma commande ?</summary>
-          <p id="faq-6-answer" class="card-body mt-4" style="margin-bottom: 0;">Contactez notre support via la page <a href="./contact.html" data-link id="faq-link-contact">Contact</a> ou ouvrez un ticket depuis votre espace client. Consultez également la page <a href="./status.html" data-link id="faq-link-status">Statut</a> pour vérifier l'état opérationnel des services.</p>
-        </details>
+        <article id="faq-6" class="faq-item">
+          <button type="button" id="faq-6-question" class="faq-question" aria-expanded="false" aria-controls="faq-6-answer">
+            <span class="faq-question-text">Que faire en cas de problème avec ma commande ?</span>
+            <span class="faq-arrow" aria-hidden="true"></span>
+          </button>
+          <div id="faq-6-answer" class="faq-answer" hidden>
+            <p class="card-body">Contactez notre support via la page <a href="./contact.html" data-link id="faq-link-contact">Contact</a> ou ouvrez un ticket depuis votre espace client. Consultez également la page <a href="./status.html" data-link id="faq-link-status">Statut</a> pour vérifier l'état opérationnel des services.</p>
+          </div>
+        </article>
       </div>
 
       <div id="faq-cta" class="text-center mt-8">
@@ -132,6 +162,8 @@
 
 <div id="toast-container" class="toast-container" aria-live="polite"></div>
 <div id="modal-root"></div>
+
+<script type="module" src="../js/main.js"></script>
 
 </body>
 </html>

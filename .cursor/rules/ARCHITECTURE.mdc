@@ -1,0 +1,485 @@
+---
+alwaysApply: true
+---
+
+MASTER UNLOCKER — Architecture Technique
+
+1. Objectif Architecture
+
+MASTER UNLOCKER est une application SaaS modulaire construite avec :
+
+- HTML
+- CSS
+- JavaScript ES Modules
+- Firebase
+
+L'architecture est conçue pour :
+
+- être maintenable
+- être scalable
+- éviter les dépendances circulaires
+- faciliter l'automatisation future
+- supporter plusieurs administrateurs
+- supporter plusieurs fournisseurs APIs
+
+---
+
+2. Architecture Globale
+
+index.html
+↓
+js/main.js
+↓
+js/core/app.js
+↓
+Firebase Initialization
+↓
+Session Check
+↓
+Router
+↓
+Pages HTML
+↓
+Modules spécialisés
+↓
+Firestore / Storage / Payments
+↓
+UI Rendering
+
+---
+
+3. Architecture en Couches
+
+┌──────────────────────────────┐
+│ UI LAYER                     │
+│ pages / dashboard / admin    │
+└──────────────────────────────┘
+↓
+┌──────────────────────────────┐
+│ FEATURE LAYER                │
+│ auth                         │
+│ services                     │
+│ orders                       │
+│ payments                     │
+│ admin                        │
+│ ui                           │
+└──────────────────────────────┘
+↓
+┌──────────────────────────────┐
+│ CORE LAYER                   │
+│ app                          │
+│ router                       │
+│ state                        │
+│ guards                       │
+│ constants                    │
+└──────────────────────────────┘
+↓
+┌──────────────────────────────┐
+│ UTILS LAYER                  │
+│ validators                   │
+│ formatters                   │
+│ generators                   │
+│ helpers                      │
+│ sanitizer                    │
+│ storage                      │
+└──────────────────────────────┘
+↓
+┌──────────────────────────────┐
+│ BACKEND LAYER                │
+│ firebase/auth                │
+│ firebase/firestore           │
+│ firebase/storage             │
+│ firebase/functions           │
+└──────────────────────────────┘
+
+---
+
+4. Structure des Dossiers
+
+[Conserver exactement la structure actuelle du projet]
+
+La structure officielle du projet est la structure validée présente dans le repository.
+
+Aucun module ne doit être créé hors de cette architecture sans justification technique.
+
+---
+
+5. Responsabilités des Modules
+
+index.html
+
+Point d'entrée unique.
+
+Responsable :
+
+- chargement CSS
+- chargement JS principal
+- conteneur principal
+
+---
+
+main.js
+
+Bootstrap système.
+
+Responsable :
+
+- démarrage application
+- initialisation globale
+- lancement du router
+- vérification session
+
+Ne contient aucune logique métier.
+
+---
+
+core/app.js
+
+Initialisation centrale.
+
+Responsable :
+
+- démarrage Firebase
+- chargement configuration
+- préparation application
+
+---
+
+core/router.js
+
+Responsable :
+
+- navigation
+- résolution routes
+- protection routes
+- redirections
+
+Aucune logique métier.
+
+---
+
+core/state.js
+
+Source unique de vérité.
+
+Responsable :
+
+- utilisateur courant
+- session courante
+- état UI global
+- cache mémoire
+
+---
+
+core/guards.js
+
+Responsable :
+
+- contrôle accès
+- protection routes
+- vérification rôles
+- redirections sécurité
+
+---
+
+auth
+
+Responsable :
+
+- login
+- register
+- logout
+- reset password
+- gestion session
+
+---
+
+services
+
+Responsable :
+
+- catalogue
+- catégories
+- marques
+- filtres
+- détails services
+
+---
+
+orders
+
+Responsable :
+
+- création commandes
+- suivi commandes
+- gestion orderDrafts
+- mise à jour statuts
+
+---
+
+payments
+
+Responsable :
+
+- paiements
+- vérifications
+- webhooks
+- statuts transactions
+
+---
+
+admin
+
+Responsable :
+
+- administration
+- gestion utilisateurs
+- gestion commandes
+- analytics
+- monitoring
+
+---
+
+ui
+
+Responsable :
+
+- modals
+- toasts
+- loaders
+- tables
+- composants dynamiques
+
+Ne doit jamais communiquer directement avec Firestore.
+
+---
+
+firebase
+
+Responsable :
+
+- accès backend
+- Firestore
+- Auth
+- Storage
+- Functions
+
+Toutes les communications backend passent par cette couche.
+
+---
+
+utils
+
+Responsable :
+
+- validation
+- formatage
+- génération IDs
+- sécurité
+- helpers
+
+Fonctions pures uniquement.
+
+---
+
+6. Dépendances Autorisées
+
+AUTORISÉ
+
+pages
+→ feature modules
+
+feature modules
+→ core
+
+feature modules
+→ utils
+
+feature modules
+→ firebase
+
+core
+→ utils
+
+core
+→ firebase
+
+INTERDIT
+
+utils
+→ core
+
+utils
+→ firebase
+
+firebase
+→ core
+
+firebase
+→ ui
+
+ui
+→ firebase
+
+ui
+→ firestore direct
+
+---
+
+7. Flow Login
+
+login.html
+↓
+auth/login.js
+↓
+validators.js
+↓
+firebase/auth.js
+↓
+firestore.js
+↓
+state.js
+↓
+router.js
+↓
+dashboard.html
+
+---
+
+8. Flow Création Commande
+
+service-details.html
+↓
+orders/createOrder.js
+↓
+validators.js
+↓
+sanitizer.js
+↓
+orderDrafts
+↓
+checkout.html
+↓
+payments/initPayment.js
+↓
+payments collection
+↓
+orders collection
+
+---
+
+9. Flow Paiement
+
+checkout.html
+↓
+initPayment.js
+↓
+provider API
+↓
+verifyPayment.js
+↓
+payments
+↓
+orders
+↓
+notifications
+
+---
+
+10. Flow Administration
+
+admin page
+↓
+guards.js
+↓
+firestore.js
+↓
+orders/users/services
+↓
+ui rendering
+
+---
+
+11. Sécurité Architecture
+
+Obligatoire :
+
+- CSP active
+- Validation systématique
+- Sanitization systématique
+- Contrôle rôles centralisé
+- Routes protégées
+- Firestore Rules strictes
+- Aucun innerHTML
+- Aucun insertAdjacentHTML
+- Aucun onclick inline
+
+---
+
+12. Performance
+
+Obligatoire :
+
+- ES Modules
+- Lazy loading si nécessaire
+- Réutilisation composants
+- DocumentFragment
+- Réduction requêtes Firestore
+- Pagination données
+
+---
+
+13. Source Unique de Vérité
+
+Configuration globale :
+core/constants.js
+
+État global :
+core/state.js
+
+Sécurité :
+core/guards.js
+
+Backend :
+firebase/
+
+Utilitaires :
+utils/
+
+---
+
+14. Règles de Développement
+
+1 fichier = 1 responsabilité.
+
+Ne jamais dupliquer une logique existante.
+
+Toujours réutiliser :
+
+- utils
+- core
+- firebase
+
+Toute nouvelle fonctionnalité doit respecter les couches de l'architecture.
+
+Aucune dépendance circulaire.
+
+Aucun accès Firestore direct depuis les pages HTML.
+
+Aucun accès Firestore direct depuis ui/.
+
+---
+
+15. Vision Finale
+
+MASTER UNLOCKER est une plateforme SaaS modulaire basée sur Firebase permettant :
+
+- gestion utilisateurs
+- gestion commandes
+- paiements Mobile Money
+- licences logiciels
+- services mobiles
+- administration multi-rôles
+- automatisation future via APIs fournisseurs
+
+L'architecture doit rester stable, extensible et compatible avec une croissance importante du volume d'utilisateurs et de commandes.

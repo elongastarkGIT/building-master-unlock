@@ -1,6 +1,11 @@
 <!-- Référence composant : header public (à charger via JS Phase 2) -->
 <header id="site-header" class="site-header">
   <div class="container">
+    <button type="button" id="mobile-menu-toggle" class="menu-toggle menu-toggle-public" aria-label="Ouvrir le menu" aria-controls="mobile-nav" aria-expanded="false">
+      <span class="menu-toggle-bar" aria-hidden="true"></span>
+      <span class="menu-toggle-bar" aria-hidden="true"></span>
+      <span class="menu-toggle-bar" aria-hidden="true"></span>
+    </button>
     <a href="../pages/home.html" class="logo" data-link id="logo-link">
       <span class="logo-mark" aria-hidden="true">MU</span>
       <span id="logo-text">MASTER UNLOCKER</span>
@@ -22,10 +27,13 @@
     <a href="../pages/home.html" data-link id="mobile-nav-home">Accueil</a>
     <a href="../pages/services.html" data-link id="mobile-nav-services">Services</a>
     <a href="../pages/brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="../pages/tracking.html" data-link id="mobile-nav-tracking">Suivi commande</a>
     <a href="../pages/faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="../pages/announcements.html" data-link id="mobile-nav-announcements">Annonces</a>
     <a href="../pages/contact.html" data-link id="mobile-nav-contact">Contact</a>
     <a href="../pages/status.html" data-link id="mobile-nav-status">Statut</a>
     <a href="../pages/login.html" data-link id="mobile-nav-login">Connexion</a>
     <a href="../pages/register.html" data-link id="mobile-nav-register">Inscription</a>
   </nav>
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
 </header>
