@@ -539,6 +539,25 @@ function initFaqAccordion() {
   });
 }
 
+let authModulesPromise = null;
+
+function loadAuthModules() {
+  if (!authModulesPromise) {
+    authModulesPromise = Promise.all([
+      import("../firebase/auth.js"),
+      import("../auth/session.js")
+    ]).then(([authModule, sessionModule]) => ({
+      loginUser: authModule.loginUser,
+      loginWithGoogle: authModule.loginWithGoogle,
+      registerUser: authModule.registerUser,
+      listenSession: sessionModule.listenSession,
+      logoutSession: sessionModule.logoutSession
+    }));
+  }
+
+  return authModulesPromise;
+}
+
 function initAuthForms() {
   const loginForm = document.getElementById("login-form");
   const registerForm = document.getElementById("register-form");
@@ -547,19 +566,23 @@ function initAuthForms() {
     return;
   }
 
-  import("../firebase/auth.js")
-    .then(({ loginUser, loginWithGoogle, registerUser }) => import("../auth/session.js").then(({ listenSession, logoutSession }) => {
-      let suppressAuthenticatedRedirect = false;
+  let suppressAuthenticatedRedirect = false;
 
+  loadAuthModules()
+    .then(({ listenSession }) => {
       listenSession((session) => {
-    if (suppressAuthenticatedRedirect) {
-      return;
-    }
+        if (suppressAuthenticatedRedirect) {
+          return;
+        }
 
-    if (session?.data) {
-      navigateTo(getAuthenticatedRedirect(session));
-    }
-  });
+        if (session?.data) {
+          navigateTo(getAuthenticatedRedirect(session));
+        }
+      });
+    })
+    .catch((error) => {
+      console.error("AUTH SESSION INIT ERROR:", error);
+    });
 
   if (loginForm) {
     const loginError = document.getElementById("login-error");
@@ -576,6 +599,7 @@ function initAuthForms() {
       const password = formData.get("password");
 
       try {
+        const { loginUser } = await loadAuthModules();
         await loginUser(email, password);
         navigateTo(ROUTES.user.dashboard);
       } catch (error) {
@@ -589,6 +613,7 @@ function initAuthForms() {
       setPendingState([loginSubmit, loginGoogle], true);
 
       try {
+        const { loginWithGoogle } = await loadAuthModules();
         await loginWithGoogle();
         navigateTo(ROUTES.user.dashboard);
       } catch (error) {
@@ -620,6 +645,7 @@ function initAuthForms() {
       const formData = new FormData(registerForm);
 
       try {
+        const { registerUser, logoutSession } = await loadAuthModules();
         await registerUser({
           fullName: formData.get("fullName"),
           email: formData.get("email"),
@@ -641,6 +667,7 @@ function initAuthForms() {
       setPendingState([registerSubmit, registerGoogle], true);
 
       try {
+        const { loginWithGoogle } = await loadAuthModules();
         await loginWithGoogle();
         navigateTo(ROUTES.user.dashboard);
       } catch (error) {
@@ -649,10 +676,6 @@ function initAuthForms() {
       }
     });
   }
-    }))
-    .catch((error) => {
-      console.error("AUTH FORMS ERROR:", error);
-    });
 }
 
 function initPublicMobileNav() {
@@ -669,6 +692,37 @@ function initPublicMobileNav() {
     return;
   }
 
+  document.body.appendChild(mobileNav);
+
+  const navHeader = document.createElement("div");
+  navHeader.className = "mobile-nav-header";
+  navHeader.id = "mobile-nav-header";
+
+  const navTitle = document.createElement("span");
+  navTitle.className = "mobile-nav-title";
+  navTitle.id = "mobile-nav-title";
+  navTitle.textContent = "Navigation";
+
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.id = "mobile-nav-close";
+  closeButton.className = "mobile-nav-close";
+  closeButton.setAttribute("aria-label", "Fermer le menu");
+
+  for (let index = 0; index < 2; index += 1) {
+    const bar = document.createElement("span");
+    bar.className = "mobile-nav-close-bar";
+    bar.setAttribute("aria-hidden", "true");
+    closeButton.appendChild(bar);
+  }
+
+  navHeader.appendChild(navTitle);
+  navHeader.appendChild(closeButton);
+
+  const linksWrap = document.createElement("div");
+  linksWrap.className = "mobile-nav-links";
+  linksWrap.id = "mobile-nav-links";
+
   const drawerLinksFragment = document.createDocumentFragment();
 
   PUBLIC_DRAWER_LINKS.forEach(({ href, id, label }) => {
@@ -680,7 +734,8 @@ function initPublicMobileNav() {
     drawerLinksFragment.appendChild(link);
   });
 
-  mobileNav.replaceChildren(drawerLinksFragment);
+  linksWrap.appendChild(drawerLinksFragment);
+  mobileNav.replaceChildren(navHeader, linksWrap);
 
   let toggle = document.getElementById("mobile-menu-toggle");
 
@@ -710,15 +765,22 @@ function initPublicMobileNav() {
     overlay.id = "mobile-nav-overlay";
     overlay.className = "mobile-nav-overlay";
     overlay.setAttribute("aria-hidden", "true");
-    header.appendChild(overlay);
   }
 
+  document.body.appendChild(overlay);
+
   const closeMenu = () => {
+    if (!mobileNav.classList.contains("is-open")) {
+      return;
+    }
+
     mobileNav.classList.remove("is-open");
     overlay.classList.remove("is-open");
     document.body.classList.remove("mobile-nav-open");
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", "Ouvrir le menu");
+    overlay.setAttribute("aria-hidden", "true");
+    mobileNav.setAttribute("aria-hidden", "true");
   };
 
   const openMenu = () => {
@@ -727,6 +789,8 @@ function initPublicMobileNav() {
     document.body.classList.add("mobile-nav-open");
     toggle.setAttribute("aria-expanded", "true");
     toggle.setAttribute("aria-label", "Fermer le menu");
+    overlay.setAttribute("aria-hidden", "false");
+    mobileNav.setAttribute("aria-hidden", "false");
   };
 
   const toggleMenu = () => {
@@ -738,11 +802,38 @@ function initPublicMobileNav() {
     openMenu();
   };
 
-  toggle.addEventListener("click", toggleMenu);
+  toggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleMenu();
+  });
+
+  closeButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    closeMenu();
+  });
+
   overlay.addEventListener("click", closeMenu);
 
-  mobileNav.querySelectorAll("a").forEach((link) => {
+  linksWrap.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!mobileNav.classList.contains("is-open")) {
+      return;
+    }
+
+    const target = event.target;
+
+    if (
+      mobileNav.contains(target) ||
+      toggle.contains(target) ||
+      overlay.contains(target)
+    ) {
+      return;
+    }
+
+    closeMenu();
   });
 
   document.addEventListener("keydown", (event) => {
@@ -750,6 +841,8 @@ function initPublicMobileNav() {
       closeMenu();
     }
   });
+
+  mobileNav.setAttribute("aria-hidden", "true");
 }
 
 function isIndexPage() {
