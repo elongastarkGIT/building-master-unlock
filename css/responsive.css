@@ -16,11 +16,12 @@
 
 @media (max-width: 768px) {
   .nav-main,
-  .nav-actions .btn-ghost {
+  .nav-actions {
     display: none;
   }
 
   .site-header .container {
+    justify-content: flex-start;
     gap: var(--space-3);
   }
 

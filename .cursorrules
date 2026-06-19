@@ -1,0 +1,97 @@
+# =====================================================================
+# OBJECTIF DE DÉVELOPPEMENT - MASTER UNLOCKER
+# =====================================================================
+Ce document définit l'ordre officiel et l'architecture de MASTER UNLOCKER.
+Buts : Éviter les dépendances cassées, éliminer les retours inutiles, garantir une architecture SaaS cohérente, et maintenir une progression stable sans perte de contexte.
+
+# =====================================================================
+# RÈGLES OBLIGATOIRES DE CODAGE & FLUX
+# =====================================================================
+1. Toujours travailler sur un seul fichier à la fois.
+2. Respecter strictement l'ordre du flow de développement. Ne jamais sauter un fichier.
+3. Ne jamais revenir modifier un fichier validé sauf : bug critique, faille sécurité, dépendance cassée.
+4. Toujours analyser les fichiers existants, imports et dépendances réelles avant toute génération.
+5. Privilégier la réutilisation du code existant. Interdiction de contourner ARCHITECTURE.md ou DATABASE.md.
+6. INTERDICTION ABSOLUE de créer des fichiers doublons ou de nouveaux fichiers (ex: pas de fichier "chargement" ou "ui" sorti de nulle part). Utilise les ressources existantes (ex: pour le chargement, intègre "loaders.html" style Hostinger load).
+
+# =====================================================================
+# AUDIT OBLIGATOIRE AVANT MODIFICATION
+# =====================================================================
+Avant chaque création ou modification :
+1. Lire le fichier concerné.
+2. Vérifier les dépendances, imports et exports.
+3. Vérifier la cohérence avec : PRD.md, ARCHITECTURE.md, DATABASE.md, DEVELOPMENT-FLOW.md.
+Si une amélioration est possible, la signaler et expliquer l'impact avant de coder. Ne jamais approuver automatiquement un fichier.
+
+# =====================================================================
+# PAGE-ROLES OBLIGATOIRE (DOCUMENTATION AUTOMATIQUE)
+# =====================================================================
+Après validation d'un fichier, crée AUTOMATIQUEMENT son résumé JSON dans "/page-roles" sous le format "nomDuFichier-role.json".
+Exemple de structure requis :
+{
+  "file": "main.js",
+  "status": "validated",
+  "role": "Bootstrap principal de l'application",
+  "responsibilities": ["Démarrer application", "Initialiser système", "Lancer router"],
+  "dependsOn": ["app.js", "router.js"],
+  "usedBy": ["index.html"]
+}
+
+# =====================================================================
+# ÉTAT DU PROJET & FLOW OFFICIEL ACTUEL
+# =====================================================================
+Fichiers déjà Validés (NE PAS TOUCHER) :
+utils/helpers.js ✅ | utils/generators.js ✅ | js/core/constants.js ✅ | js/core/state.js ✅ | js/core/guards.js ✅ | firebase/firebaseConfig.js ✅ | firebase/firestore.js ✅ | firebase/auth.js ✅ | utils/validators.js ✅ | utils/sanitizer.js ✅ | utils/formatters.js ✅ | js/core/router.js ✅ | js/main.js ✅
+
+Étape suivante immédiate :
+-> utils/storage.js (Rôle : cache localStorage, sessionStorage, persistance légère, helpers stockage)
+Puis :
+-> js/auth/session.js (Rôle : session utilisateur, sync Firebase Auth, chargement utilisateur, reconnexion)
+Puis :
+-> js/ui/toast.js (Rôle : notifications système : succès, erreurs, avertissements)
+Puis :
+-> js/ui/modal.js (Rôle : fenêtres modales, confirmations, alertes)
+
+RÈGLE DE DÉPENDANCE : Un fichier ne peut être développé que si toutes ses dépendances directes sont terminées (ex: storage.js doit être fini avant session.js).
+
+# =====================================================================
+# ARCHITECTURE DE LA BASE DE DONNÉES (FIREBASE FIRESTORE PRO)
+# =====================================================================
+Toute manipulation de données doit respecter scrupuleusement la structure SaaS scalable suivante :
+
+1. users/{uid} -> { uid:string, fullName:string, email:string, phone:string, country:string, photoURL:string, role:string(user|support|operator|manager|superadmin), status:string(active|suspended|banned|pending), emailVerified:boolean, phoneVerified:boolean, preferredLanguage:string, currency:string, totalOrders:number, totalSpent:number, lastLoginAt:timestamp, createdAt:timestamp, updatedAt:timestamp }
+2. admins/{uid} -> { uid:string, fullName:string, email:string, role:string(support|operator|manager|superadmin), permissions:array, active:boolean, createdAt:timestamp, updatedAt:timestamp }
+3. services/{serviceId} -> { title:string, slug:string, shortDescription:string, description:string, categoryId:string, brandId:string, active:boolean, featured:boolean, automatic:boolean, semiAutomatic:boolean, estimatedTime:string, basePrice:number, currency:string, promoPrice:number, imageURL:string, iconURL:string, tags:array, requiredFields:array, seoTitle:string, seoDescription:string, views:number, ordersCount:number, createdAt:timestamp, updatedAt:timestamp }
+4. serviceCategories/{categoryId} -> { title:string, slug:string, description:string, icon:string, active:boolean, createdAt:timestamp }
+5. brands/{brandId} -> { name:string, slug:string, logoURL:string, active:boolean, popular:boolean, createdAt:timestamp }
+6. tools/{toolId} -> { name:string, slug:string, logoURL:string, website:string, active:boolean, supportsCredits:boolean, supportsLicenses:boolean, createdAt:timestamp, updatedAt:timestamp }
+7. orders/{orderId} -> { orderNumber:string, paymentId:string, serviceId:string, status:string(pending|paid|processing|completed|failed|refunded), processingStatus:string(waiting|in_progress|done), client:{uid,name,phone,email}, fields:{imei,serial,username,androidVersion}, amount:number, currency:string, assignedAdmin:string, notes:string, result:string, resultFiles:array, proofImages:array, providerResponse:map, createdAt:timestamp, updatedAt:timestamp, completedAt:timestamp }
+8. orderDrafts/{draftId} -> { uid:string, serviceId:string, temporaryData:map, amount:number, currency:string, paymentProvider:string, expiresAt:timestamp, convertedToOrder:boolean, createdAt:timestamp }
+9. payments/{paymentId} -> { orderDraftId:string, orderId:string, provider:string(cinetpay|flutterwave), transactionId:string, paymentMethod:string(momo|card), amount:number, currency:string, status:string(pending|success|failed|cancelled), customerPhone:string, providerResponse:map, webhookVerified:boolean, refunded:boolean, refundAmount:number, createdAt:timestamp, updatedAt:timestamp }
+10. notifications/{notificationId} -> { uid:string, type:string(order|payment|system), title:string, message:string, read:boolean, targetRole:string, actionURL:string, createdAt:timestamp }
+11. tickets/{ticketId} -> { uid:string, orderId:string, subject:string, message:string, status:string(open|closed|pending), priority:string(low|medium|high), assignedAdmin:string, createdAt:timestamp, updatedAt:timestamp }
+12. reviews/{reviewId} -> { uid:string, orderId:string, rating:number, comment:string, approved:boolean, createdAt:timestamp }
+13. wallets/{walletId} -> { uid:string, balance:number, currency:string, totalDeposits:number, totalSpent:number, updatedAt:timestamp }
+14. transactions/{transactionId} -> { walletId:string, type:string(deposit|payment|refund), amount:number, balanceBefore:number, balanceAfter:number, reference:string, createdAt:timestamp }
+15. providers/{providerId} -> { name:string, active:boolean, apiEnabled:boolean, apiURL:string, supportedServices:array, createdAt:timestamp }
+16. apiIntegrations/{integrationId} -> { providerId:string, serviceId:string, enabled:boolean, mode:string(sandbox|live), createdAt:timestamp }
+17. toolLicenses/{licenseId} -> { uid:string, toolId:string, username:string, duration:string, startDate:timestamp, endDate:timestamp, active:boolean, createdAt:timestamp }
+18. announcements/{announcementId} -> { title:string, message:string, type:string(maintenance|update|alert), active:boolean, createdAt:timestamp }
+19. settings/general -> { platformName:string, supportEmail:string, supportWhatsapp:string, maintenanceMode:boolean, defaultCurrency:string, allowRegistrations:boolean, updatedAt:timestamp }
+20. logs/{logId} -> { uid:string, action:string, target:string, ip:string, userAgent:string, success:boolean, createdAt:timestamp }
+21. currencies/{currencyId} -> { code:string(USD|CDF), symbol:string, exchangeRate:number, active:boolean, updatedAt:timestamp }
+22. countries/{countryId} -> { name:string, code:string, currency:string, active:boolean }
+23. promotions/{promoId} -> { code:string, discountType:string(fixed|percent), value:number, active:boolean, expiresAt:timestamp, usageLimit:number, usedCount:number }
+24. resellers/{resellerId} -> { uid:string, companyName:string, balance:number, level:string, active:boolean, createdAt:timestamp }
+25. uploads/{uploadId} -> { uid:string, orderId:string, type:string(proof|screenshot|result), fileURL:string, fileName:string, fileSize:number, mimeType:string, uploadedAt:timestamp }
+26. reports/{reportId} -> { type:string, generatedAt:timestamp, data:map }
+27. savedDevices/{deviceId} -> { uid:string, brand:string, model:string, imei:string, serial:string, createdAt:timestamp }
+28. faqs/{faqId} -> { question:string, answer:string, category:string, active:boolean, createdAt:timestamp }
+29. statusPages/{statusId} -> { service:string, status:string(operational|degraded|offline), message:string, updatedAt:timestamp }
+
+# =====================================================================
+# RÈGLE CRUCIALE SUR LES PAIEMENTS & FIREBASE FUNCTIONS
+# =====================================================================
+- Actuellement, le projet utilise UNIQUELEMENT Firestore et Firebase Auth côté client.
+- INTERDICTION d'écrire ou de configurer des scripts de paiement (CinetPay, Flutterwave) directement côté client si cela nécessite des clés secrètes ou des webhooks sécurisés.
+- Dès que le flux de développement exigera l'intégration d'un paiement, tu devras IMPÉRATIVEMENT me signaler qu'il est temps de créer et de déployer des **Firebase Cloud Functions** sur notre projet Firebase pour sécuriser les transactions et recevoir les webhooks de paiement. Ne génère aucune intégration de paiement bancaire ou Mobile Money en dur côté front-end.

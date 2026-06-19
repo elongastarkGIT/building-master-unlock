@@ -14,8 +14,9 @@
 .site-header .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   height: 100%;
+  gap: var(--space-3);
 }
 
 .logo {
@@ -41,7 +42,7 @@
 }
 
 .nav-main {
-  display: flex;
+  display: none;
   align-items: center;
   gap: var(--space-6);
 }
@@ -59,7 +60,7 @@
 }
 
 .nav-actions {
-  display: flex;
+  display: none;
   align-items: center;
   gap: var(--space-3);
 }
@@ -77,6 +78,7 @@
 
 .menu-toggle-public {
   display: inline-flex;
+  flex-direction: column;
   width: 44px;
   height: 44px;
   align-items: center;
@@ -93,10 +95,10 @@
 
 .menu-toggle-public .menu-toggle-bar {
   display: block;
-  width: 18px;
-  height: 2px;
+  width: 20px;
+  height: 2.5px;
   border-radius: 999px;
-  background: currentColor;
+  background: #f1f5f9;
   transition: transform var(--transition-fast), opacity var(--transition-fast);
 }
 
@@ -586,6 +588,7 @@ body.mobile-nav-open {
   width: 60%;
   margin-bottom: var(--space-4);
 }
+
 
 /* Toast container (visual) */
 .toast-container {

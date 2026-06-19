@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+
+[STRICT RULE: NO UNNECESSARY REFACTORING]
+- Si le code soumis par l'utilisateur est correct et fonctionnel, NE LE CORRIGE PAS et ne le réécris pas sous prétexte de "l'améliorer" ou de changer le style (formatting, clean up).
+- Concentre-toi uniquement sur la tâche demandée (ex: ajouter une feature, corriger un bug spécifique).
+- Si aucune modification n'est nécessaire sur une portion de code, laisse-la strictement intacte.
+- Ne propose pas de versions alternatives "plus élégantes" ou "plus modernes" de mon code si la version actuelle marche déjà. Va droit au but.

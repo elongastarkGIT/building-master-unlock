@@ -1,7 +1,7 @@
 import { initCore } from "./core/app.js";
 import { initRouter, setActiveLinks, fixAbsoluteLinks } from "./core/router.js";
-import { COLLECTIONS, ROUTES, USER_ROLES, resolvePath } from "./core/constants.js";
-import { listenSession, logoutSession } from "./auth/session.js";
+import { COLLECTIONS, ROUTES, resolvePath } from "./core/constants.js";
+import { listenSession, logoutSession, getSession } from "./auth/session.js";
 import { loginUser, loginWithGoogle, registerUser } from "../firebase/auth.js";
 import { getDocument, listenCollection, queryDocuments } from "../firebase/firestore.js";
 import { formatCurrency } from "../utils/formatters.js";
@@ -43,11 +43,8 @@ function cleanupSensitiveQueryParams() {
 }
 
 function getAuthenticatedRedirect(session) {
-  if (session?.data?.role === USER_ROLES.USER) {
-    return ROUTES.user.dashboard;
-  }
-
-  return ROUTES.admin.dashboard;
+  void session;
+  return ROUTES.user.dashboard;
 }
 
 function showFormError(element, message) {
@@ -572,6 +569,7 @@ function initAuthForms() {
 
       try {
         await loginUser(email, password);
+        navigateTo(ROUTES.user.dashboard);
       } catch (error) {
         showFormError(loginError, mapAuthError(error));
         setPendingState([loginSubmit, loginGoogle], false);
@@ -584,6 +582,7 @@ function initAuthForms() {
 
       try {
         await loginWithGoogle();
+        navigateTo(ROUTES.user.dashboard);
       } catch (error) {
         showFormError(loginError, mapAuthError(error));
         setPendingState([loginSubmit, loginGoogle], false);
@@ -635,6 +634,7 @@ function initAuthForms() {
 
       try {
         await loginWithGoogle();
+        navigateTo(ROUTES.user.dashboard);
       } catch (error) {
         showFormError(registerError, mapAuthError(error));
         setPendingState([registerSubmit, registerGoogle], false);
@@ -740,25 +740,132 @@ function initPublicMobileNav() {
   });
 }
 
+function isIndexPage() {
+  const pathname = window.location.pathname.toLowerCase();
+  return pathname.endsWith("/index.html") || pathname.endsWith("/");
+}
+
+function initGlobalAppLoader() {
+  const loader = document.getElementById("global-app-loader");
+  const progressFill = document.getElementById("progress-fill");
+  const statusText = document.getElementById("status-text");
+  const key = document.getElementById("key");
+  const shackle = document.getElementById("shackle");
+
+  if (!loader || !progressFill || !statusText || !key || !shackle) {
+    return {
+      complete: async () => {}
+    };
+  }
+
+  const steps = [
+    { progress: 15, text: "Connexion securisee S-Unlock API...", duration: 900 },
+    { progress: 40, text: "Analyse des donnees materielles...", duration: 900 },
+    { progress: 65, text: "Generation de la cle de deverrouillage...", duration: 1200 },
+    { progress: 85, text: "Injection et rotation du token...", duration: 1400 }
+  ];
+
+  let resolveSequence;
+  const sequenceDone = new Promise((resolve) => {
+    resolveSequence = resolve;
+  });
+
+  const runStep = (index) => {
+    if (index >= steps.length) {
+      resolveSequence();
+      return;
+    }
+
+    const step = steps[index];
+    progressFill.style.width = `${step.progress}%`;
+    statusText.textContent = step.text;
+
+    if (step.progress === 65) {
+      window.setTimeout(() => {
+        key.classList.add("arrive");
+      }, 150);
+    }
+
+    if (step.progress === 85) {
+      window.setTimeout(() => {
+        key.classList.add("turn");
+        window.setTimeout(() => {
+          shackle.classList.add("opened");
+          window.setTimeout(() => {
+            key.classList.add("fade-out");
+          }, 200);
+        }, 420);
+      }, 220);
+    }
+
+    window.setTimeout(() => {
+      runStep(index + 1);
+    }, step.duration);
+  };
+
+  window.setTimeout(() => runStep(0), 250);
+
+  return {
+    complete: async (redirectPath) => {
+      await sequenceDone;
+
+      progressFill.style.width = "100%";
+      statusText.textContent = "Verification terminee. Redirection...";
+      statusText.style.color = "#00cec9";
+
+      await new Promise((resolve) => {
+        window.setTimeout(resolve, 260);
+      });
+
+      loader.style.transition = "opacity 260ms ease";
+      loader.style.opacity = "0";
+
+      await new Promise((resolve) => {
+        window.setTimeout(resolve, 260);
+      });
+
+      loader.style.display = "none";
+
+      if (redirectPath) {
+        navigateTo(redirectPath);
+      }
+    }
+  };
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
+  const loaderController = initGlobalAppLoader();
+  let initCoreError = null;
+
+  cleanupSensitiveQueryParams();
+  fixAbsoluteLinks();
+  initPublicMobileNav();
+  initFaqAccordion();
+  initRouter();
+  initAuthForms();
+  initServicesCatalog();
+  await initServiceDetails();
+  setActiveLinks();
+  window.addEventListener("popstate", setActiveLinks);
+
   try {
-    cleanupSensitiveQueryParams();
-    fixAbsoluteLinks();
-    initPublicMobileNav();
-    initFaqAccordion();
-
     await initCore();
-
-    initRouter();
-    initAuthForms();
-    initServicesCatalog();
-    await initServiceDetails();
-
-    setActiveLinks();
-
-    window.addEventListener("popstate", setActiveLinks);
-
   } catch (e) {
-    console.error("INIT ERROR:", e);
+    initCoreError = e;
+    console.error("INIT CORE ERROR:", e);
+  }
+
+  if (isIndexPage()) {
+    const session = getSession();
+    const redirectPath = session?.data
+      ? getAuthenticatedRedirect(session)
+      : ROUTES.public.home;
+
+    await loaderController.complete(redirectPath);
+    return;
+  }
+
+  if (!initCoreError) {
+    await loaderController.complete();
   }
 });
