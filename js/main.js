@@ -545,7 +545,7 @@ function loadAuthModules() {
   if (!authModulesPromise) {
     authModulesPromise = Promise.all([
       import("../firebase/auth.js"),
-      import("../auth/session.js")
+      import("./auth/session.js")
     ]).then(([authModule, sessionModule]) => ({
       loginUser: authModule.loginUser,
       loginWithGoogle: authModule.loginWithGoogle,
