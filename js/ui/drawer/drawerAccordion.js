@@ -1,20 +1,24 @@
 // /js/ui/drawer/drawerAccordion.js
 
-function toggleAccordionGroup(group, trigger, panel, arrow) {
-  const isOpen = group.classList.contains("is-open");
+function closeAccordionGroup(group, trigger, arrow) {
+  group.classList.remove("is-open");
+  trigger.setAttribute("aria-expanded", "false");
+  arrow.setAttribute("data-state", "closed");
+}
 
-  if (isOpen) {
-    group.classList.remove("is-open");
-    trigger.setAttribute("aria-expanded", "false");
-    panel.hidden = true;
-    arrow.textContent = "v";
+function openAccordionGroup(group, trigger, arrow) {
+  group.classList.add("is-open");
+  trigger.setAttribute("aria-expanded", "true");
+  arrow.setAttribute("data-state", "open");
+}
+
+function toggleAccordionGroup(group, trigger, arrow) {
+  if (group.classList.contains("is-open")) {
+    closeAccordionGroup(group, trigger, arrow);
     return;
   }
 
-  group.classList.add("is-open");
-  trigger.setAttribute("aria-expanded", "true");
-  panel.hidden = false;
-  arrow.textContent = "^";
+  openAccordionGroup(group, trigger, arrow);
 }
 
 export function createAccordionGroup({
@@ -41,7 +45,8 @@ export function createAccordionGroup({
   const arrow = document.createElement("span");
   arrow.className = "mobile-nav-accordion-arrow";
   arrow.setAttribute("aria-hidden", "true");
-  arrow.textContent = defaultOpen ? "^" : "v";
+  arrow.setAttribute("data-state", defaultOpen ? "open" : "closed");
+  arrow.textContent = "v";
 
   trigger.appendChild(labelSpan);
   trigger.appendChild(arrow);
@@ -49,7 +54,9 @@ export function createAccordionGroup({
   const panel = document.createElement("div");
   panel.className = "mobile-nav-accordion-panel";
   panel.id = `${id}-panel`;
-  panel.hidden = !defaultOpen;
+
+  const panelInner = document.createElement("div");
+  panelInner.className = "mobile-nav-accordion-panel-inner";
 
   const panelList = document.createElement("div");
   panelList.className = "mobile-nav-accordion-links";
@@ -60,17 +67,24 @@ export function createAccordionGroup({
     link.id = item.id;
     link.textContent = item.label;
     link.setAttribute("data-link", "");
+    link.tabIndex = defaultOpen ? 0 : -1;
     panelList.appendChild(link);
   });
 
-  panel.appendChild(panelList);
+  panelInner.appendChild(panelList);
+  panel.appendChild(panelInner);
 
   if (defaultOpen) {
     group.classList.add("is-open");
   }
 
   trigger.addEventListener("click", () => {
-    toggleAccordionGroup(group, trigger, panel, arrow);
+    const willOpen = !group.classList.contains("is-open");
+    toggleAccordionGroup(group, trigger, arrow);
+
+    panelList.querySelectorAll("a").forEach((link) => {
+      link.tabIndex = willOpen ? 0 : -1;
+    });
   });
 
   group.appendChild(trigger);

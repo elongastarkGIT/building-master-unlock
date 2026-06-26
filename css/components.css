@@ -235,23 +235,25 @@
     transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.mobile-nav.is-open a {
+.mobile-nav.is-open .mobile-nav-static-links > a,
+.mobile-nav.is-open .mobile-nav-user-block > a {
   opacity: 1;
   transform: translateX(0);
 }
 
-.mobile-nav.is-open a:nth-child(1) { transition-delay: 40ms; }
-.mobile-nav.is-open a:nth-child(2) { transition-delay: 60ms; }
-.mobile-nav.is-open a:nth-child(3) { transition-delay: 80ms; }
-.mobile-nav.is-open a:nth-child(4) { transition-delay: 100ms; }
-.mobile-nav.is-open a:nth-child(5) { transition-delay: 120ms; }
-.mobile-nav.is-open a:nth-child(6) { transition-delay: 140ms; }
-.mobile-nav.is-open a:nth-child(7) { transition-delay: 160ms; }
-.mobile-nav.is-open a:nth-child(8) { transition-delay: 180ms; }
-.mobile-nav.is-open a:nth-child(9) { transition-delay: 200ms; }
-.mobile-nav.is-open a:nth-child(10) { transition-delay: 220ms; }
+.mobile-nav.is-open .mobile-nav-static-links > a:nth-child(1) { transition-delay: 40ms; }
+.mobile-nav.is-open .mobile-nav-static-links > a:nth-child(2) { transition-delay: 60ms; }
+.mobile-nav.is-open .mobile-nav-static-links > a:nth-child(3) { transition-delay: 80ms; }
+.mobile-nav.is-open .mobile-nav-static-links > a:nth-child(4) { transition-delay: 100ms; }
+.mobile-nav.is-open .mobile-nav-static-links > a:nth-child(5) { transition-delay: 120ms; }
+.mobile-nav.is-open .mobile-nav-static-links > a:nth-child(6) { transition-delay: 140ms; }
+.mobile-nav.is-open .mobile-nav-static-links > a:nth-child(7) { transition-delay: 160ms; }
 
-.mobile-nav:not(.is-open) a {
+.mobile-nav.is-open .mobile-nav-user-block > a { transition-delay: 30ms; }
+.mobile-nav.is-open .mobile-nav-user-block .mobile-nav-logout-btn { transition-delay: 50ms; }
+
+.mobile-nav:not(.is-open) .mobile-nav-static-links > a,
+.mobile-nav:not(.is-open) .mobile-nav-user-block > a {
   transition-delay: 0ms;
 }
 
@@ -266,7 +268,33 @@
   margin-top: var(--space-2);
 }
 
-.mobile-nav-logout-btn,
+.mobile-nav-logout-btn {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  padding: calc(var(--space-4) + 2px) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    opacity 220ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobile-nav.is-open .mobile-nav-user-block .mobile-nav-logout-btn {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .footer-logout-btn {
   width: 100%;
   text-align: left;
@@ -300,12 +328,25 @@
   color: var(--color-primary);
   border-color: rgba(106, 164, 255, 0.35);
   background: rgba(106, 164, 255, 0.14);
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    opacity 220ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobile-nav.is-open .mobile-nav-primary-link {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .mobile-nav-accordion {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0;
 }
 
 .mobile-nav-accordion-trigger {
@@ -323,7 +364,18 @@
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.04);
   cursor: pointer;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    background 220ms ease,
+    border-color 220ms ease,
+    opacity 220ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobile-nav.is-open .mobile-nav-accordion-trigger {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .mobile-nav-accordion-trigger:hover,
@@ -337,30 +389,86 @@
 }
 
 .mobile-nav-accordion-arrow {
-  font-size: var(--text-sm);
-  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
   line-height: 1;
+  color: var(--color-primary);
+  transform: rotate(0deg);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobile-nav-accordion.is-open .mobile-nav-accordion-arrow {
+  transform: rotate(180deg);
 }
 
 .mobile-nav-accordion-panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  display: grid;
+  grid-template-rows: 0fr;
   padding-left: var(--space-2);
+  transition: grid-template-rows 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobile-nav-accordion.is-open .mobile-nav-accordion-panel {
+  grid-template-rows: 1fr;
+}
+
+.mobile-nav-accordion-panel-inner {
+  overflow: hidden;
+  min-height: 0;
 }
 
 .mobile-nav-accordion-links {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  padding-top: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 220ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    padding-top 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.mobile-nav-accordion.is-open .mobile-nav-accordion-links {
+  padding-top: var(--space-2);
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .mobile-nav-accordion-links a {
   font-size: var(--text-sm);
   font-weight: 600;
   padding: var(--space-3) var(--space-4);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    opacity 200ms ease,
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobile-nav-accordion.is-open .mobile-nav-accordion-links a {
   opacity: 1;
-  transform: none;
+  transform: translateX(0);
+}
+
+.mobile-nav-accordion.is-open .mobile-nav-accordion-links a:nth-child(1) { transition-delay: 50ms; }
+.mobile-nav-accordion.is-open .mobile-nav-accordion-links a:nth-child(2) { transition-delay: 80ms; }
+.mobile-nav-accordion.is-open .mobile-nav-accordion-links a:nth-child(3) { transition-delay: 110ms; }
+.mobile-nav-accordion.is-open .mobile-nav-accordion-links a:nth-child(4) { transition-delay: 140ms; }
+
+.mobile-nav-accordion:not(.is-open) .mobile-nav-accordion-links a {
+  transition-delay: 0ms;
 }
 
 .mobile-nav-static-links {
