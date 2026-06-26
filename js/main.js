@@ -1,5 +1,5 @@
 import { initRouter, setActiveLinks, fixAbsoluteLinks } from "./core/router.js";
-import { COLLECTIONS, ROUTES, resolvePath } from "./core/constants.js";
+import { COLLECTIONS, ROUTES, resolvePath, ADMIN_ROLES } from "./core/constants.js";
 import { formatCurrency } from "../utils/formatters.js";
 import { sanitizeObject, sanitizeText } from "../utils/sanitizer.js";
 
@@ -39,7 +39,12 @@ function cleanupSensitiveQueryParams() {
 }
 
 function getAuthenticatedRedirect(session) {
-  void session;
+  const role = session?.data?.role;
+
+  if (role && Object.values(ADMIN_ROLES).includes(role)) {
+    return ROUTES.admin.dashboard;
+  }
+
   return ROUTES.user.dashboard;
 }
 

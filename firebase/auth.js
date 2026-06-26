@@ -49,16 +49,26 @@ async function loadUserSessionData(user) {
   const userRef = doc(db, COL_USERS, user.uid);
   const adminRef = doc(db, COL_ADMINS, user.uid);
 
-  const [userSnap, adminSnap] = await Promise.all([
-    getDoc(userRef),
-    getDoc(adminRef)
-  ]);
+  let userSnap = null;
+  let adminSnap = null;
 
-  if (!userSnap.exists() && !adminSnap.exists()) {
+  try {
+    userSnap = await getDoc(userRef);
+  } catch (error) {
+    console.error("USER PROFILE READ ERROR:", error);
+  }
+
+  try {
+    adminSnap = await getDoc(adminRef);
+  } catch (error) {
+    console.error("ADMIN PROFILE READ ERROR:", error);
+  }
+
+  if (!userSnap?.exists() && !adminSnap?.exists()) {
     return null;
   }
 
-  const data = userSnap.exists()
+  const data = userSnap?.exists()
     ? { ...userSnap.data() }
     : {
         uid: user.uid,
@@ -69,8 +79,12 @@ async function loadUserSessionData(user) {
         status: USER_STATUS_ACTIVE
       };
 
-  if (adminSnap.exists()) {
+  if (adminSnap?.exists()) {
     const adminData = adminSnap.data();
+
+    if (adminData.active === false) {
+      return null;
+    }
 
     if (adminData.role) {
       data.role = adminData.role;
@@ -78,6 +92,8 @@ async function loadUserSessionData(user) {
 
     if (adminData.status) {
       data.status = adminData.status;
+    } else if (adminData.active === true || adminData.active === undefined) {
+      data.status = USER_STATUS_ACTIVE;
     }
   }
 
@@ -205,34 +221,64 @@ async function resetPassword(email) {
 /* =========================
    SESSION SYSTEM (CORE)
 ========================= */
-function listenAuth(callback) {
-  return onAuthStateChanged(auth, async (user) => {
+const authCallbacks = new Set();
+let authStateUnsubscribe = null;
 
-    if (!user) {
-      currentUser = null;
-      currentUserData = null;
-      callback(null);
-      return;
-    }
+async function buildSession(user) {
+  if (!user) {
+    currentUser = null;
+    currentUserData = null;
+    return null;
+  }
 
-    const data = await loadUserSessionData(user);
+  const data = await loadUserSessionData(user);
 
-    if (!data) {
-      await signOut(auth);
-      currentUser = null;
-      currentUserData = null;
-      callback(null);
-      return;
-    }
+  if (!data) {
+    await signOut(auth);
+    currentUser = null;
+    currentUserData = null;
+    return null;
+  }
 
-    currentUser = user;
-    currentUserData = data;
+  currentUser = user;
+  currentUserData = data;
 
-    callback({
-      auth: user,
-      data
-    });
+  return {
+    auth: user,
+    data
+  };
+}
+
+function notifyAuthCallbacks(session) {
+  authCallbacks.forEach((callback) => {
+    callback(session);
   });
+}
+
+function listenAuth(callback) {
+  if (typeof callback !== "function") {
+    return () => {};
+  }
+
+  authCallbacks.add(callback);
+
+  if (!authStateUnsubscribe) {
+    authStateUnsubscribe = onAuthStateChanged(auth, async (user) => {
+      const session = await buildSession(user);
+      notifyAuthCallbacks(session);
+    });
+  } else if (currentUser && currentUserData) {
+    callback({
+      auth: currentUser,
+      data: currentUserData
+    });
+  } else if (!currentUser) {
+    callback(null);
+  }
+
+  return () => {
+    authCallbacks.delete(callback);
+  };
 }
 
 /* =========================

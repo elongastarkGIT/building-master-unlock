@@ -1,6 +1,6 @@
 // /js/core/guards.js
 
-import { USER_ROLES, USER_STATUS, ROUTES, resolvePath } from "./constants.js";
+import { USER_ROLES, USER_STATUS, ROUTES, resolvePath, ADMIN_ROLES } from "./constants.js";
 
 /* =========================
    CHECK USER STATUS
@@ -33,36 +33,49 @@ export function guardPage({
   requireAuth = true,
   redirectTo = ROUTES.public.login
 } = {}) {
-  import("../auth/session.js").then(({ listenSession, logoutSession }) => {
-  listenSession(async (session) => {
+  import("../auth/session.js").then(({ listenSession, logoutSession, getSession }) => {
+    const evaluateAccess = async (session) => {
+      if (!session && requireAuth) {
+        redirect(redirectTo);
+        return;
+      }
 
-    if (!session && requireAuth) {
-      redirect(redirectTo);
-      return;
+      const userData = session?.data;
+
+      if (requireAuth && !userData) {
+        redirect(redirectTo);
+        return;
+      }
+
+      if (!userData) {
+        return;
+      }
+
+      if (!isActiveUser(userData)) {
+        await logoutSession();
+        redirect(ROUTES.public.login);
+        return;
+      }
+
+      if (!hasAccess(userData, allowRoles)) {
+        if (Object.values(ADMIN_ROLES).includes(userData.role)) {
+          redirect(ROUTES.admin.dashboard);
+          return;
+        }
+
+        redirect(ROUTES.public.notFound);
+      }
+    };
+
+    const existingSession = getSession();
+
+    if (existingSession) {
+      evaluateAccess(existingSession);
     }
 
-    const userData = session?.data;
-
-    if (requireAuth && !userData) {
-      redirect(redirectTo);
-      return;
-    }
-
-    if (!userData) {
-      return;
-    }
-
-    if (!isActiveUser(userData)) {
-      await logoutSession();
-      redirect(ROUTES.public.login);
-      return;
-    }
-
-    if (!hasAccess(userData, allowRoles)) {
-      redirect(ROUTES.public.notFound);
-      return;
-    }
-  });
+    listenSession((session) => {
+      evaluateAccess(session);
+    });
   });
 }
 
