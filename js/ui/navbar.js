@@ -8,6 +8,7 @@ import {
   getCtaDestination,
   toPagesRelativePath
 } from "../core/router.js";
+import { updateMobileDrawerSession } from "./drawer/mobileDrawer.js";
 
 let activeSession = null;
 
@@ -93,56 +94,7 @@ function renderNavActions(session) {
 }
 
 function renderMobileAuthLinks(session) {
-  const linksWrap = document.getElementById("mobile-nav-links");
-
-  if (!linksWrap) {
-    return;
-  }
-
-  linksWrap.querySelector("#mobile-nav-login")?.remove();
-  linksWrap.querySelector("#mobile-nav-register")?.remove();
-  linksWrap.querySelector("#mobile-nav-dashboard")?.remove();
-  linksWrap.querySelector("#mobile-nav-logout")?.remove();
-
-  const fragment = document.createDocumentFragment();
-
-  if (isAuthenticated(session)) {
-    const dashboardLink = document.createElement("a");
-    dashboardLink.href = toPagesRelativePath(getDashboardPathForRole(session.data.role));
-    dashboardLink.id = "mobile-nav-dashboard";
-    dashboardLink.textContent = "Mon Dashboard";
-    dashboardLink.setAttribute("data-link", "");
-    fragment.appendChild(dashboardLink);
-
-    const logoutButton = document.createElement("button");
-    logoutButton.type = "button";
-    logoutButton.id = "mobile-nav-logout";
-    logoutButton.className = "mobile-nav-logout-btn";
-    logoutButton.textContent = "Déconnexion";
-
-    logoutButton.addEventListener("click", async () => {
-      await logoutSession();
-      navigate(ROUTES.public.home);
-    });
-
-    fragment.appendChild(logoutButton);
-  } else {
-    const loginLink = document.createElement("a");
-    loginLink.href = "./login.html";
-    loginLink.id = "mobile-nav-login";
-    loginLink.textContent = "Connexion";
-    loginLink.setAttribute("data-link", "");
-    fragment.appendChild(loginLink);
-
-    const registerLink = document.createElement("a");
-    registerLink.href = "./register.html";
-    registerLink.id = "mobile-nav-register";
-    registerLink.textContent = "Inscription";
-    registerLink.setAttribute("data-link", "");
-    fragment.appendChild(registerLink);
-  }
-
-  linksWrap.appendChild(fragment);
+  updateMobileDrawerSession(session);
 }
 
 function renderFooterAccountLinks(session) {

@@ -57,7 +57,10 @@
           <article id="service-info-card" class="card">
             <div class="card-header">
               <div>
-                <h1 id="service-title">Chargement...</h1>
+                <div class="service-title-row" id="service-title-row">
+                  <h1 id="service-title">Chargement...</h1>
+                  <span id="service-new-badge" class="badge badge-new" hidden>Nouveau</span>
+                </div>
                 <p id="service-category" class="text-muted" style="margin: 0;">—</p>
               </div>
               <span id="service-badge" class="badge badge-neutral">—</span>
@@ -65,8 +68,10 @@
             <div class="card-body">
               <p id="service-description">Les détails du service seront chargés dynamiquement depuis Firestore.</p>
               <dl id="service-meta" class="mt-4">
-                <dt class="text-muted" style="font-size: var(--text-sm);">Prix</dt>
-                <dd id="service-price" class="stat-value" style="margin: 0 0 var(--space-4);">—</dd>
+                <div id="service-price-row">
+                  <dt class="text-muted" style="font-size: var(--text-sm);">Prix</dt>
+                  <dd id="service-price" class="stat-value" style="margin: 0 0 var(--space-4);">—</dd>
+                </div>
                 <dt class="text-muted" style="font-size: var(--text-sm);">Délai estimé</dt>
                 <dd id="service-delivery" style="margin: 0 0 var(--space-4);">—</dd>
                 <dt class="text-muted" style="font-size: var(--text-sm);">Disponibilité</dt>
@@ -112,6 +117,13 @@
               <input type="text" id="field-android-version" name="androidVersion" class="form-input" placeholder="Ex. Android 13" autocomplete="off">
             </div>
 
+            <div class="form-group" id="field-phone-photo-group" hidden>
+              <label for="field-phone-photo-url" class="form-label">Lien Photo Telephone</label>
+              <input type="url" id="field-phone-photo-url" name="phonePhotoUrl" class="form-input" placeholder="https://..." autocomplete="off">
+              <p class="form-hint" id="field-phone-photo-hint">Fournissez un lien vers la photo du telephone.</p>
+              <a id="field-phone-photo-link" class="btn btn-ghost btn-sm mt-2" target="_blank" rel="noopener noreferrer" hidden>Voir Exemple Photo</a>
+            </div>
+
             <p id="form-error" class="form-error" role="alert" hidden></p>
           </form>
         </div>
@@ -122,8 +134,10 @@
             <dl>
               <dt class="text-muted" style="font-size: var(--text-sm);">Service</dt>
               <dd id="sidebar-service-name" style="margin: 0 0 var(--space-4);">Chargement...</dd>
-              <dt class="text-muted" style="font-size: var(--text-sm);">Prix total</dt>
-              <dd id="sidebar-total" class="stat-value" style="margin: 0 0 var(--space-6);">—</dd>
+              <div id="sidebar-total-row">
+                <dt class="text-muted" style="font-size: var(--text-sm);">Prix total</dt>
+                <dd id="sidebar-total" class="stat-value" style="margin: 0 0 var(--space-6);">—</dd>
+              </div>
             </dl>
             <a href="./checkout.html" class="btn btn-primary btn-block" data-link id="btn-order-cta">Commander et payer</a>
             <p class="form-hint text-center mt-4">Vous serez redirigé vers le paiement après validation du formulaire.</p>

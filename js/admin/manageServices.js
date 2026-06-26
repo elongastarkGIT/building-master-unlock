@@ -1,6 +1,6 @@
 // /js/admin/manageServices.js
 
-import { COLLECTIONS, ROUTES, resolvePath } from "../core/constants.js";
+import { COLLECTIONS, ROUTES, resolvePath, SERVICE_GROUPS } from "../core/constants.js";
 import { sanitizeText } from "../../utils/sanitizer.js";
 import { generateSlug } from "../../utils/generators.js";
 import { validateService } from "../../utils/validators.js";
@@ -137,6 +137,7 @@ export async function initServiceEditor() {
   const slugInput = document.getElementById("service-slug");
   const priceInput = document.getElementById("service-base-price");
   const categorySelect = document.getElementById("service-category");
+  const groupSelect = document.getElementById("service-group");
   const activeInput = document.getElementById("service-active");
   const submitButton = document.getElementById("service-editor-submit");
   const pageTitle = document.getElementById("page-title");
@@ -200,6 +201,12 @@ export async function initServiceEditor() {
         selectedValue: sanitizeText(service.category || "")
       });
 
+      if (groupSelect) {
+        groupSelect.value = sanitizeText(
+          service.serviceGroup || service.group || SERVICE_GROUPS.IMEI
+        );
+      }
+
       if (pageTitle) {
         pageTitle.textContent = "Modifier le service";
       }
@@ -220,6 +227,7 @@ export async function initServiceEditor() {
     const slug = sanitizeText(slugInput?.value || generateSlug(title));
     const basePrice = Number(priceInput?.value || 0);
     const category = sanitizeText(categorySelect?.value || "");
+    const serviceGroup = sanitizeText(groupSelect?.value || SERVICE_GROUPS.IMEI);
     const active = Boolean(activeInput?.checked);
 
     const payload = {
@@ -227,6 +235,7 @@ export async function initServiceEditor() {
       slug,
       basePrice,
       category,
+      serviceGroup,
       active
     };
 

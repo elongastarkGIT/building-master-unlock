@@ -156,6 +156,14 @@
       </select>
       <p class="form-hint" id="service-category-hint">Les catégories se gèrent dans <a href="./categories.html" id="service-category-link" data-link>Admin &gt; Catégories</a>.</p>
     </div>
+    <div class="form-group" id="service-group-group">
+      <label for="service-group" class="form-label" id="service-group-label">Groupe Service</label>
+      <select id="service-group" name="serviceGroup" class="form-select" required>
+        <option value="imei" id="service-group-imei">Services IMEI</option>
+        <option value="serveur" id="service-group-serveur">Services Serveur</option>
+        <option value="louer-outils" id="service-group-louer-outils">Louer Outils</option>
+      </select>
+    </div>
     <div class="form-group" id="service-active-group">
       <label for="service-active" class="form-label" id="service-active-label">Actif</label>
       <input type="checkbox" id="service-active" name="active" value="true">

@@ -284,6 +284,24 @@ export const ROUTES = {
 
 
 /* =========================
+   SERVICE GROUPS (DRAWER / CATALOGUE)
+========================= */
+
+export const SERVICE_GROUPS = {
+  IMEI: "imei",
+  SERVEUR: "serveur",
+  LOUER_OUTILS: "louer-outils"
+};
+
+export const ORDER_DRAWER_FILTERS = {
+  EN_COURS: "en-cours",
+  SUCCES: "succes",
+  SERVEUR: "serveur",
+  OUTILS: "outils"
+};
+
+
+/* =========================
    STORAGE KEYS (localStorage)
 ========================= */
 
