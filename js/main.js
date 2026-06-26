@@ -1,5 +1,6 @@
-import { initRouter, setActiveLinks, fixAbsoluteLinks } from "./core/router.js";
-import { COLLECTIONS, ROUTES, resolvePath, ADMIN_ROLES } from "./core/constants.js";
+import { initRouter, setActiveLinks, fixAbsoluteLinks, getDashboardPathForRole } from "./core/router.js";
+import { COLLECTIONS, ROUTES, resolvePath } from "./core/constants.js";
+import { initPublicNavigation, initAdminNavigation } from "./ui/navbar.js";
 import { formatCurrency } from "../utils/formatters.js";
 import { sanitizeObject, sanitizeText } from "../utils/sanitizer.js";
 
@@ -11,9 +12,7 @@ const PUBLIC_DRAWER_LINKS = [
   { href: "./faq.html", id: "mobile-nav-faq", label: "FAQ" },
   { href: "./announcements.html", id: "mobile-nav-announcements", label: "Annonces" },
   { href: "./status.html", id: "mobile-nav-status", label: "Statut" },
-  { href: "./contact.html", id: "mobile-nav-contact", label: "Contact" },
-  { href: "./login.html", id: "mobile-nav-login", label: "Connexion" },
-  { href: "./register.html", id: "mobile-nav-register", label: "Inscription" }
+  { href: "./contact.html", id: "mobile-nav-contact", label: "Contact" }
 ];
 
 function navigateTo(url) {
@@ -39,13 +38,7 @@ function cleanupSensitiveQueryParams() {
 }
 
 function getAuthenticatedRedirect(session) {
-  const role = session?.data?.role;
-
-  if (role && Object.values(ADMIN_ROLES).includes(role)) {
-    return ROUTES.admin.dashboard;
-  }
-
-  return ROUTES.user.dashboard;
+  return getDashboardPathForRole(session?.data?.role);
 }
 
 function showFormError(element, message) {
@@ -870,9 +863,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   cleanupSensitiveQueryParams();
   fixAbsoluteLinks();
   initPublicMobileNav();
+  initPublicNavigation();
+  initAdminNavigation();
   initFaqAccordion();
   setActiveLinks();
   window.addEventListener("popstate", setActiveLinks);
+
+  try {
+    const { initCore } = await import("./core/app.js");
+    await initCore();
+  } catch (error) {
+    console.error("INIT CORE ERROR:", error);
+  }
+
   initRouter();
 
   try {
@@ -881,12 +884,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     await initServiceDetails();
   } catch (error) {
     console.error("PAGE INIT ERROR:", error);
-  }
-
-  try {
-    const { initCore } = await import("./core/app.js");
-    await initCore();
-  } catch (error) {
-    console.error("INIT CORE ERROR:", error);
   }
 });

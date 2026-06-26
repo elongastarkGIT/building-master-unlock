@@ -272,7 +272,7 @@ function listenAuth(callback) {
       auth: currentUser,
       data: currentUserData
     });
-  } else if (!currentUser) {
+  } else if (!auth.currentUser) {
     callback(null);
   }
 

@@ -33,7 +33,7 @@ export function guardPage({
   requireAuth = true,
   redirectTo = ROUTES.public.login
 } = {}) {
-  import("../auth/session.js").then(({ listenSession, logoutSession, getSession }) => {
+  import("../auth/session.js").then(async ({ listenSession, logoutSession, waitForSession }) => {
     const evaluateAccess = async (session) => {
       if (!session && requireAuth) {
         redirect(redirectTo);
@@ -67,11 +67,8 @@ export function guardPage({
       }
     };
 
-    const existingSession = getSession();
-
-    if (existingSession) {
-      evaluateAccess(existingSession);
-    }
+    const initialSession = await waitForSession();
+    await evaluateAccess(initialSession);
 
     listenSession((session) => {
       evaluateAccess(session);

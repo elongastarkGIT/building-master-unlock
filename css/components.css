@@ -266,6 +266,45 @@
   margin-top: var(--space-2);
 }
 
+.mobile-nav-logout-btn,
+.footer-logout-btn {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  padding: calc(var(--space-4) + 2px) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.mobile-nav-logout-btn:hover,
+.footer-logout-btn:hover {
+  color: var(--color-text);
+  border-color: rgba(106, 164, 255, 0.24);
+  background: rgba(106, 164, 255, 0.12);
+}
+
+.footer-logout-btn {
+  width: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.footer-logout-btn:hover {
+  color: var(--color-text);
+  background: none;
+  border: none;
+}
+
 .mobile-nav-overlay {
   position: fixed;
   inset: 0;

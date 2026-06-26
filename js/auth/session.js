@@ -14,6 +14,7 @@ import {
 
 let activeSession = null;
 let authUnsubscribe = null;
+let sessionReadyPromise = null;
 
 /* =========================
    SYNC SESSION → STATE
@@ -33,7 +34,11 @@ function applySession(session) {
    INIT SESSION
 ========================= */
 function initSession() {
-  return new Promise((resolve) => {
+  if (sessionReadyPromise) {
+    return sessionReadyPromise;
+  }
+
+  sessionReadyPromise = new Promise((resolve) => {
     let settled = false;
 
     authUnsubscribe = listenAuth((session) => {
@@ -45,6 +50,12 @@ function initSession() {
       }
     });
   });
+
+  return sessionReadyPromise;
+}
+
+function waitForSession() {
+  return initSession();
 }
 
 /* =========================
@@ -101,6 +112,7 @@ function destroySession() {
 ========================= */
 export {
   initSession,
+  waitForSession,
   listenSession,
   getSession,
   getSessionUser,

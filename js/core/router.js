@@ -172,3 +172,71 @@ export function setActiveLinks() {
 export function isRoute(path) {
   return stripBasePath(window.location.pathname) === stripBasePath(path);
 }
+
+/* =========================
+   AUTH NAV HELPERS
+========================= */
+
+export function isAdminRole(role) {
+  return Boolean(role && Object.values(ADMIN_ROLES).includes(role));
+}
+
+export function getDashboardPathForRole(role) {
+  if (isAdminRole(role)) {
+    return ROUTES.admin.dashboard;
+  }
+
+  return ROUTES.user.dashboard;
+}
+
+export function getCtaDestination(ctaType, session) {
+  const authenticated = Boolean(session?.data);
+
+  if (!authenticated) {
+    return ROUTES.public.login;
+  }
+
+  const role = session.data.role;
+
+  if (ctaType === "services") {
+    return ROUTES.public.services;
+  }
+
+  if (ctaType === "order") {
+    return ROUTES.public.services;
+  }
+
+  if (ctaType === "contact") {
+    return ROUTES.public.contact;
+  }
+
+  if (ctaType === "tracking") {
+    return ROUTES.user.orders;
+  }
+
+  if (ctaType === "account" || ctaType === "register") {
+    return getDashboardPathForRole(role);
+  }
+
+  return getDashboardPathForRole(role);
+}
+
+export function toPagesRelativePath(routePath) {
+  if (!routePath || typeof routePath !== "string") {
+    return routePath;
+  }
+
+  if (routePath.startsWith("/pages/")) {
+    return `./${routePath.slice("/pages/".length)}`;
+  }
+
+  if (routePath.startsWith("/dashboard/")) {
+    return `../dashboard/${routePath.slice("/dashboard/".length)}`;
+  }
+
+  if (routePath.startsWith("/admin/")) {
+    return `../admin/${routePath.slice("/admin/".length)}`;
+  }
+
+  return resolvePath(routePath);
+}
