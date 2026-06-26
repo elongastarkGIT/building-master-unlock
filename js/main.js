@@ -580,9 +580,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const { initAdminCategories } = await import("./services/categories.js");
     const { initAdminServices, initServiceEditor } = await import("./admin/manageServices.js");
+    const { initAdminDashboard } = await import("./admin/adminDashboard.js");
+    const { initAdminUsers } = await import("./admin/manageUsers.js");
+    const { initAdminOrders } = await import("./admin/manageOrders.js");
+    const { initAdminPayments } = await import("./admin/managePayments.js");
+    const { initAdminTickets } = await import("./admin/manageTickets.js");
+    const { initAdminReports } = await import("./admin/analytics.js");
+
     await initAdminCategories();
     await initAdminServices();
     await initServiceEditor();
+    await initAdminDashboard();
+    await initAdminUsers();
+    await initAdminOrders();
+    await initAdminPayments();
+    await initAdminTickets();
+    await initAdminReports();
   } catch (error) {
     console.error("PAGE INIT ERROR:", error);
   }

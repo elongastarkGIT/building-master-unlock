@@ -9,6 +9,15 @@ import {
   toPagesRelativePath
 } from "../core/router.js";
 import { updateMobileDrawerSession } from "./drawer/mobileDrawer.js";
+import { sanitizeText } from "../../utils/sanitizer.js";
+
+const ADMIN_ROLE_LABELS = {
+  superadmin: "Superadmin",
+  manager: "Manager",
+  operator: "Operateur",
+  support: "Support",
+  user: "Client"
+};
 
 let activeSession = null;
 
@@ -267,10 +276,62 @@ export function initPublicNavigation() {
   });
 }
 
+function renderAdminProfile(session) {
+  const nameEl = document.getElementById("admin-user-name");
+  const roleEl = document.getElementById("admin-user-role");
+  const avatarEl = document.getElementById("admin-user-avatar");
+  const userData = session?.data;
+
+  if (!userData) {
+    if (nameEl) {
+      nameEl.textContent = "—";
+    }
+
+    if (roleEl) {
+      roleEl.textContent = "—";
+    }
+
+    if (avatarEl) {
+      avatarEl.textContent = "—";
+    }
+
+    return;
+  }
+
+  const displayName = sanitizeText(userData.fullName || userData.email || "Admin");
+  const roleLabel = ADMIN_ROLE_LABELS[userData.role] || sanitizeText(userData.role || "Admin");
+  const avatarLetter = displayName.charAt(0).toUpperCase() || "A";
+
+  if (nameEl) {
+    nameEl.textContent = displayName;
+  }
+
+  if (roleEl) {
+    roleEl.textContent = roleLabel;
+  }
+
+  if (avatarEl) {
+    avatarEl.textContent = avatarLetter;
+  }
+}
+
 export function initAdminNavigation() {
   if (!document.body.classList.contains("page-admin")) {
     return;
   }
+
+  import("../auth/session.js")
+    .then(async ({ listenSession, waitForSession }) => {
+      const initialSession = await waitForSession();
+      renderAdminProfile(initialSession);
+
+      listenSession((session) => {
+        renderAdminProfile(session);
+      });
+    })
+    .catch((error) => {
+      console.error("ADMIN PROFILE INIT ERROR:", error);
+    });
 
   const footer = document.getElementById("admin-sidebar-footer");
 
