@@ -347,7 +347,18 @@ function initServicesCatalog() {
   filter.addEventListener("change", renderServices);
 
   import("../firebase/firestore.js")
-    .then(({ listenCollection }) => {
+    .then(async ({ listenCollection }) => {
+      try {
+        const { loadCategories, fillCategorySelect } = await import("./services/categories.js");
+        const categories = await loadCategories({ activeOnly: true });
+        fillCategorySelect(filter, categories, {
+          includeAllOption: true,
+          allLabel: "Toutes les categories"
+        });
+      } catch (error) {
+        console.error("SERVICES CATEGORIES FILTER ERROR:", error);
+      }
+
       listenCollection(COLLECTIONS.SERVICES, (services) => {
         allServices = services
           .map(normalizeService)
@@ -882,6 +893,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     initAuthForms();
     initServicesCatalog();
     await initServiceDetails();
+
+    const { initAdminCategories } = await import("./services/categories.js");
+    const { initAdminServices, initServiceEditor } = await import("./admin/manageServices.js");
+    await initAdminCategories();
+    await initAdminServices();
+    await initServiceEditor();
   } catch (error) {
     console.error("PAGE INIT ERROR:", error);
   }

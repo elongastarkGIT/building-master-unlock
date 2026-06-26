@@ -76,6 +76,7 @@ const routes = [
   { path: ROUTES.admin.users, type: "admin" },
   { path: ROUTES.admin.admins, type: "admin" },
   { path: ROUTES.admin.services, type: "admin" },
+  { path: ROUTES.admin.categories, type: "admin" },
   { path: ROUTES.admin.serviceEditor, type: "admin" },
   { path: ROUTES.admin.payments, type: "admin" },
   { path: ROUTES.admin.tickets, type: "admin" },

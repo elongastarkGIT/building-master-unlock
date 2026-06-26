@@ -322,6 +322,29 @@ export function initAdminNavigation() {
 
   const footer = document.getElementById("admin-sidebar-footer");
 
+  const catalogueSection = document.getElementById("nav-section-catalogue");
+  const servicesLink = document.getElementById("nav-services");
+
+  if (catalogueSection && servicesLink && !document.getElementById("nav-categories")) {
+    const categoriesLink = document.createElement("a");
+    categoriesLink.href = "./categories.html";
+    categoriesLink.id = "nav-categories";
+    categoriesLink.className = "sidebar-link";
+    categoriesLink.setAttribute("data-link", "");
+
+    const icon = document.createElement("span");
+    icon.className = "sidebar-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "◈";
+
+    const label = document.createElement("span");
+    label.textContent = "Catégories";
+
+    categoriesLink.appendChild(icon);
+    categoriesLink.appendChild(label);
+    catalogueSection.insertBefore(categoriesLink, servicesLink.nextSibling);
+  }
+
   if (!footer || document.getElementById("nav-public-site")) {
     return;
   }

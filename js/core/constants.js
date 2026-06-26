@@ -268,6 +268,7 @@ export const ROUTES = {
     users: "/admin/users.html",
     admins: "/admin/admins.html",
     services: "/admin/services.html",
+    categories: "/admin/categories.html",
     serviceEditor: "/admin/service-editor.html",
     payments: "/admin/payments.html",
     tickets: "/admin/tickets.html",

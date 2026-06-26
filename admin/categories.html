@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
-<title>Éditeur service — Admin MASTER UNLOCKER</title>
+<title>Catégories — Admin MASTER UNLOCKER</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="page-admin">
@@ -37,9 +37,13 @@
     </div>
     <div class="sidebar-nav-section" id="nav-section-catalogue">
       <span class="sidebar-nav-label" id="nav-label-catalogue">Catalogue</span>
-      <a href="./services.html" class="sidebar-link active" data-link id="nav-services">
+      <a href="./services.html" class="sidebar-link" data-link id="nav-services">
         <span class="sidebar-icon" aria-hidden="true">◆</span>
         <span>Services</span>
+      </a>
+      <a href="./categories.html" class="sidebar-link active" data-link id="nav-categories">
+        <span class="sidebar-icon" aria-hidden="true">◈</span>
+        <span>Catégories</span>
       </a>
       <a href="./promotions.html" class="sidebar-link" data-link id="nav-promotions">
         <span class="sidebar-icon" aria-hidden="true">◇</span>
@@ -123,50 +127,68 @@
 
 <div class="admin-content" id="admin-content">
 
-<nav class="breadcrumb" id="service-editor-breadcrumb" aria-label="Fil d'Ariane">
-  <a href="./services.html" id="breadcrumb-services" data-link>Services</a>
-  <span aria-hidden="true">/</span>
-  <span id="breadcrumb-current">Éditeur</span>
-</nav>
-
 <header class="page-header" id="page-header">
-  <h1 id="page-title">Éditeur de service</h1>
-  <p id="page-description">Création ou modification d'un service du catalogue.</p>
+  <h1 id="page-title">Catégories</h1>
+  <p id="page-description">Organisez le catalogue par catégories avant d'ajouter des services.</p>
 </header>
 
-<section class="card" id="service-editor-card">
-  <form id="service-editor-form" novalidate>
-    <div class="form-group" id="service-title-group">
-      <label for="service-title" class="form-label" id="service-title-label">Titre</label>
-      <input type="text" id="service-title" name="title" class="form-input" required autocomplete="off">
+<div class="action-bar" id="admin-categories-toolbar">
+  <h2 class="card-title" id="admin-categories-subtitle">Catalogue</h2>
+  <button type="button" class="btn btn-primary btn-sm" id="admin-add-category-btn">Nouvelle catégorie</button>
+</div>
+
+<section class="card" id="category-form-card" hidden>
+  <h2 class="card-title" id="category-form-title">Nouvelle catégorie</h2>
+  <form id="category-form" novalidate>
+    <div class="form-group" id="category-title-group">
+      <label for="category-title" class="form-label" id="category-title-label">Titre</label>
+      <input type="text" id="category-title" name="title" class="form-input" required autocomplete="off">
     </div>
-    <div class="form-group" id="service-slug-group">
-      <label for="service-slug" class="form-label" id="service-slug-label">Slug</label>
-      <input type="text" id="service-slug" name="slug" class="form-input" required autocomplete="off">
-      <p class="form-hint" id="service-slug-hint">Identifiant URL unique du service.</p>
+    <div class="form-group" id="category-slug-group">
+      <label for="category-slug" class="form-label" id="category-slug-label">Slug</label>
+      <input type="text" id="category-slug" name="slug" class="form-input" required autocomplete="off">
+      <p class="form-hint" id="category-slug-hint">Identifiant technique utilisé par les services (ex: frp, imei).</p>
     </div>
-    <div class="form-group" id="service-base-price-group">
-      <label for="service-base-price" class="form-label" id="service-base-price-label">Prix de base</label>
-      <input type="number" id="service-base-price" name="basePrice" class="form-input" min="0" step="0.01" required>
+    <div class="form-group" id="category-description-group">
+      <label for="category-description" class="form-label" id="category-description-label">Description</label>
+      <textarea id="category-description" name="description" class="form-input" rows="3"></textarea>
     </div>
-    <div class="form-group" id="service-category-group">
-      <label for="service-category" class="form-label" id="service-category-label">Catégorie</label>
-      <select id="service-category" name="category" class="form-select" required>
-        <option value="" id="service-category-default">Sélectionner une catégorie</option>
-      </select>
-      <p class="form-hint" id="service-category-hint">Les catégories se gèrent dans <a href="./categories.html" id="service-category-link" data-link>Admin &gt; Catégories</a>.</p>
+    <div class="form-group" id="category-active-group">
+      <label for="category-active" class="form-label" id="category-active-label">Active</label>
+      <input type="checkbox" id="category-active" name="active" value="true" checked>
     </div>
-    <div class="form-group" id="service-active-group">
-      <label for="service-active" class="form-label" id="service-active-label">Actif</label>
-      <input type="checkbox" id="service-active" name="active" value="true">
-      <p class="form-hint" id="service-active-hint">Service visible et commandable sur la plateforme.</p>
-    </div>
-    <div class="form-row" id="service-editor-actions">
-      <a href="./services.html" class="btn btn-ghost" id="service-editor-cancel" data-link>Annuler</a>
-      <button type="submit" class="btn btn-primary" id="service-editor-submit">Enregistrer</button>
+    <p class="form-error" id="category-form-error" hidden></p>
+    <div class="form-row" id="category-form-actions">
+      <button type="button" class="btn btn-ghost" id="category-form-cancel">Annuler</button>
+      <button type="submit" class="btn btn-primary" id="category-form-submit">Enregistrer</button>
     </div>
   </form>
 </section>
+
+<div class="data-card" id="admin-categories-card">
+  <div class="data-card-header" id="admin-categories-header">
+    <h2 class="card-title" id="admin-categories-title">Liste des catégories</h2>
+  </div>
+  <div class="data-card-body" id="admin-categories-body-wrapper">
+    <div class="table-wrapper" id="admin-categories-table-wrapper">
+      <table class="table" id="admin-categories-table">
+        <thead id="admin-categories-thead">
+          <tr>
+            <th scope="col" id="categories-col-title">Titre</th>
+            <th scope="col" id="categories-col-slug">Slug</th>
+            <th scope="col" id="categories-col-description">Description</th>
+            <th scope="col" id="categories-col-active">Active</th>
+            <th scope="col" id="categories-col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-categories-body"></tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="admin-categories-empty">
+      <p id="admin-categories-empty-text">Aucune catégorie. Cliquez sur « Nouvelle catégorie » pour commencer.</p>
+    </div>
+  </div>
+</div>
 
 </div>
 </main>
