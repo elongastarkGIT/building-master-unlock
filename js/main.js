@@ -39,6 +39,12 @@ function getAuthenticatedRedirect(session) {
   return getDashboardPathForRole(session?.data?.role);
 }
 
+async function redirectAfterAuth() {
+  const { waitForSession } = await import("./auth/session.js");
+  const session = await waitForSession();
+  navigateTo(getAuthenticatedRedirect(session));
+}
+
 function showFormError(element, message) {
   if (!element) {
     return;
@@ -98,7 +104,15 @@ function mapAuthError(error) {
     code === "auth/configuration-not-found" ||
     code === "auth/operation-not-allowed"
   ) {
-    return "Authentication Firebase non configuree. Activez Email/Mot de passe dans la console Firebase.";
+    return "Authentication Firebase non configuree. Activez Email/Mot de passe et Google dans la console Firebase.";
+  }
+
+  if (code === "auth/unauthorized-domain") {
+    return "Ce domaine n'est pas autorise dans Firebase Authentication.";
+  }
+
+  if (code === "auth/network-request-failed") {
+    return "Connexion reseau impossible. Verifiez votre connexion internet.";
   }
 
   if (message) {
@@ -441,7 +455,7 @@ function initAuthForms() {
       try {
         const { loginUser } = await loadAuthModules();
         await loginUser(email, password);
-        navigateTo(ROUTES.user.dashboard);
+        await redirectAfterAuth();
       } catch (error) {
         showFormError(loginError, mapAuthError(error));
         setPendingState([loginSubmit, loginGoogle], false);
@@ -455,7 +469,7 @@ function initAuthForms() {
       try {
         const { loginWithGoogle } = await loadAuthModules();
         await loginWithGoogle();
-        navigateTo(ROUTES.user.dashboard);
+        await redirectAfterAuth();
       } catch (error) {
         showFormError(loginError, mapAuthError(error));
         setPendingState([loginSubmit, loginGoogle], false);
@@ -509,7 +523,7 @@ function initAuthForms() {
       try {
         const { loginWithGoogle } = await loadAuthModules();
         await loginWithGoogle();
-        navigateTo(ROUTES.user.dashboard);
+        await redirectAfterAuth();
       } catch (error) {
         showFormError(registerError, mapAuthError(error));
         setPendingState([registerSubmit, registerGoogle], false);
@@ -546,6 +560,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     await initCore();
   } catch (error) {
     console.error("INIT CORE ERROR:", error);
+  }
+
+  if (document.body.classList.contains("page-dashboard")) {
+    try {
+      const { initPhoneOnboarding } = await import("./auth/phoneOnboarding.js");
+      await initPhoneOnboarding();
+    } catch (error) {
+      console.error("PHONE ONBOARDING ERROR:", error);
+    }
   }
 
   initRouter();

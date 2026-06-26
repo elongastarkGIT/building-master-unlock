@@ -1013,6 +1013,16 @@ body.mobile-nav-open .site-footer {
   padding: var(--space-4);
 }
 
+.modal-backdrop-blocking {
+  background: rgba(4, 8, 16, 0.82);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
 .modal {
   background: var(--color-surface);
   border: 1px solid var(--color-border);

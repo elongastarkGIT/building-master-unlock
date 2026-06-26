@@ -8,14 +8,14 @@ export function buildConnexionsSection() {
     label: "Connexions",
     items: [
       {
-        href: "./register.html",
-        id: "mobile-nav-register",
-        label: "Register"
-      },
-      {
         href: "./login.html",
         id: "mobile-nav-login",
-        label: "Login"
+        label: "Connexion"
+      },
+      {
+        href: "./register.html",
+        id: "mobile-nav-register",
+        label: "Inscription"
       }
     ]
   });

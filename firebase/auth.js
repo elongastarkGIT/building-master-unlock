@@ -34,6 +34,9 @@ import {
 } from "../utils/sanitizer.js";
 
 const googleProvider = new GoogleAuthProvider();
+googleProvider.addScope("email");
+googleProvider.addScope("profile");
+googleProvider.setCustomParameters({ prompt: "select_account" });
 
 const COL_USERS = "users";
 const COL_ADMINS = "admins";
@@ -65,7 +68,14 @@ async function loadUserSessionData(user) {
   }
 
   if (!userSnap?.exists() && !adminSnap?.exists()) {
-    return null;
+    return {
+      uid: user.uid,
+      fullName: sanitizeText(user.displayName || ""),
+      email: sanitizeEmail(user.email || ""),
+      phone: "",
+      role: "user",
+      status: USER_STATUS_ACTIVE
+    };
   }
 
   const data = userSnap?.exists()
@@ -168,31 +178,29 @@ async function loginWithGoogle() {
   const cred = await signInWithPopup(auth, googleProvider);
   const user = cred.user;
 
-  const ref = doc(db, COL_USERS, user.uid);
-  const snap = await getDoc(ref);
+  const userRef = doc(db, COL_USERS, user.uid);
+  const adminRef = doc(db, COL_ADMINS, user.uid);
+  const snap = await getDoc(userRef);
+  const adminSnap = await getDoc(adminRef);
 
-  if (!snap.exists()) {
-    const adminSnap = await getDoc(doc(db, COL_ADMINS, user.uid));
+  if (!snap.exists() && !adminSnap.exists()) {
+    const fullName = sanitizeText(user.displayName || "Utilisateur");
+    const cleanEmail = sanitizeEmail(user.email || "");
 
-    if (!adminSnap.exists()) {
-      const fullName = sanitizeText(user.displayName || "User");
-      const cleanEmail = sanitizeEmail(user.email || "");
-
-      await setDoc(ref, {
-        uid: user.uid,
-        fullName,
-        email: cleanEmail,
-        phone: "",
-        role: "user",
-        status: USER_STATUS_ACTIVE,
-        emailVerified: user.emailVerified || false,
-        phoneVerified: false,
-        totalOrders: 0,
-        totalSpent: 0,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-      });
-    }
+    await setDoc(userRef, {
+      uid: user.uid,
+      fullName,
+      email: cleanEmail,
+      phone: "",
+      role: "user",
+      status: USER_STATUS_ACTIVE,
+      emailVerified: user.emailVerified || false,
+      phoneVerified: false,
+      totalOrders: 0,
+      totalSpent: 0,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
   }
 
   return user;
@@ -301,6 +309,26 @@ function getCurrentUserData() {
   return currentUserData;
 }
 
+async function refreshCurrentUserData() {
+  if (!currentUser) {
+    return null;
+  }
+
+  const data = await loadUserSessionData(currentUser);
+
+  if (!data) {
+    return null;
+  }
+
+  currentUserData = data;
+  notifyAuthCallbacks({
+    auth: currentUser,
+    data
+  });
+
+  return data;
+}
+
 /* =========================
    EXPORT
 ========================= */
@@ -314,6 +342,7 @@ export {
   resetPassword,
 
   listenAuth,
+  refreshCurrentUserData,
 
   hasRole,
   getCurrentUser,
