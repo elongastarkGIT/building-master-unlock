@@ -180,28 +180,47 @@ async function loginWithGoogle() {
 
   const userRef = doc(db, COL_USERS, user.uid);
   const adminRef = doc(db, COL_ADMINS, user.uid);
-  const snap = await getDoc(userRef);
-  const adminSnap = await getDoc(adminRef);
 
-  if (!snap.exists() && !adminSnap.exists()) {
-    const fullName = sanitizeText(user.displayName || "Utilisateur");
-    const cleanEmail = sanitizeEmail(user.email || "");
+  let userExists = false;
+  let adminExists = false;
 
-    await setDoc(userRef, {
-      uid: user.uid,
-      fullName,
-      email: cleanEmail,
-      phone: "",
-      role: "user",
-      status: USER_STATUS_ACTIVE,
-      emailVerified: user.emailVerified || false,
-      phoneVerified: false,
-      totalOrders: 0,
-      totalSpent: 0,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    });
+  try {
+    const snap = await getDoc(userRef);
+    userExists = snap.exists();
+  } catch (error) {
+    console.error("GOOGLE LOGIN USER READ ERROR:", error);
   }
+
+  try {
+    const adminSnap = await getDoc(adminRef);
+    adminExists = adminSnap.exists();
+  } catch (error) {
+    console.error("GOOGLE LOGIN ADMIN READ ERROR:", error);
+  }
+
+  // Compte deja present (users OU admins) → connexion uniquement, pas de creation.
+  if (userExists || adminExists) {
+    return user;
+  }
+
+  // Nouveau compte uniquement : ni users/{uid} ni admins/{uid}
+  const fullName = sanitizeText(user.displayName || "Utilisateur");
+  const cleanEmail = sanitizeEmail(user.email || "");
+
+  await setDoc(userRef, {
+    uid: user.uid,
+    fullName,
+    email: cleanEmail,
+    phone: "",
+    role: "user",
+    status: USER_STATUS_ACTIVE,
+    emailVerified: user.emailVerified || false,
+    phoneVerified: false,
+    totalOrders: 0,
+    totalSpent: 0,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+  });
 
   return user;
 }

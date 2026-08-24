@@ -1,0 +1,820 @@
+MASTER UNLOCKER — Catégories vs Services
+=========================================
+Guide saisie Admin > Services — champs identiques au formulaire service-editor.html
+
+
+RAPPEL DES CHAMPS DU FORMULAIRE
+-------------------------------
+  Titre          → nom affiché au client
+  Slug           → identifiant URL unique (minuscules, tirets, sans espaces)
+  Prix de base   → montant numérique (USD)
+  Catégorie      → slug de la catégorie (Admin > Catégories)
+  Groupe Service → imei | serveur | louer-outils
+  Actif          → cocher = visible et commandable
+
+
+PARTIE A — CATÉGORIES À CRÉER D'ABORD (Admin > Catégories)
+-----------------------------------------------------------
+Créer ces catégories AVANT les services. Slug exact obligatoire.
+
+  Titre                              | Slug (Catégorie)            | Active
+  -----------------------------------|-----------------------------|--------
+  Déblocage opérateur iPhone         | deblocage-operateur-iphone  | Oui
+  Bypass iCloud / Activation Lock    | bypass-icloud               | Oui
+  MDM et Cloud ID Android            | mdm-cloud-id-android        | Oui
+  Déblocage réseau Japon             | deblocage-reseau-japon      | Oui
+  Déblocage réseau Europe            | deblocage-reseau-europe     | Oui
+  Services Auth / FRP serveur        | auth-frp-serveur            | Oui
+  EFT Pro                            | eft-pro                     | Oui
+  Chimera Tool                       | chimera-tool                | Oui
+  DFT Pro                            | dft-pro                     | Oui
+  DT Pro                             | dt-pro                      | Oui
+  AWT AndroidWinTool                 | awt-androidwintool          | Oui
+  Sigma Plus                         | sigma-plus                  | Oui
+  AMT Android Multi Tool             | amt-android                 | Oui
+  Hydra Tool                         | hydra-tool                  | Oui
+  TSM Tool                           | tsm-tool                    | Oui
+  TFM Pro Tool                       | tfm-pro                     | Oui
+  Cheetah Tool                       | cheetah-tool                | Oui
+  Griffin Unlock                     | griffin-unlock              | Oui
+  Lanrui Gzlanrui                    | lanrui                      | Oui
+  UnlockTool                         | unlocktool                  | Oui
+
+
+PARTIE B — SERVICES À SAISIR (Admin > Services > Nouveau service)
+-----------------------------------------------------------------
+Pour chaque bloc ci-dessous, remplir le formulaire puis Enregistrer.
+
+
+================================================================================
+GROUPE : Services IMEI (Groupe Service = Services IMEI)
+================================================================================
+
+
+--- Catégorie : deblocage-operateur-iphone ---
+
+[S001]
+  Titre          : Déblocage iPhone AT&T USA — Script le moins cher
+  Slug           : att-usa-script-le-moins-cher
+  Prix de base   : 0.33
+  Catégorie      : deblocage-operateur-iphone
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S002]
+  Titre          : Déblocage iPhone AT&T USA — Résultats optimaux
+  Slug           : att-usa-resultats-optimaux
+  Prix de base   : 2.05
+  Catégorie      : deblocage-operateur-iphone
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S003]
+  Titre          : Déblocage iPhone AT&T USA — Offre exceptionnelle
+  Slug           : att-usa-offre-exceptionnelle
+  Prix de base   : 0.23
+  Catégorie      : deblocage-operateur-iphone
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+
+--- Catégorie : bypass-icloud ---
+
+[S004]
+  Titre          : Fixer A12+ Windows Chine [iOS 26.2 non pris en charge]
+  Slug           : fixer-a12-windows-chine
+  Prix de base   : 3.5
+  Catégorie      : bypass-icloud
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S005]
+  Titre          : HFZ Activator A12+ Premium Windows [iOS 18.7.2 - 26.1]
+  Slug           : hfz-activator-a12-premium-windows
+  Prix de base   : 4.95
+  Catégorie      : bypass-icloud
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S006]
+  Titre          : FRPFILE ACTIVATOR A12 XR à 17 Pro Max [iOS 17.8.2 et 26.1]
+  Slug           : frpfile-activator-a12-xr-17-pro-max
+  Prix de base   : 3.7
+  Catégorie      : bypass-icloud
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S007]
+  Titre          : Activateur FRP A12 iPhone 11 à 17 Pro Max, iPad A12+ à M3
+  Slug           : activateur-frp-a12-iphone-11-17-pro-max
+  Prix de base   : 5.2
+  Catégorie      : bypass-icloud
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S008]
+  Titre          : iAldaz Premium Bypass A12+ MacOs XS à 17 Pro Max
+  Slug           : iazaldaz-premium-bypass-a12-macos
+  Prix de base   : 4
+  Catégorie      : bypass-icloud
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S009]
+  Titre          : S-UNLOCKER A12+ — 1 mois illimité SN
+  Slug           : s-unlocker-a12-1-mois-illimite
+  Prix de base   : 10
+  Catégorie      : bypass-icloud
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S010]
+  Titre          : S-UNLOCKER A12+ — 3 mois illimité SN
+  Slug           : s-unlocker-a12-3-mois-illimite
+  Prix de base   : 20
+  Catégorie      : bypass-icloud
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S011]
+  Titre          : S-UNLOCKER A12+ — 6 mois illimité SN
+  Slug           : s-unlocker-a12-6-mois-illimite
+  Prix de base   : 30
+  Catégorie      : bypass-icloud
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+
+--- Catégorie : mdm-cloud-id-android ---
+
+[S012]
+  Titre          : Suppression Cloud ID 100% garanti (Infinix/Tecno/Itel)
+  Slug           : suppression-cloud-id-garanti
+  Prix de base   : 5.65
+  Catégorie      : mdm-cloud-id-android
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S013]
+  Titre          : Suppression ID + Réémission code activation
+  Slug           : suppression-id-reemission-code-activation
+  Prix de base   : 0
+  Catégorie      : mdm-cloud-id-android
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S014]
+  Titre          : Vérificateur MDM Tel/Tecno/Infinix
+  Slug           : verificateur-mdm-tecno-infinix-itel
+  Prix de base   : 0.06
+  Catégorie      : mdm-cloud-id-android
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S015]
+  Titre          : Suppression MDM garantie 100% à la source
+  Slug           : suppression-mdm-garantie-source
+  Prix de base   : 10.5
+  Catégorie      : mdm-cloud-id-android
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S016]
+  Titre          : MDM Non effectué — Remboursement 48h
+  Slug           : mdm-non-effectue-remboursement-48h
+  Prix de base   : 0
+  Catégorie      : mdm-cloud-id-android
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S017]
+  Titre          : Extraction IMEI via photo batterie
+  Slug           : extraction-imei-photo-batterie
+  Prix de base   : 5.61
+  Catégorie      : mdm-cloud-id-android
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S018]
+  Titre          : A12+ Rembypass Ancien Immatricula
+  Slug           : a12-rembypass-ancien-immatricula
+  Prix de base   : 0
+  Catégorie      : mdm-cloud-id-android
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+
+--- Catégorie : deblocage-reseau-japon ---    
+
+[S019]
+  Titre          : NTT Docomo Japon Android [IMEI vierge/non payé]
+  Slug           : ntt-docomo-japon-android
+  Prix de base   : 5
+  Catégorie      : deblocage-reseau-japon
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S020]
+  Titre          : NTT Docomo Android Premium [Tous statuts]
+  Slug           : ntt-docomo-android-premium
+  Prix de base   : 4.5
+  Catégorie      : deblocage-reseau-japon
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S021]
+  Titre          : NTT Docomo iPhone 6s à 13 Pro Max [IMEI propre]
+  Slug           : ntt-docomo-iphone-6s-13-pro-max
+  Prix de base   : 5
+  Catégorie      : deblocage-reseau-japon
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S022]
+  Titre          : Softbank Japon iPhone [propre/non payé]
+  Slug           : softbank-japon-iphone
+  Prix de base   : 3.99
+  Catégorie      : deblocage-reseau-japon
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S023]
+  Titre          : Softbank Code déblocage générique Sony/Samsung/Sharp
+  Slug           : softbank-deblocage-generique-sony-samsung-sharp
+  Prix de base   : 2.18
+  Catégorie      : deblocage-reseau-japon
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S024]
+  Titre          : Softbank Android [IMEI propre/non payé]
+  Slug           : softbank-android-imei-propre
+  Prix de base   : 2.32
+  Catégorie      : deblocage-reseau-japon
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+[S025]
+  Titre          : KDDI Japan iPhone 6s à 13 Pro Max / iPad
+  Slug           : kddi-japan-iphone-ipad
+  Prix de base   : 3.5
+  Catégorie      : deblocage-reseau-japon
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+
+--- Catégorie : deblocage-reseau-europe --- 
+
+[S026]
+  Titre          : Vodafone Allemagne iPhone + génériques
+  Slug           : vodafone-allemagne-iphone-generiques
+  Prix de base   : 0
+  Catégorie      : deblocage-reseau-europe
+  Groupe Service : Services IMEI
+  Actif          : Oui
+
+
+================================================================================
+GROUPE : Services Serveur (Groupe Service = Services Serveur)	
+================================================================================
+
+
+--- Catégorie : auth-frp-serveur ---
+
+[S027]
+  Titre          : Crédit Auth Flash / EFS RESET / FRP / FDL [utilisateur existant]
+  Slug           : credit-auth-flash-efs-frp-fdl
+  Prix de base   : 0.72
+  Catégorie      : auth-frp-serveur
+  Groupe Service : Services Serveur
+  Actif          : Oui
+
+[S028]
+  Titre          : Phoenix Service Tool
+  Slug           : phoenix-service-tool
+  Prix de base   : 0.94
+  Catégorie      : auth-frp-serveur
+  Groupe Service : Services Serveur
+  Actif          : Oui
+
+[S029]
+  Titre          : Outil HXRU OPPO | Realme | OnePlus
+  Slug           : hxru-oppo-realme-oneplus
+  Prix de base   : 1.4
+  Catégorie      : auth-frp-serveur
+  Groupe Service : Services Serveur
+  Actif          : Oui
+
+[S030]
+  Titre          : Outil auth HXRU Xiaomi Qualcomm/Mediatek v5 v6
+  Slug           : hxru-xiaomi-qualcomm-mediatek
+  Prix de base   : 0.91
+  Catégorie      : auth-frp-serveur
+  Groupe Service : Services Serveur
+  Actif          : Oui
+
+[S031]
+  Titre          : TMT PRO Activation 3 mois — 1 PC
+  Slug           : tmt-pro-activation-3-mois
+  Prix de base   : 16.49
+  Catégorie      : auth-frp-serveur
+  Groupe Service : Services Serveur
+  Actif          : Oui
+
+[S032]
+  Titre          : TMT PRO Activation 6 mois — 1 PC
+  Slug           : tmt-pro-activation-6-mois
+  Prix de base   : 24.49
+  Catégorie      : auth-frp-serveur
+  Groupe Service : Services Serveur
+  Actif          : Oui
+
+[S033]
+  Titre          : TMT PRO Activation 12 mois — 1 PC
+  Slug           : tmt-pro-activation-12-mois
+  Prix de base   : 31.9
+  Catégorie      : auth-frp-serveur
+  Groupe Service : Services Serveur
+  Actif          : Oui
+
+[S034]
+  Titre          : Outil réparation auth Xiaomi (TMT PRO)
+  Slug           : tmt-pro-reparation-auth-xiaomi
+  Prix de base   : 0
+  Catégorie      : auth-frp-serveur
+  Groupe Service : Services Serveur
+  Actif          : Oui
+
+
+================================================================================
+GROUPE : Louer Outils (Groupe Service = Louer Outils)					IIIIICI
+================================================================================
+
+
+--- Catégorie : eft-pro ---
+
+[S035]
+  Titre          : Produit EFT Pro
+  Slug           : produit-eft-pro
+  Prix de base   : 37
+  Catégorie      : eft-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S036]
+  Titre          : Clé EFT — Renouvellement 2 ans AVEC CLÉ
+  Slug           : cle-eft-renouvellement-2-ans
+  Prix de base   : 28.19
+  Catégorie      : eft-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S037]
+  Titre          : EFT Dongle — 12 mois Renouvellement AVEC DONGLE
+  Slug           : eft-dongle-12-mois-renouvellement
+  Prix de base   : 0
+  Catégorie      : eft-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : chimera-tool ---
+
+[S038]
+  Titre          : Chimera Licence Basic 1 an [100 appareils]
+  Slug           : chimera-licence-basic-1-an
+  Prix de base   : 98
+  Catégorie      : chimera-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S039]
+  Titre          : Chimera Licence Professionnelle 1 an [1500 appareils]
+  Slug           : chimera-licence-pro-1-an
+  Prix de base   : 148
+  Catégorie      : chimera-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S040]
+  Titre          : Chimera Licence Premium 1 an [5000 appareils]
+  Slug           : chimera-licence-premium-1-an
+  Prix de base   : 188
+  Catégorie      : chimera-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S041]
+  Titre          : Crédits Chimera Tool
+  Slug           : credits-chimera-tool
+  Prix de base   : 0.15
+  Catégorie      : chimera-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : dft-pro ---
+
+[S042]
+  Titre          : DFT Pro Activation 1 an [Nouveaux utilisateurs]
+  Slug           : dft-pro-activation-1-an-nouveau
+  Prix de base   : 70.8
+  Catégorie      : dft-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S043]
+  Titre          : DFT Pro Activation 1 an [Anciens utilisateurs]
+  Slug           : dft-pro-activation-1-an-ancien
+  Prix de base   : 70.8
+  Catégorie      : dft-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S044]
+  Titre          : DFT Pro Activation 2 ans [Nouveaux utilisateurs]
+  Slug           : dft-pro-activation-2-ans-nouveau
+  Prix de base   : 141.9
+  Catégorie      : dft-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S045]
+  Titre          : DFT Pro Activation 2 ans [Anciens utilisateurs]
+  Slug           : dft-pro-activation-2-ans-ancien
+  Prix de base   : 141.9
+  Catégorie      : dft-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : dt-pro ---
+
+[S046]
+  Titre          : Activation DT PRO
+  Slug           : activation-dt-pro
+  Prix de base   : 14.85
+  Catégorie      : dt-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S047]
+  Titre          : Crédit DT PRO utilisateur existant
+  Slug           : credit-dt-pro-utilisateur-existant
+  Prix de base   : 0
+  Catégorie      : dt-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : awt-androidwintool ---
+
+[S048]
+  Titre          : Crédits AWT AndroidWinTool
+  Slug           : credits-awt-androidwintool
+  Prix de base   : 0.88
+  Catégorie      : awt-androidwintool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S049]
+  Titre          : AWT Licence 1 PC — 1 mois
+  Slug           : awt-licence-1-pc-1-mois
+  Prix de base   : 15.89
+  Catégorie      : awt-androidwintool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S050]
+  Titre          : AWT Licence 1 PC — 3 mois
+  Slug           : awt-licence-1-pc-3-mois
+  Prix de base   : 24.49
+  Catégorie      : awt-androidwintool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S051]
+  Titre          : AWT Licence 1 PC — 1 an
+  Slug           : awt-licence-1-pc-1-an
+  Prix de base   : 33.84
+  Catégorie      : awt-androidwintool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : sigma-plus ---
+
+[S052]
+  Titre          : Sigma Plus Licence numérique 3 jours
+  Slug           : sigma-plus-licence-3-jours
+  Prix de base   : 10.89
+  Catégorie      : sigma-plus
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S053]
+  Titre          : Sigma Plus Licence numérique 1 mois
+  Slug           : sigma-plus-licence-1-mois
+  Prix de base   : 35.35
+  Catégorie      : sigma-plus
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : amt-android ---
+
+[S054]
+  Titre          : AMT Licence 12 mois
+  Slug           : amt-licence-12-mois
+  Prix de base   : 28.2
+  Catégorie      : amt-android
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S055]
+  Titre          : AMT Android VIVO-XIAOMI-TECNO-INFINIX-ITEL-REALME-OPPO FRP/FLASH
+  Slug           : amt-android-frp-flash-multi-marques
+  Prix de base   : 0.92
+  Catégorie      : amt-android
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S056]
+  Titre          : AMT Android Multi Tool — 3 mois
+  Slug           : amt-android-multi-tool-3-mois
+  Prix de base   : 11.2
+  Catégorie      : amt-android
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S057]
+  Titre          : AMT Android Multi Tool — 6 mois
+  Slug           : amt-android-multi-tool-6-mois
+  Prix de base   : 17.84
+  Catégorie      : amt-android
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S058]
+  Titre          : Android Multi Tool — 1 mois
+  Slug           : android-multi-tool-1-mois
+  Prix de base   : 5.85
+  Catégorie      : amt-android
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : hydra-tool ---
+
+[S059]
+  Titre          : Hydra Tool 50 Credits
+  Slug           : hydra-tool-50-credits
+  Prix de base   : 39.68
+  Catégorie      : hydra-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : tsm-tool ---
+
+[S060]
+  Titre          : TSM TOOL — 1 Year 1 PC
+  Slug           : tsm-tool-1-year-1-pc
+  Prix de base   : 42.5
+  Catégorie      : tsm-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S061]
+  Titre          : TSM Tool Pro 3 Months
+  Slug           : tsm-tool-pro-3-months
+  Prix de base   : 23.33
+  Catégorie      : tsm-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S062]
+  Titre          : TSM TOOL — 6 Months 1 PC
+  Slug           : tsm-tool-6-months-1-pc
+  Prix de base   : 32.7
+  Catégorie      : tsm-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S063]
+  Titre          : TSM Tool Pro Add Credits
+  Slug           : tsm-tool-pro-add-credits
+  Prix de base   : 0.91
+  Catégorie      : tsm-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : tfm-pro ---
+
+[S064]
+  Titre          : TFM Pro tool Credit
+  Slug           : tfm-pro-tool-credit
+  Prix de base   : 0.87
+  Catégorie      : tfm-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S065]
+  Titre          : TFM Pro Activation 1 an
+  Slug           : tfm-pro-activation-1-an
+  Prix de base   : 28.45
+  Catégorie      : tfm-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S066]
+  Titre          : TFM Pro Activation 3 mois
+  Slug           : tfm-pro-activation-3-mois
+  Prix de base   : 19.75
+  Catégorie      : tfm-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S067]
+  Titre          : TFM Pro Activation 2 ans
+  Slug           : tfm-pro-activation-2-ans
+  Prix de base   : 45.7
+  Catégorie      : tfm-pro
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : cheetah-tool ---
+
+[S068]
+  Titre          : Cheetah Activation PRO — 3 mois
+  Slug           : cheetah-activation-pro-3-mois
+  Prix de base   : 25.1
+  Catégorie      : cheetah-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S069]
+  Titre          : Cheetah Activation PRO — 6 mois
+  Slug           : cheetah-activation-pro-6-mois
+  Prix de base   : 34.1
+  Catégorie      : cheetah-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S070]
+  Titre          : Cheetah Activation PRO — 1 an
+  Slug           : cheetah-activation-pro-1-an
+  Prix de base   : 46.1
+  Catégorie      : cheetah-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S071]
+  Titre          : Crédit Cheetah Tool (toute quantité)
+  Slug           : credit-cheetah-tool
+  Prix de base   : 0.76
+  Catégorie      : cheetah-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S072]
+  Titre          : Cheetah Activation module LG
+  Slug           : cheetah-activation-module-lg
+  Prix de base   : 13.73
+  Catégorie      : cheetah-tool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : griffin-unlock ---
+
+[S073]
+  Titre          : Griffin Unlock — Renouvellement 2 ans [comptes expirés]
+  Slug           : griffin-renouvellement-2-ans-expires
+  Prix de base   : 54.2
+  Catégorie      : griffin-unlock
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S074]
+  Titre          : Griffin Unlock — Créer nouveau compte 3 mois
+  Slug           : griffin-nouveau-compte-3-mois
+  Prix de base   : 25.66
+  Catégorie      : griffin-unlock
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S075]
+  Titre          : Griffin Unlock — Prolonger 3 mois [ancien utilisateur]
+  Slug           : griffin-prolonger-3-mois
+  Prix de base   : 26.38
+  Catégorie      : griffin-unlock
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S076]
+  Titre          : Griffin Unlock — Créer nouveau compte 6 mois
+  Slug           : griffin-nouveau-compte-6-mois
+  Prix de base   : 34.61
+  Catégorie      : griffin-unlock
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S077]
+  Titre          : Griffin Unlock — Prolonger 6 mois [utilisateur existant]
+  Slug           : griffin-prolonger-6-mois
+  Prix de base   : 36.12
+  Catégorie      : griffin-unlock
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S078]
+  Titre          : Griffin Unlock — Créer nouveau compte 12 mois
+  Slug           : griffin-nouveau-compte-12-mois
+  Prix de base   : 48.59
+  Catégorie      : griffin-unlock
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S079]
+  Titre          : Griffin Unlock — Prolonger 12 mois [utilisateur existant]
+  Slug           : griffin-prolonger-12-mois
+  Prix de base   : 49.09
+  Catégorie      : griffin-unlock
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : lanrui ---
+
+[S080]
+  Titre          : Outil matériel Lanrui Gzlanrui 1 an — 1 pièce
+  Slug           : lanrui-gzlanrui-1-an
+  Prix de base   : 47.49
+  Catégorie      : lanrui
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+--- Catégorie : unlocktool ---
+
+[S081]
+  Titre          : Licence UnlockTool 3 mois
+  Slug           : unlocktool-licence-3-mois
+  Prix de base   : 16.42
+  Catégorie      : unlocktool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S082]
+  Titre          : Licence UnlockTool 6 mois
+  Slug           : unlocktool-licence-6-mois
+  Prix de base   : 24.37
+  Catégorie      : unlocktool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+[S083]
+  Titre          : Licence UnlockTool 12 mois
+  Slug           : unlocktool-licence-12-mois
+  Prix de base   : 40.3
+  Catégorie      : unlocktool
+  Groupe Service : Louer Outils
+  Actif          : Oui
+
+
+================================================================
+RÉCAPITULATIF
+================================================================
+
+  Catégories à créer     : 20
+  Services à saisir      : 83 (S001 à S083)
+
+  Répartition par Groupe Service :
+    Services IMEI        : S001 à S026  (26 services)
+    Services Serveur     : S027 à S034  (8 services)
+    Louer Outils         : S035 à S083  (49 services)
+
+
+PROCÉDURE DE SAISIE
+-------------------
+  1. Admin > Catégories → créer les 20 catégories (Partie A)
+  2. Admin > Services > Nouveau service
+  3. Copier chaque bloc [Sxxx] dans le formulaire :
+       Titre          → champ Titre
+       Slug           → champ Slug
+       Prix de base   → champ Prix de base
+       Catégorie      → menu déroulant
+       Groupe Service → menu déroulant
+       Actif          → cocher la case
+  4. Enregistrer → service suivant
+
+NOTES
+-----
+  • Prix à 0 = service gratuit ou prix à confirmer avant publication
+  • Slug unique obligatoire — ne jamais dupliquer
+  • Catégorie = slug Firestore (ex: bypass-icloud), pas le titre affiché
+  • Groupe Service = menu tiroir public (IMEI / Serveur / Louer Outils)
+  • Décocher Actif = service masqué sans le supprimer

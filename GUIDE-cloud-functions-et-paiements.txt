@@ -1,0 +1,376 @@
+MASTER UNLOCKER — Guide A à Z : Cloud Functions + Paiements
+============================================================
+Projet Firebase : master-unlock-db
+Pour : propriétaire / admin technique (niveau Firestore + Auth)
+
+
+0. CE QUE VOUS DEVEZ COMPRENDRE EN 2 MINUTES
+--------------------------------------------
+
+Aujourd'hui vous avez :
+  - Frontend (HTML/JS) → lit/écrit Firestore + Auth
+  - Checkout (pages/checkout.html) → UI prête, logique paiement VIDE
+  - Dossier functions/ → N'EXISTE PAS encore dans le projet
+  - js/payments/*.js → fichiers vides
+
+Pourquoi Cloud Functions ?
+  - Les clés secrètes CinetPay / Flutterwave / PayPal ne doivent JAMAIS être dans le frontend
+  - La validation du paiement doit se faire côté serveur (webhook)
+  - La création de commande (order) après paiement = logique métier serveur
+
+Schéma du flux cible :
+
+  Client remplit service → orderDraft (Firestore)
+       ↓
+  Client clique "Payer" → Cloud Function initPayment
+       ↓
+  Redirection vers CinetPay / Flutterwave / PayPal
+       ↓
+  Fournisseur confirme → Webhook → Cloud Function paymentWebhook
+       ↓
+  Function met payments.status = success + crée orders + notification
+
+
+1. PRÉREQUIS (À INSTALLER SUR VOTRE PC)
+---------------------------------------
+
+  1. Node.js LTS (v20+)     → https://nodejs.org
+  2. Firebase CLI           → npm install -g firebase-tools
+  3. Compte Google          → accès console Firebase du projet master-unlock-db
+  4. Comptes marchands      → CinetPay et/ou Flutterwave (voir section 8)
+     (PayPal Business si vous voulez PayPal en plus)
+
+Vérifier l'installation :
+  node -v
+  npm -v
+  firebase --version
+
+
+2. CONNEXION FIREBASE CLI
+-------------------------
+
+Ouvrir un terminal à la racine du projet :
+  cd "e:\ES\projects\MASTER UNLOCK\Master unlock project"
+
+Se connecter :
+  firebase login
+
+Sélectionner le projet :
+  firebase use master-unlock-db
+
+Si firebase.json n'existe pas, l'initialiser (section 3).
+
+
+3. CRÉER LE DOSSIER functions/ (PREMIÈRE FOIS)
+-----------------------------------------------
+
+À la racine du projet :
+
+  firebase init functions
+
+Réponses recommandées :
+  - Use existing project → master-unlock-db
+  - Language → JavaScript (ou TypeScript si vous préférez)
+  - ESLint → Yes
+  - Install dependencies → Yes
+
+Cela crée :
+  functions/
+    index.js          ← point d'entrée des Cloud Functions
+    package.json
+  firebase.json       ← config déploiement
+  .firebaserc         ← lien projet Firebase
+
+Activer Functions dans la console Firebase :
+  https://console.firebase.google.com/project/master-unlock-db/functions
+  → Passer au plan Blaze (pay-as-you-go) — obligatoire pour Functions + appels externes
+
+
+4. STRUCTURE FIRESTORE (RAPPEL — NE PAS INVENTER)
+-------------------------------------------------
+
+Collections utilisées par le paiement :
+
+  orderDrafts/{draftId}
+    - userId, serviceId, amount, currency, formData, status: "draft"
+
+  payments/{paymentId}
+    - userId, orderDraftId, amount, currency
+    - provider: "cinetpay" | "flutterwave" | "paypal"
+    - paymentMethod: "momo" | "card"
+    - status: "pending" | "success" | "failed" | "cancelled"
+    - providerTransactionId, createdAt
+
+  orders/{orderId}
+    - créé UNIQUEMENT après paiement success
+    - status: "paid" puis "processing"
+    - processingStatus: "waiting"
+
+  notifications/{id}
+    - type: "payment" ou "order"
+
+
+5. CLOUD FUNCTIONS À CRÉER (4 FUNCTIONS MINIMUM)
+------------------------------------------------
+
+Fichier : functions/index.js
+
+--- Function 1 : initPayment (HTTPS Callable) ---
+  Appelée par le frontend quand l'utilisateur clique "Payer maintenant".
+  Entrée : { orderDraftId, paymentMethod: "momo"|"card", provider: "cinetpay"|"flutterwave" }
+  Actions :
+    1. Vérifier que l'utilisateur est authentifié (context.auth.uid)
+    2. Lire orderDraft dans Firestore, vérifier userId = uid
+    3. Créer document payments/{id} avec status "pending"
+    4. Appeler API CinetPay/Flutterwave avec la clé secrète (côté serveur)
+    5. Retourner { paymentUrl } pour redirection client
+
+--- Function 2 : paymentWebhook (HTTP Request) ---
+  URL publique appelée par CinetPay/Flutterwave après paiement.
+  Actions :
+    1. Vérifier la signature / token du fournisseur (SÉCURITÉ CRITIQUE)
+    2. Trouver le payment correspondant
+    3. Si succès : payments.status = "success"
+    4. Appeler la logique finalizePayment (Function 3 en interne)
+    5. Répondre 200 OK au fournisseur
+
+--- Function 3 : finalizePayment (interne, pas exposée) ---
+  Actions :
+    1. Lire orderDraft lié au payment
+    2. Créer orders/{orderId} avec status "paid"
+    3. Mettre orderDraft.status = "converted"
+    4. Créer notification utilisateur
+    5. (Optionnel) alerter admin
+
+--- Function 4 : verifyPayment (HTTPS Callable) ---
+  Appelée par le frontend au retour sur la page checkout (si webhook lent).
+  Entrée : { paymentId }
+  Actions :
+    1. Vérifier auth
+    2. Interroger l'API fournisseur OU lire payments.status
+    3. Retourner { status, orderId }
+
+
+6. SECRETS — OÙ METTRE LES CLÉS API
+-----------------------------------
+
+JAMAIS dans firebaseConfig.js ni dans le code frontend.
+
+Méthode recommandée (Firebase Secret Manager) :
+
+  firebase functions:secrets:set CINETPAY_API_KEY
+  firebase functions:secrets:set CINETPAY_SITE_ID
+  firebase functions:secrets:set FLUTTERWAVE_SECRET_KEY
+  firebase functions:secrets:set FLUTTERWAVE_PUBLIC_KEY
+  firebase functions:secrets:set PAYPAL_CLIENT_ID      (si PayPal)
+  firebase functions:secrets:set PAYPAL_CLIENT_SECRET  (si PayPal)
+
+Dans functions/index.js :
+  const { defineSecret } = require("firebase-functions/params");
+  const cinetpayKey = defineSecret("CINETPAY_API_KEY");
+
+Puis attacher le secret à la function :
+  exports.initPayment = onCall({ secrets: [cinetpayKey] }, async (request) => { ... });
+
+
+7. EXEMPLE SQUELETTE functions/index.js
+----------------------------------------
+
+  const { onCall, HttpsError } = require("firebase-functions/v2/https");
+  const { onRequest } = require("firebase-functions/v2/https");
+  const admin = require("firebase-admin");
+
+  admin.initializeApp();
+  const db = admin.firestore();
+
+  exports.initPayment = onCall(async (request) => {
+    if (!request.auth) throw new HttpsError("unauthenticated", "Connexion requise");
+    const { orderDraftId, paymentMethod, provider } = request.data;
+    // 1. lire orderDraft, 2. créer payment, 3. appeler API, 4. return paymentUrl
+  });
+
+  exports.paymentWebhook = onRequest(async (req, res) => {
+    // vérifier signature fournisseur
+    // mettre à jour payment + créer order
+    res.status(200).send("OK");
+  });
+
+  exports.verifyPayment = onCall(async (request) => {
+    if (!request.auth) throw new HttpsError("unauthenticated", "Connexion requise");
+    const { paymentId } = request.data;
+    // retourner statut + orderId
+  });
+
+
+8. CONFIGURER LES FOURNISSEURS DE PAIEMENT
+------------------------------------------
+
+--- A. CinetPay (MoMo + Carte — Afrique) ---
+  1. Créer compte : https://cinetpay.com
+  2. Récupérer : API Key + Site ID
+  3. Dashboard CinetPay → URL de notification (webhook) :
+     https://us-central1-master-unlock-db.cloudfunctions.net/paymentWebhookCinetpay
+     (URL exacte après 1er déploiement — voir console Functions)
+  4. URL de retour client :
+     https://VOTRE-DOMAINE/pages/checkout.html?paymentId=XXX
+
+--- B. Flutterwave (MoMo + Carte) ---
+  1. Créer compte : https://flutterwave.com
+  2. Récupérer : Public Key + Secret Key
+  3. Dashboard → Webhooks :
+     https://us-central1-master-unlock-db.cloudfunctions.net/paymentWebhookFlutterwave
+  4. Activer les devises : USD, CDF selon votre marché
+
+--- C. PayPal (optionnel) ---
+  Le projet PRD prévoit CinetPay + Flutterwave. PayPal est possible en plus :
+  1. Compte PayPal Business + Developer : https://developer.paypal.com
+  2. Créer une App → Client ID + Secret
+  3. Webhook PayPal → paymentWebhookPaypal
+  4. Ajouter provider "paypal" dans payments.provider (extension future)
+
+Recommandation MASTER UNLOCKER :
+  - MoMo RDC / Afrique → CinetPay en priorité
+  - Cartes internationales → Flutterwave
+  - PayPal → seulement si clients internationaux le demandent
+
+
+9. BRANCHER LE FRONTEND (APRÈS DÉPLOIEMENT FUNCTIONS)
+-----------------------------------------------------
+
+Fichiers à implémenter (actuellement vides) :
+
+  js/payments/initPayment.js
+    → import { httpsCallable } from firebase/functions.js
+    → appelle initPayment avec orderDraftId + method
+
+  js/payments/verifyPayment.js
+    → appelle verifyPayment au retour checkout
+
+  js/payments/webhooks.js
+    → pas d'appel frontend (c'est le serveur qui reçoit)
+
+  js/payments/momo.js
+    → logique UI MoMo (numéro téléphone)
+
+  js/orders/createOrder.js + orderDrafts.js
+    → création orderDraft AVANT paiement
+
+  firebase/functions.js (frontend)
+    → wrapper httpsCallable("initPayment"), etc.
+
+Exemple appel frontend :
+  import { httpsCallable, functions } from "../../firebase/firebaseConfig.js";
+  const initPaymentFn = httpsCallable(functions, "initPayment");
+  const result = await initPaymentFn({ orderDraftId, paymentMethod: "momo", provider: "cinetpay" });
+  window.location.href = result.data.paymentUrl;
+
+
+10. RÈGLES FIRESTORE (SÉCURITÉ PAIEMENTS)
+-----------------------------------------
+
+Créer firestore.rules à la racine si absent.
+
+Principes :
+  - Client peut CRÉER orderDraft (son userId)
+  - Client peut LIRE ses propres payments/orders
+  - Client NE PEUT PAS écrire payments.status = "success" (interdit)
+  - Seul Admin SDK (Cloud Functions) peut valider un paiement
+
+Exemple simplifié payments :
+  match /payments/{paymentId} {
+    allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+    allow create: if false;  // création via Function uniquement
+    allow update: if false;   // mise à jour via Function uniquement
+  }
+
+
+11. DÉPLOIEMENT — ÉTAPES EXACTES
+--------------------------------
+
+  Étape 1 : cd functions && npm install
+
+  Étape 2 : Tester localement (optionnel mais recommandé)
+    firebase emulators:start --only functions,firestore
+    Décommenter dans firebaseConfig.js :
+      connectFunctionsEmulator(functions, "127.0.0.1", 5001);
+
+  Étape 3 : Déployer les secrets (section 6)
+
+  Étape 4 : Déployer les functions
+    firebase deploy --only functions
+
+  Étape 5 : Copier les URLs des functions depuis la console Firebase
+    → les coller dans CinetPay / Flutterwave (webhooks)
+
+  Étape 6 : Déployer les rules Firestore
+    firebase deploy --only firestore:rules
+
+  Étape 7 : Tester un paiement sandbox (mode test fournisseur)
+
+
+12. CHECKLIST AVANT MISE EN PRODUCTION
+--------------------------------------
+
+  [ ] Plan Blaze activé sur master-unlock-db
+  [ ] functions/ créé et déployé
+  [ ] Secrets configurés (aucune clé dans le code frontend)
+  [ ] Webhooks CinetPay/Flutterwave pointent vers les bonnes URLs
+  [ ] firestore.rules empêchent la triche paiement
+  [ ] orderDraft créé avant chaque paiement
+  [ ] order créé uniquement après payment success
+  [ ] Page checkout branchée (initPayment + verifyPayment)
+  [ ] Admin > Paiements affiche les transactions (déjà prêt côté UI)
+  [ ] Test sandbox OK avec un vrai parcours : service → draft → pay → order
+
+
+13. ORDRE DE TRAVAIL RECOMMANDÉ (POUR VOUS)
+-------------------------------------------
+
+  Semaine 1 — Infrastructure
+    1. firebase init functions
+    2. Passer au plan Blaze
+    3. Créer initPayment + verifyPayment (sans vrai API, mock)
+    4. Implémenter orderDrafts.js + createOrder.js frontend
+
+  Semaine 2 — CinetPay
+    5. Compte CinetPay sandbox
+    6. Brancher initPayment → API CinetPay
+    7. Créer paymentWebhookCinetpay
+    8. Tester MoMo sandbox
+
+  Semaine 3 — Flutterwave + durcissement
+    9. Brancher Flutterwave (cartes)
+    10. firestore.rules strictes
+    11. Tests bout en bout
+    12. Passer en production fournisseur
+
+  PayPal → phase 4 si besoin business
+
+
+14. LIENS UTILES
+----------------
+
+  Console Firebase :
+    https://console.firebase.google.com/project/master-unlock-db
+
+  Doc Cloud Functions :
+    https://firebase.google.com/docs/functions
+
+  Doc Callable Functions :
+    https://firebase.google.com/docs/functions/callable
+
+  CinetPay API :
+    https://docs.cinetpay.com
+
+  Flutterwave API :
+    https://developer.flutterwave.com/docs
+
+  Emulateurs locaux :
+    https://firebase.google.com/docs/emulator-suite
+
+
+15. RÉSUMÉ EN UNE PHRASE
+------------------------
+
+  Vous ne codez pas le paiement dans Firestore directement :
+  le frontend demande → Cloud Function parle au fournisseur → webhook confirme → Function crée la commande.

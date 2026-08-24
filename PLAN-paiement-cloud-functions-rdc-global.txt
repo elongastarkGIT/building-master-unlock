@@ -1,0 +1,228 @@
+MASTER UNLOCKER — Plan action Paiement + Cloud Functions (RDC + Monde)
+========================================================================
+
+Objectif
+--------
+Donner un plan concret sur les fichiers non implémentés, quoi faire ensuite,
+et qui fait quoi (toi vs dev) pour supporter RDC + international + crypto + B2B.
+
+
+1) AUDIT RÉEL DES FICHIERS NON TRAVAILLÉS
+-----------------------------------------
+
+Fichiers actuellement vides (à implémenter) :
+
+  - js/payments/initPayment.js
+  - js/payments/verifyPayment.js
+  - js/payments/momo.js
+  - js/orders/orderDrafts.js
+  - firebase/functions.js
+
+Conséquence actuelle :
+  - La page checkout existe (UI prête), mais aucun vrai flux paiement ne fonctionne.
+  - Aucune Cloud Function locale n’est encore branchée côté frontend.
+
+
+2) PRIORITÉ STRATÉGIQUE FOURNISSEURS (RDC + MONDE)
+---------------------------------------------------
+
+Décision recommandée (ordre de mise en prod) :
+
+  Phase 1 (obligatoire) :
+    - CinetPay pour MoMo RDC/Afrique + carte
+    - Flutterwave pour cartes internationales
+
+  Phase 2 (global) :
+    - Stripe (si pays du compte le permet) OU garder Flutterwave pour cartes globales
+    - PayPal en option (clients USA/EU habitués PayPal)
+
+  Phase 3 (crypto) :
+    - Coinbase Commerce ou Binance Pay (custodial simple)
+    - Plus tard : paiements on-chain directs si besoin avancé
+
+  Phase 4 (B2B crypto) :
+    - Facture + wallet par entreprise + validation manuelle/automatique
+    - KYC/AML partenaire avant activation gros volumes
+
+
+3) ARCHITECTURE CIBLE (SÉCURITÉ)
+--------------------------------
+
+Toujours :
+  Frontend -> Cloud Function -> Provider -> Webhook -> Firestore
+
+Jamais :
+  Frontend -> API provider secrète (interdit)
+
+Flux standard :
+  orderDraft (client) ->
+  initPayment (function callable) ->
+  payment URL provider ->
+  webhook provider ->
+  finalizePayment (serveur) ->
+  create order + notification
+
+
+4) CLOUD FUNCTIONS À CRÉER EN PREMIER
+-------------------------------------
+
+Minimum production :
+
+  1. initPayment
+     - Vérifie auth
+     - Vérifie orderDraft et ownership
+     - Crée payments/{id} status=pending
+     - Retourne paymentUrl
+
+  2. paymentWebhookCinetpay
+     - Vérifie signature
+     - Met payment success/failed
+     - Lance finalizePayment
+
+  3. paymentWebhookFlutterwave
+     - Même logique que ci-dessus
+
+  4. verifyPayment
+     - Vérifie statut après retour client
+     - Retourne status + orderId
+
+  5. finalizePayment (interne)
+     - Idempotent (ne jamais créer 2 orders)
+     - Crée order depuis orderDraft
+     - Met orderDraft converti
+
+  6. initCryptoPayment (phase 3)
+     - Crée invoice crypto chez provider
+     - Retourne checkout URL / adresse / network
+
+  7. paymentWebhookCrypto (phase 3)
+     - Vérifie signature webhook crypto
+     - Valide confirmations blockchain
+     - Finalize order
+
+
+5) ADAPTATION DES FICHIERS VIDES (SANS TOUCHER LE RESTE)
+--------------------------------------------------------
+
+  - js/payments/initPayment.js
+      Appel httpsCallable("initPayment")
+      Gestion état loading + erreurs + redirection paymentUrl
+
+  - js/payments/verifyPayment.js
+      Appel httpsCallable("verifyPayment")
+      Mise à jour UI checkout selon statut
+
+  - js/payments/momo.js
+      Validation numéro RDC/international (format propre)
+      Mapping opérateur si nécessaire
+
+  - js/orders/orderDrafts.js
+      Création/lecture orderDraft avant paiement
+      Vérification montant/service côté serveur à la fin
+
+  - firebase/functions.js
+      Wrapper central des callables :
+        initPayment, verifyPayment, initCryptoPayment
+
+
+6) CE QUE TU DOIS FAIRE TOI (CÔTÉ PROPRIÉTAIRE)
+------------------------------------------------
+
+A faire avant dev paiement :
+
+  1. Créer/completer comptes marchands :
+     - CinetPay (prod + sandbox)
+     - Flutterwave (prod + sandbox)
+     - Option : PayPal Business
+     - Option crypto : Coinbase Commerce / Binance Pay
+
+  2. Préparer documents légaux entreprise :
+     - RCCM / ID fiscale / documents KYC
+     - Compte bancaire entreprise
+     - Politique remboursement + CGV
+
+  3. Définir règles business écrites :
+     - Pays acceptés/refusés
+     - Devises (USD, CDF, EUR)
+     - Délai de validité orderDraft
+     - Remboursement (quand, combien, délai)
+     - Seuil anti-fraude (montant max sans revue manuelle)
+
+  4. Valider mode crypto :
+     - Custodial simple (recommandé au début)
+     - Réseau accepté (USDT TRC20, ERC20, BTC, etc.)
+     - Nombre de confirmations requis
+
+  5. Désigner un responsable opérations :
+     - Personne qui suit daily : paiements pending/failed/webhook
+     - Personne qui répond litiges et remboursements
+
+
+7) CE QUE LE DEV DOIT FAIRE (CÔTÉ TECHNIQUE)
+---------------------------------------------
+
+  1. Initialiser dossier functions/ + secrets manager
+  2. Implémenter functions initPayment/webhooks/verify/finalize
+  3. Implémenter les 5 fichiers vides listés en section 1
+  4. Ajouter firestore.rules strictes anti-fraude
+  5. Ajouter idempotence + logs + traçabilité paiements
+  6. Tester sandbox end-to-end (success, failed, timeout, duplicate webhook)
+  7. Déployer progressivement (canary) puis production
+
+
+8) RISQUES ET MITIGATION (IMPORTANT)
+------------------------------------
+
+Risque: double commande
+  Mitigation: finalizePayment idempotent + transaction Firestore
+
+Risque: faux webhook
+  Mitigation: vérification signature obligatoire + IP allowlist si possible
+
+Risque: mismatch montant
+  Mitigation: montant recalculé côté serveur depuis service/orderDraft
+
+Risque: fraude carte/crypto
+  Mitigation: seuil review manuelle + scoring + blacklist
+
+Risque: indisponibilité provider
+  Mitigation: fallback provider + statut retry + monitoring
+
+
+9) ROADMAP SIMPLE (3 BLOCS)
+---------------------------
+
+Bloc A (Semaine 1)
+  - functions/ init + secrets
+  - initPayment + verifyPayment
+  - orderDrafts.js + initPayment.js branchés
+
+Bloc B (Semaine 2)
+  - webhooks CinetPay + Flutterwave
+  - finalizePayment robuste + règles Firestore
+  - tests sandbox complets
+
+Bloc C (Semaine 3+)
+  - crypto provider + webhook crypto
+  - mode B2B (facture, wallet entreprise, limites)
+  - observabilité (alertes, dashboard incidents)
+
+
+10) DÉCISIONS À PRENDRE MAINTENANT (TOI)
+----------------------------------------
+
+Valider ces points pour lancer l’implémentation :
+
+  - Provider principal RDC : CinetPay (Oui/Non)
+  - Provider carte globale : Flutterwave seul ou Flutterwave + PayPal
+  - Crypto phase 1 : Coinbase Commerce ou Binance Pay
+  - Devises en checkout : USD seul ou USD + CDF + EUR
+  - Activer B2B dès maintenant ou en phase 2
+
+
+Résumé exécutable
+-----------------
+Tu es prêt côté produit, mais pas encore côté moteur paiement.
+La prochaine étape technique est d’implémenter les 5 fichiers vides
+et les Cloud Functions sécurisées, puis brancher CinetPay + Flutterwave,
+ensuite crypto/B2B en phase contrôlée.

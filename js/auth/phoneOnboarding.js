@@ -2,13 +2,33 @@
 
 import { waitForSession } from "./session.js";
 import { COLLECTIONS, ADMIN_ROLES } from "../core/constants.js";
-import { sanitizePhone, sanitizeText } from "../../utils/sanitizer.js";
+import { sanitizePhone, sanitizeText, sanitizeEmail } from "../../utils/sanitizer.js";
 import { isPhone } from "../../utils/validators.js";
 
 let modalVisible = false;
 
 function isAdminRole(role) {
-  return Object.values(ADMIN_ROLES).includes(role);
+  const cleanRole = sanitizeText(role || "").toLowerCase();
+  return Object.values(ADMIN_ROLES).some((adminRole) => adminRole === cleanRole);
+}
+
+function mapPhoneSaveError(error) {
+  const code = sanitizeText(error?.code || "");
+  const message = sanitizeText(error?.message || "");
+
+  if (code === "permission-denied" || code.includes("permission-denied")) {
+    return "Permission Firestore refusee (rules). Impossible d'ecrire le telephone.";
+  }
+
+  if (code === "unavailable" || code.includes("unavailable")) {
+    return "Reseau Firestore indisponible. Reessayez.";
+  }
+
+  if (message) {
+    return `Impossible d'enregistrer le numero : ${message}`;
+  }
+
+  return "Impossible d'enregistrer le numero. Reessayez.";
 }
 
 function needsPhoneCapture(session) {
@@ -16,11 +36,16 @@ function needsPhoneCapture(session) {
     return false;
   }
 
+  // Les admins ne doivent jamais etre bloques par ce modal.
   if (isAdminRole(session.data.role)) {
     return false;
   }
 
-  const phone = sanitizeText(session.data.phone || "");
+  if (document.body.classList.contains("page-admin")) {
+    return false;
+  }
+
+  const phone = sanitizePhone(session.data.phone || "");
   return !isPhone(phone);
 }
 
@@ -156,13 +181,32 @@ function renderPhoneModal(modalRoot, session, onSuccess) {
     submit.disabled = true;
 
     try {
-      const { updateDocument } = await import("../../firebase/firestore.js");
+      const { setDocument, getDocument } = await import("../../firebase/firestore.js");
       const { refreshCurrentUserData } = await import("../../firebase/auth.js");
 
-      await updateDocument(COLLECTIONS.USERS, session.auth.uid, {
-        phone: cleanPhone,
-        phoneVerified: false
-      });
+      const existingProfile = await getDocument(COLLECTIONS.USERS, session.auth.uid);
+
+      if (existingProfile) {
+        // Compte users deja present → mettre a jour le telephone seulement
+        await setDocument(COLLECTIONS.USERS, session.auth.uid, {
+          phone: cleanPhone,
+          phoneVerified: false
+        });
+      } else {
+        // Profil users manquant (ex: admin only / Google partiel) → completer sans recreer un "compte"
+        // role force a "user" dans users/ (le role admin reste dans admins/)
+        await setDocument(COLLECTIONS.USERS, session.auth.uid, {
+          uid: session.auth.uid,
+          fullName: sanitizeText(session.data.fullName || session.auth.displayName || ""),
+          email: sanitizeEmail(session.data.email || session.auth.email || ""),
+          phone: cleanPhone,
+          phoneVerified: false,
+          role: "user",
+          status: "active",
+          totalOrders: 0,
+          totalSpent: 0
+        });
+      }
 
       await refreshCurrentUserData();
       modalVisible = false;
@@ -171,7 +215,7 @@ function renderPhoneModal(modalRoot, session, onSuccess) {
       onSuccess();
     } catch (saveError) {
       console.error("PHONE ONBOARDING ERROR:", saveError);
-      showFormError(error, "Impossible d'enregistrer le numéro. Réessayez.");
+      showFormError(error, mapPhoneSaveError(saveError));
       submit.disabled = false;
     }
   });

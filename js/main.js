@@ -68,7 +68,7 @@ function mapAuthError(error) {
   const message = typeof error?.message === "string" ? error.message : "";
 
   if (code === "auth/email-already-in-use") {
-    return "Cette adresse email est deja utilisee.";
+    return "Ce compte existe deja. Connectez-vous.";
   }
 
   if (
