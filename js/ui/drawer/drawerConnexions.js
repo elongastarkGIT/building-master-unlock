@@ -1,22 +1,26 @@
 // /js/ui/drawer/drawerConnexions.js
 
-import { createAccordionGroup } from "./drawerAccordion.js";
-
 export function buildConnexionsSection() {
-  return createAccordionGroup({
-    id: "mobile-nav-connexions",
-    label: "Connexions",
-    items: [
-      {
-        href: "./login.html",
-        id: "mobile-nav-login",
-        label: "Connexion"
-      },
-      {
-        href: "./register.html",
-        id: "mobile-nav-register",
-        label: "Inscription"
-      }
-    ]
-  });
+  const wrap = document.createElement("div");
+  wrap.className = "mobile-nav-auth-actions";
+  wrap.id = "mobile-nav-auth-actions";
+
+  const loginLink = document.createElement("a");
+  loginLink.href = "./login.html";
+  loginLink.id = "mobile-nav-login";
+  loginLink.className = "mobile-nav-auth-login";
+  loginLink.setAttribute("data-link", "");
+  loginLink.textContent = "Connexion";
+
+  const registerLink = document.createElement("a");
+  registerLink.href = "./register.html";
+  registerLink.id = "mobile-nav-register";
+  registerLink.className = "mobile-nav-auth-register";
+  registerLink.setAttribute("data-link", "");
+  registerLink.textContent = "Inscription";
+
+  wrap.appendChild(loginLink);
+  wrap.appendChild(registerLink);
+
+  return wrap;
 }
