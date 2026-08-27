@@ -167,11 +167,14 @@ p {
 
 .hero {
   position: relative;
-  /* PC: laisse apparaître la bande logos sous le hero sans scroll */
-  min-height: calc(100dvh - var(--header-height) - 80px);
+  /* Contenu-driven : évite le vide massif en "Desktop Site" mobile (vh layout gonflé) */
+  height: auto;
+  min-height: fit-content;
+  max-height: none;
   display: flex;
   align-items: center;
-  padding: var(--space-5) 0 var(--space-4);
+  justify-content: center;
+  padding: clamp(2rem, 4.5vh, 4.5rem) 0;
   background:
     radial-gradient(ellipse 80% 60% at 85% 20%, rgba(59, 130, 246, 0.18), transparent 55%),
     radial-gradient(ellipse 60% 50% at 10% 80%, rgba(6, 182, 212, 0.12), transparent 50%),
@@ -187,14 +190,16 @@ p {
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: var(--space-6);
+  gap: clamp(1rem, 2.5vw, 1.5rem);
   align-items: center;
+  justify-content: center;
 }
 
 .hero-content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  justify-content: center;
+  gap: clamp(0.5rem, 1.2vh, 0.75rem);
   min-width: 0;
 }
 
@@ -209,7 +214,7 @@ p {
 
 .hero-title {
   margin: 0;
-  min-height: 2.4em;
+  min-height: 0;
   font-size: clamp(var(--text-xl), 3.2vw, var(--text-3xl));
   line-height: 1.15;
 }
@@ -306,11 +311,12 @@ p {
 .hero-visual {
   position: relative;
   min-width: 0;
+  align-self: center;
 }
 
 .hero-visual-panel {
   position: relative;
-  padding: var(--space-4) var(--space-5);
+  padding: clamp(0.75rem, 2vh, 1.25rem) clamp(1rem, 2vw, 1.25rem);
   border-radius: var(--radius-xl);
   overflow: hidden;
   text-align: center;
@@ -337,7 +343,8 @@ p {
 }
 
 .hero-device-screen {
-  min-height: 170px;
+  min-height: 0;
+  height: auto;
   padding: var(--space-4) var(--space-3);
   border-radius: 16px;
   background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
@@ -393,6 +400,21 @@ p {
   margin: 0;
   font-size: var(--text-xs);
   color: var(--color-text-muted);
+}
+
+/* Vrais grands écrans uniquement : un peu plus d'air, sans forcer 100vh */
+@media (min-width: 1024px) and (min-height: 720px) {
+  .hero {
+    padding: clamp(2.5rem, 5vh, 5rem) 0;
+  }
+
+  .hero-title {
+    min-height: 2.4em;
+  }
+
+  .hero-device-screen {
+    min-height: 170px;
+  }
 }
 
 @keyframes hero-progress {
