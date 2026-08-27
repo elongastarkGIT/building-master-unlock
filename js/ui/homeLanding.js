@@ -105,53 +105,107 @@ function starsFromRating(rating) {
   return "★".repeat(value) + "☆".repeat(5 - value);
 }
 
-async function hydrateTestimonialsFromFirestore() {
-  const cards = Array.from(document.querySelectorAll("#testimonials-grid .testimonial-card"));
+function isElementInViewport(node) {
+  const rect = node.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
 
-  if (!cards.length) {
+function createTestimonialCard(review, index) {
+  const rating = Number(review.rating) || 0;
+  const comment = String(review.comment || "").trim();
+  const card = document.createElement("article");
+  card.id = `testimonial-${index + 1}`;
+  card.className = "testimonial-card liquid-glass";
+  card.setAttribute("data-reveal", "");
+
+  const starsEl = document.createElement("p");
+  starsEl.id = `testimonial-${index + 1}-stars`;
+  starsEl.className = "testimonial-stars";
+  starsEl.setAttribute("aria-label", `Note ${rating} sur 5`);
+  starsEl.textContent = starsFromRating(rating);
+
+  const quoteEl = document.createElement("p");
+  quoteEl.id = `testimonial-${index + 1}-quote`;
+  quoteEl.className = "testimonial-quote";
+  quoteEl.textContent = comment;
+
+  const authorEl = document.createElement("p");
+  authorEl.id = `testimonial-${index + 1}-author`;
+  authorEl.className = "testimonial-author";
+  authorEl.textContent = "Client";
+
+  const roleEl = document.createElement("p");
+  roleEl.id = `testimonial-${index + 1}-role`;
+  roleEl.className = "testimonial-role";
+  roleEl.textContent = review.orderId ? "Avis commande" : "Avis plateforme";
+
+  card.appendChild(starsEl);
+  card.appendChild(quoteEl);
+  card.appendChild(authorEl);
+  card.appendChild(roleEl);
+
+  return card;
+}
+
+function hideTestimonialsSection() {
+  const section = document.getElementById("testimonials");
+
+  if (!section) {
     return;
   }
+
+  section.hidden = true;
+  section.setAttribute("aria-hidden", "true");
+
+  const grid = document.getElementById("testimonials-grid");
+
+  if (grid) {
+    grid.replaceChildren();
+  }
+}
+
+function showTestimonialsSection() {
+  const section = document.getElementById("testimonials");
+
+  if (!section) {
+    return;
+  }
+
+  section.hidden = false;
+  section.removeAttribute("aria-hidden");
+}
+
+async function hydrateTestimonialsFromFirestore() {
+  const section = document.getElementById("testimonials");
+  const grid = document.getElementById("testimonials-grid");
+
+  if (!section || !grid) {
+    return;
+  }
+
+  hideTestimonialsSection();
 
   try {
     const { loadApprovedReviews } = await import("../reviews/submitReview.js");
     const reviews = await loadApprovedReviews(3);
 
     if (!reviews.length) {
+      hideTestimonialsSection();
       return;
     }
 
+    const fragment = document.createDocumentFragment();
+
     reviews.forEach((review, index) => {
-      const card = cards[index];
-
-      if (!card) {
-        return;
-      }
-
-      const starsEl = card.querySelector(".testimonial-stars");
-      const quoteEl = card.querySelector(".testimonial-quote");
-      const authorEl = card.querySelector(".testimonial-author");
-      const roleEl = card.querySelector(".testimonial-role");
-      const rating = Number(review.rating) || 0;
-
-      if (starsEl) {
-        starsEl.textContent = starsFromRating(rating);
-        starsEl.setAttribute("aria-label", `Note ${rating} sur 5`);
-      }
-
-      if (quoteEl) {
-        quoteEl.textContent = String(review.comment || "").trim();
-      }
-
-      if (authorEl) {
-        authorEl.textContent = "Client";
-      }
-
-      if (roleEl) {
-        roleEl.textContent = review.orderId ? "Avis commande" : "Avis plateforme";
-      }
+      fragment.appendChild(createTestimonialCard(review, index));
     });
+
+    grid.replaceChildren(fragment);
+    showTestimonialsSection();
+    initTestimonialsReveal();
   } catch (error) {
     console.error("TESTIMONIALS HYDRATE ERROR:", error);
+    hideTestimonialsSection();
   }
 }
 
@@ -176,9 +230,16 @@ function initTestimonialsReveal() {
       entry.target.classList.add("is-visible");
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.25 });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
 
-  cards.forEach((card) => observer.observe(card));
+  cards.forEach((card) => {
+    if (isElementInViewport(card)) {
+      card.classList.add("is-visible");
+      return;
+    }
+
+    observer.observe(card);
+  });
 }
 
 function initScrollReveal() {
@@ -188,8 +249,14 @@ function initScrollReveal() {
     return;
   }
 
+  document.documentElement.classList.add("has-scroll-reveal");
+
+  const reveal = (node) => {
+    node.classList.add("is-inview");
+  };
+
   if (typeof IntersectionObserver !== "function") {
-    nodes.forEach((node) => node.classList.add("is-inview"));
+    nodes.forEach(reveal);
     return;
   }
 
@@ -199,12 +266,59 @@ function initScrollReveal() {
         return;
       }
 
-      entry.target.classList.add("is-inview");
+      reveal(entry.target);
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.12, rootMargin: "0px 0px -32px 0px" });
 
-  nodes.forEach((node) => observer.observe(node));
+  nodes.forEach((node) => {
+    if (isElementInViewport(node)) {
+      reveal(node);
+      return;
+    }
+
+    observer.observe(node);
+  });
+
+  window.setTimeout(() => {
+    nodes.forEach((node) => {
+      if (!node.classList.contains("is-inview")) {
+        reveal(node);
+      }
+    });
+  }, 2500);
+}
+
+function applyLogoFallback(img, fallback) {
+  if (!img || !fallback) {
+    return;
+  }
+
+  const showFallback = () => {
+    img.classList.add("is-broken");
+    img.setAttribute("hidden", "");
+    fallback.removeAttribute("hidden");
+  };
+
+  if (img.complete) {
+    if (img.naturalWidth === 0) {
+      showFallback();
+    }
+    return;
+  }
+
+  img.addEventListener("error", showFallback, { once: true });
+}
+
+function initLogoFallback() {
+  applyLogoFallback(
+    document.getElementById("logo-img"),
+    document.getElementById("logo-fallback")
+  );
+  applyLogoFallback(
+    document.getElementById("footer-logo-img"),
+    document.getElementById("footer-logo-fallback")
+  );
 }
 
 export async function initHomeLanding() {
@@ -216,7 +330,8 @@ export async function initHomeLanding() {
     initHeroCounters();
   }
 
-  await hydrateTestimonialsFromFirestore();
-  initTestimonialsReveal();
+  initLogoFallback();
+  // Ne jamais bloquer l'affichage des sections sur Firestore
   initScrollReveal();
+  await hydrateTestimonialsFromFirestore();
 }

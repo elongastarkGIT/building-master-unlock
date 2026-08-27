@@ -41,6 +41,40 @@
   color: #fff;
 }
 
+.logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: invert(1) brightness(1.15);
+}
+
+.logo-img.is-broken {
+  display: none;
+}
+
+.logo-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color: #fff;
+}
+
+.logo-fallback[hidden] {
+  display: none;
+}
+
+.logo-fallback-svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
 .nav-main {
   display: none;
   align-items: center;
@@ -869,6 +903,59 @@ body.mobile-nav-open .site-footer {
   line-height: 1.7;
 }
 
+.home-faq-section {
+  padding-top: var(--space-10);
+}
+
+.home-faq-accordion .faq-item[data-scroll="faq-left"],
+.home-faq-accordion .faq-item[data-scroll="faq-right"] {
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1), transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.has-scroll-reveal .home-faq-accordion .faq-item[data-scroll="faq-left"],
+html.has-scroll-reveal .home-faq-accordion .faq-item[data-scroll="faq-right"] {
+  opacity: 0;
+}
+
+html.has-scroll-reveal .home-faq-accordion .faq-item[data-scroll="faq-left"] {
+  transform: translateX(-28px);
+}
+
+html.has-scroll-reveal .home-faq-accordion .faq-item[data-scroll="faq-right"] {
+  transform: translateX(28px);
+}
+
+html.has-scroll-reveal .home-faq-accordion .faq-item[data-scroll="faq-left"].is-inview,
+html.has-scroll-reveal .home-faq-accordion .faq-item[data-scroll="faq-right"].is-inview {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.home-faq-accordion .faq-item:nth-child(1).is-inview { transition-delay: 0ms; }
+.home-faq-accordion .faq-item:nth-child(2).is-inview { transition-delay: 70ms; }
+.home-faq-accordion .faq-item:nth-child(3).is-inview { transition-delay: 140ms; }
+.home-faq-accordion .faq-item:nth-child(4).is-inview { transition-delay: 210ms; }
+.home-faq-accordion .faq-item:nth-child(5).is-inview { transition-delay: 280ms; }
+
+.home-faq-cta {
+  margin-top: var(--space-8);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+html.has-scroll-reveal .home-faq-cta {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+html.has-scroll-reveal .home-faq-cta.is-inview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.home-faq-cta .text-muted {
+  margin-bottom: var(--space-4);
+}
+
 /* Badges */
 .badge {
   display: inline-flex;
@@ -1452,13 +1539,22 @@ body.modal-open {
 .testimonial-card {
   padding: var(--space-6);
   border-radius: var(--radius-xl);
-  opacity: 0;
-  transform: translateY(28px) scale(0.98);
   transition:
     opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.3s ease,
     box-shadow 0.3s ease;
+}
+
+html.has-scroll-reveal .testimonial-card {
+  opacity: 0;
+  transform: translateY(28px) scale(0.98);
+}
+
+html.has-scroll-reveal .testimonial-card.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: testimonial-float 5.5s ease-in-out infinite;
 }
 
 .testimonial-card.is-visible {
@@ -1513,7 +1609,22 @@ body.modal-open {
 
 /* ===== How it works + payments + scroll (Phase 3) ===== */
 
-.features-section .feature-card[data-scroll="scale"] {
+@media (prefers-reduced-motion: reduce) {
+  .features-section .feature-card[data-scroll="scale"],
+  .how-step,
+  .payment-methods,
+  .home-faq-accordion .faq-item[data-scroll="faq-left"],
+  .home-faq-accordion .faq-item[data-scroll="faq-right"],
+  .home-faq-cta,
+  .testimonial-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+html.has-scroll-reveal .features-section .feature-card[data-scroll="scale"] {
   opacity: 0;
   transform: scale(0.94);
   transition:
@@ -1523,7 +1634,7 @@ body.modal-open {
     box-shadow 0.3s ease;
 }
 
-.features-section .feature-card[data-scroll="scale"].is-inview {
+html.has-scroll-reveal .features-section .feature-card[data-scroll="scale"].is-inview {
   opacity: 1;
   transform: scale(1);
 }
@@ -1552,7 +1663,7 @@ body.modal-open {
   gap: var(--space-5);
 }
 
-.how-step {
+html.has-scroll-reveal .how-step {
   padding: var(--space-6);
   border-radius: var(--radius-xl);
   opacity: 0;
@@ -1564,11 +1675,16 @@ body.modal-open {
     box-shadow 0.3s ease;
 }
 
-.how-step:nth-child(even) {
+.how-step {
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+}
+
+html.has-scroll-reveal .how-step:nth-child(even) {
   transform: translateX(24px);
 }
 
-.how-step.is-inview {
+html.has-scroll-reveal .how-step.is-inview {
   opacity: 1;
   transform: translateX(0);
 }
@@ -1609,12 +1725,15 @@ body.modal-open {
   padding: var(--space-6) var(--space-8);
   border-radius: var(--radius-xl);
   text-align: center;
-  opacity: 0;
-  transform: translateY(20px);
   transition: opacity 0.55s ease, transform 0.55s ease, border-color 0.3s ease;
 }
 
-.payment-methods.is-inview {
+html.has-scroll-reveal .payment-methods {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+html.has-scroll-reveal .payment-methods.is-inview {
   opacity: 1;
   transform: translateY(0);
 }

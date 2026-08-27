@@ -562,6 +562,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("INIT CORE ERROR:", error);
   }
 
+  if (document.getElementById("hero") || document.getElementById("home-faq")) {
+    try {
+      const { initHomeLanding } = await import("./ui/homeLanding.js");
+      await initHomeLanding();
+    } catch (error) {
+      console.error("HOME LANDING ERROR:", error);
+    }
+  }
+
   if (document.body.classList.contains("page-dashboard")) {
     try {
       const { initPhoneOnboarding } = await import("./auth/phoneOnboarding.js");
@@ -577,11 +586,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     initAuthForms();
     initServicesCatalog();
     await initServiceDetails();
-
-    if (document.getElementById("hero") || document.getElementById("testimonials")) {
-      const { initHomeLanding } = await import("./ui/homeLanding.js");
-      await initHomeLanding();
-    }
 
     if (document.getElementById("review-form")) {
       const { initReviewForm } = await import("./reviews/submitReview.js");

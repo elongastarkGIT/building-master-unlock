@@ -235,6 +235,16 @@
     transform: translateY(0);
   }
 
+  .home-faq-accordion .faq-item[data-scroll="faq-left"],
+  .home-faq-accordion .faq-item[data-scroll="faq-right"] {
+    transform: translateY(16px);
+  }
+
+  .home-faq-accordion .faq-item[data-scroll="faq-left"].is-inview,
+  .home-faq-accordion .faq-item[data-scroll="faq-right"].is-inview {
+    transform: translateY(0);
+  }
+
   .payment-methods {
     padding: var(--space-5);
   }
