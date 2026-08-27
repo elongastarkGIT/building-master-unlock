@@ -51,11 +51,11 @@
   }
 
   .mobile-nav {
-    width: min(336px, calc(100vw - 20px));
+    width: min(300px, calc(100vw - 20px));
   }
 
   .mobile-nav-links {
-    padding: var(--space-4) var(--space-4) var(--space-8);
+    padding: var(--space-3) var(--space-3) var(--space-4);
   }
 
   .grid-2,
