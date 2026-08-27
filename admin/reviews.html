@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
-<title>Paramètres — Admin MASTER UNLOCKER</title>
+<title>Avis — Admin MASTER UNLOCKER</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="page-admin">
@@ -67,7 +67,7 @@
         <span class="sidebar-icon" aria-hidden="true">◓</span>
         <span>Tickets</span>
       </a>
-      <a href="./reviews.html" class="sidebar-link" data-link id="nav-reviews">
+      <a href="./reviews.html" class="sidebar-link active" data-link id="nav-reviews">
         <span class="sidebar-icon" aria-hidden="true">★</span>
         <span>Avis</span>
       </a>
@@ -78,7 +78,7 @@
     </div>
     <div class="sidebar-nav-section" id="nav-section-systeme">
       <span class="sidebar-nav-label" id="nav-label-systeme">Système</span>
-      <a href="./settings.html" class="sidebar-link active" data-link id="nav-settings">
+      <a href="./settings.html" class="sidebar-link" data-link id="nav-settings">
         <span class="sidebar-icon" aria-hidden="true">◕</span>
         <span>Paramètres</span>
       </a>
@@ -128,58 +128,51 @@
 <div class="admin-content" id="admin-content">
 
 <header class="page-header" id="page-header">
-  <h1 id="page-title">Paramètres</h1>
-  <p id="page-description">Configuration globale de la plateforme (settings/general).</p>
+  <h1 id="page-title">Avis clients</h1>
+  <p id="page-description">Approuver ou masquer les avis avant publication sur la landing.</p>
 </header>
 
-<section class="card" id="admin-settings-card">
-  <h2 class="card-title" id="settings-general-title">Paramètres généraux</h2>
-  <form id="admin-settings-form" novalidate>
-    <div class="form-group" id="settings-site-name-group">
-      <label for="settings-site-name" class="form-label" id="settings-site-name-label">Nom du site</label>
-      <input type="text" id="settings-site-name" name="siteName" class="form-input" autocomplete="off">
+<div class="filter-bar" id="admin-reviews-filters">
+  <div class="form-group" id="reviews-filter-approved-group">
+    <label for="admin-reviews-filter-approved" class="form-label" id="reviews-filter-approved-label">Approbation</label>
+    <select id="admin-reviews-filter-approved" name="approved" class="form-select">
+      <option value="" id="reviews-approved-all">Tous</option>
+      <option value="pending" id="reviews-approved-pending">En attente</option>
+      <option value="approved" id="reviews-approved-true">Approuvés</option>
+      <option value="rejected" id="reviews-approved-false">Non approuvés</option>
+    </select>
+  </div>
+  <button type="button" class="btn btn-secondary btn-sm" id="admin-reviews-filter-apply">Filtrer</button>
+  <button type="button" class="btn btn-ghost btn-sm" id="admin-reviews-filter-reset">Réinitialiser</button>
+</div>
+
+<div class="data-card" id="admin-reviews-card">
+  <div class="data-card-header" id="admin-reviews-header">
+    <h2 class="card-title" id="admin-reviews-title">Liste des avis</h2>
+  </div>
+  <div class="data-card-body" id="admin-reviews-body-wrapper">
+    <div class="table-wrapper" id="admin-reviews-table-wrapper">
+      <table class="table" id="admin-reviews-table">
+        <thead id="admin-reviews-thead">
+          <tr>
+            <th scope="col" id="reviews-col-id">ID</th>
+            <th scope="col" id="reviews-col-user">Utilisateur</th>
+            <th scope="col" id="reviews-col-rating">Note</th>
+            <th scope="col" id="reviews-col-comment">Commentaire</th>
+            <th scope="col" id="reviews-col-order">Commande</th>
+            <th scope="col" id="reviews-col-status">Statut</th>
+            <th scope="col" id="reviews-col-date">Date</th>
+            <th scope="col" id="reviews-col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-reviews-body"></tbody>
+      </table>
     </div>
-    <div class="form-group" id="settings-contact-email-group">
-      <label for="settings-contact-email" class="form-label" id="settings-contact-email-label">Email de contact</label>
-      <input type="email" id="settings-contact-email" name="contactEmail" class="form-input" autocomplete="off">
+    <div class="empty-state" id="admin-reviews-empty">
+      <p id="admin-reviews-empty-text">Aucun avis trouvé.</p>
     </div>
-    <div class="form-group" id="settings-support-phone-group">
-      <label for="settings-support-phone" class="form-label" id="settings-support-phone-label">Téléphone support</label>
-      <input type="tel" id="settings-support-phone" name="supportPhone" class="form-input" autocomplete="off">
-    </div>
-    <div class="form-row" id="settings-currency-row">
-      <div class="form-group" id="settings-default-currency-group">
-        <label for="settings-default-currency" class="form-label" id="settings-default-currency-label">Devise par défaut</label>
-        <select id="settings-default-currency" name="defaultCurrency" class="form-select">
-          <option value="" id="settings-currency-default">Sélectionner une devise</option>
-          <option value="USD" id="settings-currency-usd">USD</option>
-          <option value="CDF" id="settings-currency-cdf">CDF</option>
-          <option value="EUR" id="settings-currency-eur">EUR</option>
-        </select>
-      </div>
-      <div class="form-group" id="settings-default-country-group">
-        <label for="settings-default-country" class="form-label" id="settings-default-country-label">Pays par défaut</label>
-        <select id="settings-default-country" name="defaultCountry" class="form-select">
-          <option value="" id="settings-country-default">Sélectionner un pays</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group" id="settings-maintenance-group">
-      <label for="settings-maintenance-mode" class="form-label" id="settings-maintenance-label">Mode maintenance</label>
-      <input type="checkbox" id="settings-maintenance-mode" name="maintenanceMode" value="true">
-      <p class="form-hint" id="settings-maintenance-hint">Désactive l'accès public à la plateforme.</p>
-    </div>
-    <div class="form-group" id="settings-payment-provider-group">
-      <label for="settings-payment-provider" class="form-label" id="settings-payment-provider-label">Fournisseur paiement</label>
-      <select id="settings-payment-provider" name="paymentProvider" class="form-select">
-        <option value="" id="settings-provider-default">Sélectionner un fournisseur</option>
-        <option value="cinetpay" id="settings-provider-cinetpay">cinetpay</option>
-        <option value="flutterwave" id="settings-provider-flutterwave">flutterwave</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary" id="settings-save-submit">Enregistrer</button>
-  </form>
-</section>
+  </div>
+</div>
 
 </div>
 </main>

@@ -578,6 +578,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     initServicesCatalog();
     await initServiceDetails();
 
+    if (document.getElementById("hero") || document.getElementById("testimonials")) {
+      const { initHomeLanding } = await import("./ui/homeLanding.js");
+      await initHomeLanding();
+    }
+
+    if (document.getElementById("review-form")) {
+      const { initReviewForm } = await import("./reviews/submitReview.js");
+      await initReviewForm();
+    }
+
     const { initAdminCategories } = await import("./services/categories.js");
     const { initAdminServices, initServiceEditor } = await import("./admin/manageServices.js");
     const { initAdminDashboard } = await import("./admin/adminDashboard.js");
@@ -585,6 +595,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const { initAdminOrders } = await import("./admin/manageOrders.js");
     const { initAdminPayments } = await import("./admin/managePayments.js");
     const { initAdminTickets } = await import("./admin/manageTickets.js");
+    const { initAdminReviews } = await import("./admin/manageReviews.js");
     const { initAdminReports } = await import("./admin/analytics.js");
 
     await initAdminCategories();
@@ -595,6 +606,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await initAdminOrders();
     await initAdminPayments();
     await initAdminTickets();
+    await initAdminReviews();
     await initAdminReports();
   } catch (error) {
     console.error("PAGE INIT ERROR:", error);

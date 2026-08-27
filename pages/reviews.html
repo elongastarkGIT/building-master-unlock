@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.cloudfunctions.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+<meta name="description" content="Laissez un avis sur MASTER UNLOCKER — note et commentaire après votre expérience.">
+<title>Laisser un avis — MASTER UNLOCKER</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-public">
+
+<header id="site-header" class="site-header">
+  <div class="container">
+    <a href="./home.html" class="logo" data-link id="logo-link">
+      <span class="logo-mark" aria-hidden="true">MU</span>
+      <span id="logo-text">MASTER UNLOCKER</span>
+    </a>
+    <nav id="nav-main" class="nav-main" aria-label="Navigation principale">
+      <a href="./home.html" data-link id="nav-home">Accueil</a>
+      <a href="./services.html" data-link id="nav-services">Services</a>
+      <a href="./brands.html" data-link id="nav-brands">Marques</a>
+      <a href="./faq.html" data-link id="nav-faq">FAQ</a>
+      <a href="./contact.html" data-link id="nav-contact">Contact</a>
+      <a href="./status.html" data-link id="nav-status">Statut</a>
+    </nav>
+    <div id="nav-actions" class="nav-actions">
+      <a href="./login.html" class="btn btn-ghost btn-sm" data-link id="btn-login">Connexion</a>
+      <a href="./register.html" class="btn btn-primary btn-sm" data-link id="btn-register">Inscription</a>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <a href="./home.html" data-link id="mobile-nav-home">Accueil</a>
+    <a href="./services.html" data-link id="mobile-nav-services">Services</a>
+    <a href="./brands.html" data-link id="mobile-nav-brands">Marques</a>
+    <a href="./faq.html" data-link id="mobile-nav-faq">FAQ</a>
+    <a href="./contact.html" data-link id="mobile-nav-contact">Contact</a>
+    <a href="./status.html" data-link id="mobile-nav-status">Statut</a>
+    <a href="./login.html" data-link id="mobile-nav-login">Connexion</a>
+    <a href="./register.html" data-link id="mobile-nav-register">Inscription</a>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section id="reviews-section" class="section">
+    <div class="container">
+      <header class="page-header text-center">
+        <h1 id="page-title">Laisser un avis</h1>
+        <p id="page-subtitle">Partagez votre expérience. Les avis sont publiés après validation par l’équipe.</p>
+      </header>
+
+      <div class="editor-layout">
+        <form id="review-form" class="card" aria-label="Formulaire d'avis" novalidate>
+          <h2 id="review-form-title" class="card-title">Votre avis</h2>
+
+          <div class="form-group" id="review-rating-group">
+            <label for="review-rating" class="form-label" id="review-rating-label">Note</label>
+            <select id="review-rating" name="rating" class="form-select" required>
+              <option value="">Sélectionner une note</option>
+              <option value="5">5 — Excellent</option>
+              <option value="4">4 — Très bien</option>
+              <option value="3">3 — Correct</option>
+              <option value="2">2 — Moyen</option>
+              <option value="1">1 — Décevant</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="review-order-group">
+            <label for="review-order-id" class="form-label" id="review-order-label">ID commande (optionnel)</label>
+            <input type="text" id="review-order-id" name="orderId" class="form-input" placeholder="Ex. id Firestore de la commande" autocomplete="off">
+            <p class="form-hint" id="review-order-hint">Utile si l’avis concerne une commande précise.</p>
+          </div>
+
+          <div class="form-group" id="review-comment-group">
+            <label for="review-comment" class="form-label" id="review-comment-label">Commentaire</label>
+            <textarea id="review-comment" name="comment" class="form-textarea" rows="6" placeholder="Décrivez votre expérience (min. 10 caractères)..." required></textarea>
+          </div>
+
+          <p id="review-error" class="form-error" role="alert" hidden></p>
+          <p id="review-success" class="alert alert-success" role="status" hidden>Avis envoyé. Il sera visible après approbation.</p>
+
+          <button type="submit" id="review-submit" class="btn btn-primary">Envoyer l’avis</button>
+        </form>
+
+        <aside id="review-info">
+          <div class="card">
+            <h2 id="review-info-title" class="card-title">Informations</h2>
+            <p id="review-info-body" class="card-body">Connexion requise. Votre avis est enregistré avec le statut non approuvé jusqu’à validation admin.</p>
+            <a href="./login.html" class="btn btn-ghost btn-sm" data-link id="review-login-link">Se connecter</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div id="footer-brand">
+        <a href="./home.html" class="logo" data-link id="footer-logo">
+          <span class="logo-mark" aria-hidden="true">MU</span>
+          <span>MASTER UNLOCKER</span>
+        </a>
+        <p class="text-muted mt-4">Plateforme SaaS de services mobiles — déblocage, IMEI, FRP, iCloud et outils GSM.</p>
+      </div>
+      <nav id="footer-nav-services" aria-label="Liens services">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="./services.html" data-link id="footer-link-services">Catalogue</a></li>
+          <li><a href="./brands.html" data-link id="footer-link-brands">Marques</a></li>
+          <li><a href="./tracking.html" data-link id="footer-link-tracking">Suivi commande</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-support" aria-label="Liens support">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="./faq.html" data-link id="footer-link-faq">FAQ</a></li>
+          <li><a href="./contact.html" data-link id="footer-link-contact">Contact</a></li>
+          <li><a href="./status.html" data-link id="footer-link-status">Statut</a></li>
+        </ul>
+      </nav>
+      <nav id="footer-nav-account" aria-label="Liens compte">
+        <h4>Compte</h4>
+        <ul>
+          <li><a href="./login.html" data-link id="footer-link-login">Connexion</a></li>
+          <li><a href="./register.html" data-link id="footer-link-register">Inscription</a></li>
+          <li><a href="./announcements.html" data-link id="footer-link-announcements">Annonces</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p id="footer-copyright">&copy; 2026 MASTER UNLOCKER. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+<script type="module" src="../js/main.js"></script>
+
+</body>
+</html>

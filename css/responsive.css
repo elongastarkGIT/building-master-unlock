@@ -124,7 +124,119 @@
   }
 
   .hero {
-    padding: var(--space-8) 0;
+    min-height: 0;
+    max-height: none;
+    display: block;
+    padding: var(--space-5) 0 var(--space-4);
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .hero-content {
+    order: 1;
+    gap: var(--space-2);
+  }
+
+  .hero-visual {
+    order: 2;
+  }
+
+  .hero-title {
+    min-height: 0;
+    font-size: clamp(1.15rem, 5.2vw, 1.45rem);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-sm);
+    line-height: 1.4;
+  }
+
+  .hero-contrast-old,
+  .hero-contrast-new {
+    font-size: 0.7rem;
+  }
+
+  .hero-counters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .hero-counter {
+    padding: var(--space-2);
+  }
+
+  .hero-counter-value {
+    font-size: var(--text-sm);
+  }
+
+  .hero-actions {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: var(--space-2);
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 0;
+    width: auto;
+    justify-content: center;
+    padding: var(--space-2) var(--space-2);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .hero-visual-panel {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .hero-device {
+    width: min(120px, 42%);
+    margin-bottom: var(--space-2);
+  }
+
+  .hero-device-screen {
+    min-height: 120px;
+    padding: var(--space-3) var(--space-2);
+    gap: var(--space-1);
+  }
+
+  .hero-device-status,
+  .hero-device-done,
+  .hero-visual-caption {
+    font-size: 0.65rem;
+  }
+
+  .hero-device-progress {
+    font-size: var(--text-xs);
+  }
+
+  .usp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .how-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .how-step,
+  .how-step:nth-child(even) {
+    transform: translateY(20px);
+  }
+
+  .how-step.is-inview,
+  .how-step:nth-child(even).is-inview {
+    transform: translateY(0);
+  }
+
+  .payment-methods {
+    padding: var(--space-5);
   }
 
   .section {
