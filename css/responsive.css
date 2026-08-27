@@ -1,16 +1,61 @@
 /* MASTER UNLOCKER — Responsive */
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .grid-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .footer-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .editor-layout {
     grid-template-columns: 1fr;
+  }
+
+  /* Schéma B : tablet + mobile = grille 2×2 */
+  .site-footer {
+    padding: 1.35rem 0 1rem;
+  }
+
+  .footer-shell {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.15rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-brand-row {
+    grid-column: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .footer-col-account {
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .footer-col-services,
+  .footer-col-support {
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .footer-brand-row { order: 1; }
+  .footer-col-account { order: 2; }
+  .footer-col-services { order: 3; }
+  .footer-col-support { order: 4; }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    text-align: left;
   }
 }
 
@@ -68,14 +113,54 @@
     grid-template-columns: 1fr;
   }
 
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
+  /* Mobile = même grille 2×2 que tablet ; seules tailles de police / densités */
+  .site-footer {
+    padding: 1.1rem 0 0.85rem;
+  }
+
+  .footer-shell {
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-brand-row,
+  .footer-col-account,
+  .footer-col-services,
+  .footer-col-support {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .footer-brand-row .logo {
+    font-size: 0.8125rem;
+  }
+
+  .footer-brand-row .logo-img,
+  .footer-brand-row .logo-fallback {
+    width: 24px;
+    height: 24px;
+  }
+
+  .footer-tagline {
+    font-size: 0.6875rem;
+  }
+
+  .footer-col h4 {
+    font-size: 0.625rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .footer-col a {
+    font-size: 0.6875rem;
+    padding: 0.1rem 0;
   }
 
   .footer-bottom {
-    flex-direction: column;
-    text-align: center;
+    font-size: 0.625rem;
+    padding-top: 0.65rem;
+  }
+
+  .footer-legal-links a {
+    font-size: 0.625rem;
   }
 
   .dashboard-sidebar,

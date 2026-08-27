@@ -147,20 +147,21 @@ function createTestimonialCard(review, index) {
   return card;
 }
 
-function hideTestimonialsSection() {
-  const section = document.getElementById("testimonials");
-
-  if (!section) {
-    return;
-  }
-
-  section.hidden = true;
-  section.setAttribute("aria-hidden", "true");
-
+function setTestimonialsEmptyState(isEmpty) {
   const grid = document.getElementById("testimonials-grid");
+  const emptyEl = document.getElementById("testimonials-empty");
 
   if (grid) {
-    grid.replaceChildren();
+    if (isEmpty) {
+      grid.setAttribute("hidden", "");
+      grid.replaceChildren();
+    } else {
+      grid.removeAttribute("hidden");
+    }
+  }
+
+  if (emptyEl) {
+    emptyEl.hidden = !isEmpty;
   }
 }
 
@@ -183,14 +184,15 @@ async function hydrateTestimonialsFromFirestore() {
     return;
   }
 
-  hideTestimonialsSection();
+  showTestimonialsSection();
+  setTestimonialsEmptyState(true);
 
   try {
     const { loadApprovedReviews } = await import("../reviews/submitReview.js");
     const reviews = await loadApprovedReviews(3);
 
     if (!reviews.length) {
-      hideTestimonialsSection();
+      setTestimonialsEmptyState(true);
       return;
     }
 
@@ -201,11 +203,11 @@ async function hydrateTestimonialsFromFirestore() {
     });
 
     grid.replaceChildren(fragment);
-    showTestimonialsSection();
+    setTestimonialsEmptyState(false);
     initTestimonialsReveal();
   } catch (error) {
     console.error("TESTIMONIALS HYDRATE ERROR:", error);
-    hideTestimonialsSection();
+    setTestimonialsEmptyState(true);
   }
 }
 

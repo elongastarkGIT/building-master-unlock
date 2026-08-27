@@ -5,6 +5,7 @@ const STATIC_DRAWER_LINKS = [
   { href: "./brands.html", id: "mobile-nav-brands", label: "Marques" },
   { href: "./tracking.html", id: "mobile-nav-tracking", label: "Suivi Commande" },
   { href: "./faq.html", id: "mobile-nav-faq", label: "FAQ" },
+  { href: "./reviews.html", id: "mobile-nav-reviews", label: "Laisser un avis" },
   { href: "./announcements.html", id: "mobile-nav-announcements", label: "Annonces" },
   { href: "./status.html", id: "mobile-nav-status", label: "Statut" },
   { href: "./contact.html", id: "mobile-nav-contact", label: "Contact" }
