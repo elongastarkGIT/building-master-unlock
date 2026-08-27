@@ -125,10 +125,10 @@
 
   .hero {
     height: auto;
-    min-height: fit-content;
+    min-height: 0;
     max-height: none;
     display: block;
-    padding: clamp(1.5rem, 4vh, 2.5rem) 0;
+    padding: 1.5rem 0;
   }
 
   .hero-grid {
